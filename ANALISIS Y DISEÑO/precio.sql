@@ -1,4 +1,8 @@
-﻿-- Column: precio
+﻿
+haciendo prueba de funcionalidad
+create table basedatos
+
+-- Column: precio
 
 -- ALTER TABLE producto DROP COLUMN precio;
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Empleado">
+   <children>
+      <Label layoutX="270.0" layoutY="14.0" text="EMPLEADO" />
+      <TabPane layoutX="14.0" layoutY="42.0" prefHeight="313.0" prefWidth="569.0" styleClass="tab-Pane" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="VENTAS">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+                     <children>
+                        <Label layoutX="25.0" layoutY="14.0" text="ID PRODUCTO" />
+                        <Label layoutX="200.0" layoutY="212.0" text="CLIENTE" />
+                        <Label layoutX="23.0" layoutY="68.0" text="CANTIDAD" />
+                        <Label layoutX="418.0" layoutY="212.0" text="TOTAL" />
+                        <TextField fx:id="txtIdVentas" layoutX="23.0" layoutY="31.0">
+                           <tooltip>
+                              <Tooltip fx:id="ttId" />
+                           </tooltip></TextField>
+                        <TextField fx:id="txtCantidadVentas" layoutX="23.0" layoutY="93.0" onAction="#insertar">
+                           <tooltip>
+                              <Tooltip fx:id="ttCantidad" />
+                           </tooltip></TextField>
+                        <Button fx:id="btnInsertar" layoutX="109.0" layoutY="130.0" mnemonicParsing="false" onAction="#insertar" text="INSERTAR" />
+                        <TextField fx:id="txtClienteVentas" layoutX="251.0" layoutY="208.0" onAction="#venta">
+                           <tooltip>
+                              <Tooltip fx:id="ttCantidad" />
+                           </tooltip></TextField>
+                        <Button fx:id="btnVenta" layoutX="418.0" layoutY="246.0" mnemonicParsing="false" onAction="#venta" text="VENTA" />
+                        <Button fx:id="btnCancelar" layoutX="489.0" layoutY="246.0" mnemonicParsing="false" onAction="#cancelar" text="CANCELAR" />
+                        <TableView fx:id="tvVentas" layoutX="185.0" layoutY="12.0" prefHeight="187.0" prefWidth="379.0">
+                          <columns>
+                            <TableColumn fx:id="tcIdVen" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="tcNombreVen" prefWidth="75.0" text="NOMBRE" />
+                              <TableColumn fx:id="tcPrecioVen" prefWidth="75.0" text="PRECIO" />
+                              <TableColumn fx:id="tcCantidadVen" prefWidth="75.0" text="CANTIDAD" />
+                              <TableColumn fx:id="tcImporteVen" prefWidth="75.0" text="IMPORTE" />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="lblTotal" contentDisplay="RIGHT" layoutX="474.0" layoutY="212.0" prefHeight="17.0" prefWidth="81.0" text="0" textAlignment="RIGHT" />
+                        <Button fx:id="btnModItem" layoutX="328.0" layoutY="246.0" mnemonicParsing="false" onAction="#modificarItem" text="MOD ITEM">
+                           <tooltip>
+                              <Tooltip text="Modifica un elemento \n en la tabla." />
+                           </tooltip></Button>
+                        <Button fx:id="btnDelItem" layoutX="243.0" layoutY="246.0" mnemonicParsing="false" onAction="#eliminarItem" text="DEL ITEM">
+                           <tooltip>
+                              <Tooltip text="Elimina un elemento \nde la tabla." />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="LISTA DE PRODUCTOS">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+                     <children>
+                        <TableView fx:id="tvProductos" prefHeight="253.0" prefWidth="569.0">
+                          <columns>
+                            <TableColumn fx:id="tcIdProd" prefWidth="37.0" text="ID" />
+                            <TableColumn fx:id="tcNombreProd" prefWidth="101.0" text="NOMBRE" />
+                              <TableColumn fx:id="tcPrecioProd" prefWidth="87.0" text="PRECIO" />
+                              <TableColumn fx:id="tcCantidadProd" prefWidth="75.0" text="CANTIDAD" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="txtIdB" layoutX="200.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="55.0" promptText="ID" />
+                        <TextField fx:id="txtNombreB" layoutX="264.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="114.0" promptText="Nombre" />
+                        <TextField fx:id="txtPrecioB" layoutX="386.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="53.0" promptText="Precio" />
+                        <Button fx:id="btnBuscar" layoutX="447.0" layoutY="256.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                        <Button fx:id="btnAgregar" layoutX="504.0" layoutY="256.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
+                        <Button fx:id="btnMostrarT" layoutX="76.0" layoutY="256.0" mnemonicParsing="false" onAction="#mostrar" text="Mostrar Productos">
+                           <tooltip>
+                              <Tooltip text="Muestra todos los productos disponibles." />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="btnCerrarSesion" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#cerrarSesion" text="CERRAR SESIÓN" />
+      <Label fx:id="lblEmpleado" layoutX="345.0" layoutY="14.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="474.0" prefWidth="964.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Administrador">
+   <children>
+      <Label layoutX="229.0" layoutY="14.0" text="ADMINISTRADOR" />
+      <TabPane layoutX="10.0" layoutY="33.0" prefHeight="410.0" prefWidth="937.0" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Productos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <SplitPane dividerPositions="0.31590181430096054" layoutX="-2.0" layoutY="2.0" prefHeight="379.0" prefWidth="937.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TextField fx:id="txtNombreRegistrar" layoutX="142.0" layoutY="50.0" prefHeight="25.0" prefWidth="105.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttNombreProd" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtPrecio" layoutX="144.0" layoutY="130.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttPrecioProd" />
+                                       </tooltip></TextField>
+                                    <TextField fx:id="txtStock" layoutX="145.0" layoutY="209.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttCantidadProd" />
+                                       </tooltip></TextField>
+                                    <Button fx:id="btnGuadarRegistrar" layoutX="57.0" layoutY="346.0" mnemonicParsing="false" onAction="#guardarRegistrar" text="Guardar" />
+                                    <Button fx:id="btnLimpiarRegistrar" layoutX="174.0" layoutY="346.0" mnemonicParsing="false" onAction="#limpiarRegistrar" text="Limpiar" />
+                                    <Label layoutX="57.0" layoutY="213.0" text="Stock" />
+                                    <Label layoutX="57.0" layoutY="134.0" text="Precio" />
+                                    <Label layoutX="49.0" layoutY="54.0" text="Nombre " />
+                                    <Label layoutX="101.0" layoutY="14.0" text="REGISTRAR" />
+                                    <TextField fx:id="txtPrecio2" layoutX="142.0" layoutY="170.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttPrecioProd1" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Label layoutX="57.0" layoutY="174.0" text="Precio 2" />
+                                    <Label layoutX="42.0" layoutY="248.0" text="Stock Max" />
+                                    <Label layoutX="44.0" layoutY="284.0" text="Stock Min" />
+                                    <TextField fx:id="txtStockMax" layoutX="145.0" layoutY="245.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttCantidadProd1" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtStockMin" layoutX="145.0" layoutY="280.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttCantidadProd2" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Label layoutX="65.0" layoutY="317.0" text="Tipo" />
+                                    <ComboBox fx:id="cbMarca" layoutX="31.0" layoutY="88.0" prefHeight="25.0" prefWidth="96.0" promptText="Marca" />
+                                    <ComboBox fx:id="cbCategoria" layoutX="145.0" layoutY="88.0" prefHeight="25.0" prefWidth="101.0" promptText="Categoria" />
+                                    <ComboBox fx:id="cbTipo" layoutX="142.0" layoutY="314.0" prefHeight="25.0" prefWidth="107.0" promptText="Tipo" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="376.0" prefWidth="630.0">
+                                 <children>
+                                    <TableView fx:id="tvProductos" layoutY="21.0" prefHeight="262.0" prefWidth="639.0">
+                                       <columns>
+                                          <TableColumn fx:id="tcIdProd" prefWidth="35.0" text="Id" />
+                                          <TableColumn fx:id="tcNombreProd" prefWidth="94.0" text="Nombre" />
+                                          <TableColumn fx:id="tcCantidadProd" prefWidth="81.0" text="Cantidad" />
+                                          <TableColumn fx:id="tcPrecioProd" prefWidth="59.0" text="Precio" />
+                                          <TableColumn prefWidth="69.0" text="Categoria" />
+                                          <TableColumn prefWidth="61.0" text="marca" />
+                                          <TableColumn prefWidth="55.0" text="Precio2" />
+                                          <TableColumn prefWidth="67.0" text="StockMax" />
+                                          <TableColumn prefWidth="64.0" text="StockMin" />
+                                          <TableColumn prefWidth="75.0" text="Tipo" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="btnModificar" layoutX="491.0" layoutY="336.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+                                    <Button fx:id="btnEliminar" layoutX="567.0" layoutY="336.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+                                    <TextField fx:id="txtBuscar" layoutX="476.0" layoutY="299.0" onAction="#buscar" prefHeight="9.0" prefWidth="72.0" promptText="Nombre">
+                                       <tooltip>
+                                          <Tooltip text="Ingresa nombr de producto." />
+                                       </tooltip></TextField>
+                                    <Button fx:id="btnBuscar" layoutX="575.0" layoutY="300.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                                    <Button fx:id="btnProductos" layoutX="389.0" layoutY="300.0" mnemonicParsing="false" onAction="#mostrarProductos" text="Productos">
+                                       <tooltip>
+                                          <Tooltip text="Muestra todos los productos disponibles." />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Caracteristicas Producto">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <Label layoutX="158.0" layoutY="32.0" text="Categoria" />
+                        <Label layoutX="652.0" layoutY="32.0" text="Marca" />
+                        <Separator layoutX="409.0" orientation="VERTICAL" prefHeight="378.0" prefWidth="14.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Empleado">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <TabPane layoutX="1.0" layoutY="3.0" prefHeight="379.0" prefWidth="937.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <tabs>
+                            <Tab text="Registrar">
+                                 <content>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+                                       <children>
+                                          <Label layoutX="40.0" layoutY="23.0" text="Nombre" />
+                                          <Label layoutX="38.0" layoutY="73.0" prefHeight="16.0" prefWidth="113.0" text="Apellido Paterno" />
+                                          <Label layoutX="160.0" layoutY="73.0" text="Apellido Materno" />
+                                          <Label layoutX="38.0" layoutY="126.0" text="Dirección" />
+                                          <Label layoutX="40.0" layoutY="183.0" text="Teléfono" />
+                                          <Label layoutX="40.0" layoutY="246.0" text="Usuario" />
+                                          <Label layoutX="130.0" layoutY="246.0" text="Password" />
+                                          <TextField fx:id="txtNombreRegEmp" layoutX="37.0" layoutY="44.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttNombreEmp" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtAPaternoRegEmp" layoutX="37.0" layoutY="94.0" prefHeight="25.0" prefWidth="115.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttApPaterno" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtAMaternoRegEmp" layoutX="160.0" layoutY="94.0" prefHeight="25.0" prefWidth="115.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttApMaterno" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtDireccionRegEmp" layoutX="37.0" layoutY="150.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttDireccion" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtTelefonoRegEmp" layoutX="39.0" layoutY="207.0" prefHeight="25.0" prefWidth="152.0" promptText="555-555-55-55">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttTelefono" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtUsuarioRegEmp" layoutX="33.0" layoutY="263.0" onAction="#guardarRegEmp" prefHeight="25.0" prefWidth="74.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttUsuario" />
+                                             </tooltip></TextField>
+                                          <TextField fx:id="txtPasswordRegEmp" layoutX="118.0" layoutY="263.0" onAction="#guardarRegEmp" prefHeight="25.0" prefWidth="74.0">
+                                             <tooltip>
+                                                <Tooltip fx:id="ttPassword" />
+                                             </tooltip></TextField>
+                                          <Button fx:id="btnGuardarRegEmp" layoutX="42.0" layoutY="302.0" mnemonicParsing="false" onAction="#guardarRegEmp" text="Guardar" />
+                                          <Button fx:id="btnLimpiarRegEmp" layoutX="132.0" layoutY="302.0" mnemonicParsing="false" onAction="#limpiarRegEmp" text="Limpiar" />
+                                          <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="306.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/Live%20Messenger.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Empleados">
+                                 <content>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+                                       <children>
+                                          <TableView fx:id="tvEmpleados" prefHeight="297.0" prefWidth="572.0">
+                                             <columns>
+                                                <TableColumn fx:id="tcIdEmp" prefWidth="37.0" text="Id" />
+                                                <TableColumn fx:id="tcNombreEmp" prefWidth="94.0" text="Nombre" />
+                                                <TableColumn fx:id="tcAPaternoEmp" prefWidth="70.0" text="Ap Paterno" />
+                                                <TableColumn fx:id="tcAMaternoEmp" prefWidth="74.0" text="Ap Materno" />
+                                                <TableColumn fx:id="tcDireccionEmp" text="Dirección" />
+                                                <TableColumn fx:id="tcTelefonoEmp" prefWidth="95.0" text="Teléfono" />
+                                                <TableColumn fx:id="tcUsuarioEmp" prefWidth="44.0" text="Usuario" />
+                                                <TableColumn fx:id="tcContrasenaEmp" prefWidth="77.0" text="Contraseña" />
+                                             </columns>
+                                          </TableView>
+                                          <Button fx:id="btnEliminarEmp" layoutX="501.0" layoutY="304.0" mnemonicParsing="false" onAction="#eliminarModEmp" text="Eliminar" />
+                                          <Button fx:id="btnModificarEmp" layoutX="423.0" layoutY="304.0" mnemonicParsing="false" onAction="#modificarEmp" text="Modificar" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Proveedor">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background" />
+               </content>
+            </Tab>
+            <Tab text="Cliente">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background" />
+               </content>
+            </Tab>
+            <Tab text="Compra">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background" />
+               </content>
+            </Tab>
+            <Tab text="Ventas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <TableView fx:id="tvVentas" layoutX="14.0" layoutY="49.0" prefHeight="271.0" prefWidth="553.0">
+                          <columns>
+                            <TableColumn fx:id="tcIdVen" prefWidth="75.0" text="Id" />
+                            <TableColumn fx:id="tcClienteVen" prefWidth="75.0" text="Cliente" />
+                              <TableColumn fx:id="tcImporteVen" prefWidth="75.0" text="Importe" />
+                              <TableColumn fx:id="tcVendedorVen" prefWidth="162.0" text="Vendedor" />
+                              <TableColumn fx:id="tcFechaVen" minWidth="1.0" prefWidth="139.0" text="Fecha" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Contraseña">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <TextField fx:id="txtUsuarioP" layoutX="116.0" layoutY="90.0">
+                           <tooltip>
+                              <Tooltip fx:id="ttUsuarioP" />
+                           </tooltip>
+                        </TextField>
+                        <Label layoutX="107.0" layoutY="33.0" text="CAMBIAR CONTRASEÑA" />
+                        <Label layoutX="133.0" layoutY="63.0" text="Usuario (Opcional)" />
+                        <Label layoutX="134.0" layoutY="125.0" text="Contraseña Actual" />
+                        <Label layoutX="134.0" layoutY="190.0" text="Nueva Contraseña" />
+                        <Label layoutX="121.0" layoutY="248.0" text="Confirmar Contraseña" />
+                        <ImageView fitHeight="242.0" fitWidth="318.0" layoutX="353.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/PERZAN%20FINAL.png" />
+                           </image>
+                        </ImageView>
+                        <PasswordField fx:id="pfContrasenaP" layoutX="115.0" layoutY="152.0">
+                           <tooltip>
+                              <Tooltip fx:id="ttContrasenaP" />
+                           </tooltip>
+                        </PasswordField>
+                        <PasswordField fx:id="pfNewContrasenaP" layoutX="115.0" layoutY="215.0">
+                           <tooltip>
+                              <Tooltip fx:id="ttNewContrasenaP" />
+                           </tooltip>
+                        </PasswordField>
+                        <PasswordField fx:id="pfConfContrasenaP" layoutX="116.0" layoutY="279.0" onAction="#cambiarContrasena">
+                           <tooltip>
+                              <Tooltip fx:id="ttConfContrasenaP" />
+                           </tooltip>
+                        </PasswordField>
+                        <Button fx:id="btnAceptarP" layoutX="134.0" layoutY="314.0" mnemonicParsing="false" onAction="#cambiarContrasena" text="Aceptar" />
+                        <Button fx:id="btnCancelarP" layoutX="216.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelarP" text="Cancelar" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="btnCerrarSesion" layoutX="870.0" layoutY="6.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onInputMethodTextChanged="#login" prefHeight="176.0" prefWidth="305.0" styleClass="dialogStage" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Login">
+   <children>
+      <Label layoutX="110.0" layoutY="14.0" text="INICIAR SESIÓN" />
+      <Label layoutX="132.0" layoutY="41.0" text="Usuario" />
+      <Label layoutX="123.0" layoutY="88.0" text="Contraseña" />
+      <TextField fx:id="txtUsuario" layoutX="79.0" layoutY="58.0">
+         <tooltip>
+            <Tooltip text="Nombre de usuario" textOverrun="CLIP" />
+         </tooltip></TextField>
+      <PasswordField fx:id="txtPassword" layoutX="79.0" layoutY="105.0" onAction="#login">
+         <tooltip>
+            <Tooltip text="Contraseña" />
+         </tooltip></PasswordField>
+      <Button fx:id="btnLogin" layoutX="92.0" layoutY="137.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="btnCancelar" layoutX="187.0" layoutY="137.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+   </children>
+</AnchorPane>

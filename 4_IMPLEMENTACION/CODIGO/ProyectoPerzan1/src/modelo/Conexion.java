@@ -9,6 +9,9 @@ public class Conexion {
 	private String servidor;
 	private String ip;
 	private int puerto;
+	private static Conexion instancia;
+	private Connection con;
+	
 	public String getIp() {
 		return ip;
 	}
@@ -25,11 +28,9 @@ public class Conexion {
 		this.puerto = puerto;
 	}
 
-	private static Conexion instancia;
-	private Connection con;
 	
 	private Conexion(){
-		setBd("perzan");
+		setBd("perzan1");
 		usuario = "postgres";
 		contrasena = "12345";
 		ip = "localhost";

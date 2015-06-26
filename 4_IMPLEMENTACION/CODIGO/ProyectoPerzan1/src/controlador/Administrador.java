@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import modelo.AdminDAO;
 import modelo.CategoriaVO;
 import modelo.EmpleadoDAO;
 import modelo.EmpleadoVO;
@@ -14,7 +15,6 @@ import modelo.Encrypt;
 import modelo.MarcaVO;
 import modelo.ProductoDAO;
 import modelo.ProductoVO;
-import modelo.AdminDAO;
 import modelo.VentaDAO;
 import modelo.VentaVO;
 import javafx.collections.FXCollections;
@@ -680,4 +680,5 @@ public class Administrador implements Initializable{
 	public void setMain1(application.Main1 main1) {
 		this.main1 = main1;
 	}
+	
 }

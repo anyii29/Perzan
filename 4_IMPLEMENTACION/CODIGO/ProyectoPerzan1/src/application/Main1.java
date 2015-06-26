@@ -3,11 +3,11 @@ package application;
 import java.io.IOException;
 
 import modelo.EmpleadoVO;
+import modelo.LoginEmpVO;
 import modelo.ProductoVO;
 import modelo.VentaDetVO;
 import controlador.Administrador;
 import controlador.Empleado;
-import controlador.Login;
 import controlador.LoginEmp;
 import controlador.ModEmpleado;
 import controlador.ModProducto;
@@ -29,7 +29,7 @@ public class Main1 extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Principal controlleroot;
-	private String usuario;
+	private LoginEmpVO usuario;
 	public Stage dStage;
 	@SuppressWarnings("unused")
 	private controlador.Principal principal;
@@ -40,10 +40,11 @@ public class Main1 extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("PERZAN");
-    	//splash();
         RootLayout();
+        //splash();
         empty();
         //splash();
+        
     }
     public void RootLayout() {
         try {
@@ -63,35 +64,6 @@ public class Main1 extends Application {
             e.printStackTrace();
         }
     }
-    
-	public void showLoginAdm() {
-		try {
-			empty();
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main1.class.getResource("Login.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Login Administrador");
-			dialogStage.getIcons().add(new Image("application/images/perzanIco.png"));
-			dialogStage.initStyle(StageStyle.TRANSPARENT); 
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			dialogStage.setScene(scene);
-			Login controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			primaryStage.opacityProperty().set(0.7);
-			dialogStage.showAndWait();
-			primaryStage.opacityProperty().set(1.0);
-			usuario = controller.getUsuario();
-			if(usuario != null){
-				viewAdministrador();
-			}
-		} catch (IOException e) {	
-			e.printStackTrace();
-		}
-	}
 	public void showLoginEmp() {
 		try {
 			empty();
@@ -113,8 +85,11 @@ public class Main1 extends Application {
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
 			usuario = controller.getUsuario();
-			if(usuario != null){
-				viewEmpleado(usuario);
+			if(usuario != null && usuario.getTipo().equals("admin")){
+				viewAdministrador();
+			}
+			if(usuario != null && usuario.getTipo().equals("empleado")){
+				viewEmpleado(usuario.getUsuario());
 			}
 			
 		} catch (IOException e) {	

@@ -9,20 +9,23 @@ import modelo.Conexion;
 public class LoginEmpDAO {
 	boolean result;
 	Conexion conex;
+	LoginEmpVO loginE = new LoginEmpVO();
 
 	public boolean iniciar(LoginEmpVO usuarioEmpVO) {
 		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * from empleado where usuario = ? and pass = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT usuario,password,tipo from empleado where usuario = ? and password = ? and tipo = ? and activo = 's'");
 				consulta.setString(1,usuarioEmpVO.getUsuario());
 				consulta.setString(2,usuarioEmpVO.getPassword());
+				consulta.setString(3,usuarioEmpVO.getTipo());
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
-					if(res.getString("usuario").equals(usuarioEmpVO.getUsuario())&&res.getString("pass").equals(usuarioEmpVO.getPassword())){
-						result = true;
-					}	
+					loginE.setUsuario(res.getString("usuario"));
+					loginE.setPassword(res.getString("password"));
+					loginE.setTipo(res.getString("tipo"));
+					result = true;
 				}
 				else{
 					result = false;
@@ -44,36 +47,9 @@ public class LoginEmpDAO {
 			return false;
 		}
 	}
-	public String nombre(String nombre) {
-		conex = Conexion.getInstance();
-		boolean dato = false;
-		String nom = null;
-		if(conex.conectado()){
-			try{
-				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("select CONCAT(nombre, \" \", apPaterno) as nombre from empleado where usuario = ?");
-				consulta.setString(1, nombre);
-				ResultSet res = consulta.executeQuery();
-				if(res.next()){
-					nom = res.getString("nombre");
-					dato = true;
-				}
-			}		
-			catch(SQLException e){
-				e.printStackTrace();
-			}
-			finally{
-				conex.desconectar();
-			}
-		}
-		
-		if(dato){
-			return nom;
-		}
-		else{
-			return null;
-		}
-		
+	
+	public LoginEmpVO obj() {
+			return loginE;	
 	}
 }
 

@@ -1,6 +1,8 @@
 package controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import application.Main1;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,6 +22,7 @@ public class Splash implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		iniciar();
+		//run();
 	}
 	@FXML
 	private ProgressBar pbBarra;
@@ -28,13 +31,14 @@ public class Splash implements Initializable{
 	@FXML
 	private Label lblProgress;
 	private Stage dialogStage;
+	Task<Void> task;
 	boolean hecho = false;
 	Timeline timeline;
-	 Thread th;
+	Thread th;
 	application.Main1 main1;
 	private Status dat;
 	public void run(){
-		 Task<Void> task = new Task<Void>() {
+		  task = new Task<Void>() {
 		      @Override public Void call() {
 		        for (int i = 1; i < 100; i++) {
 		          try {
@@ -42,15 +46,9 @@ public class Splash implements Initializable{
 		          } catch (InterruptedException e) {
 		            e.printStackTrace();
 		          }
-		         // cerrar();
 		          updateProgress(i, 100);
-		          if(i == 99){
-		        	  timeline.stop();
-				      cerrar();
 		          }
-		          }
-		        timeline.stop();
-		        cerrar();
+		     
 		        //cerrar();
 		       // main1.dStage.close();
 		        return null;
@@ -60,15 +58,13 @@ public class Splash implements Initializable{
 		    th = new Thread(task);
 		    th.setDaemon(true);
 		    th.start();
-		    /*System.out.println(task.getMessage());
-		    task.getOnSucceeded();{
-		    	System.out.println("cerrado mybe");
-		    	 //main1.dStage.close();
-		    }
-		    task.isDone();*/
+		    System.out.println(th.getPriority());
 		    
-		    //cerrar();
-		    //System.out.println("Cerrado");
+				timeline.statusProperty();{
+			    	cerrar();
+			    }
+			
+			
 	}
 	public void iniciar(){
 		timeline = new Timeline(new KeyFrame(
@@ -76,16 +72,16 @@ public class Splash implements Initializable{
 		        ae -> run()));
 		//timeline.setCycleCount(Animation.Status);
 		timeline.play();
-		/*timeline.getOnFinished();{
+		timeline.getOnFinished();{
 			System.out.println("Entro");
 			//dialogStage.close();
 			//main1.dStage.close();
 			
-		}*/
+		}
 		/*while(timeline.getCurrentRate() >= 0.0){
 			System.out.println(timeline.getCurrentRate());
-		}*/
-		/*try{
+		}
+		try{
 			dialogStage.close();
 			System.out.println("Hecho");
 		}
@@ -95,22 +91,25 @@ public class Splash implements Initializable{
 		}*/
 	}
 	public void cerrar(){
-		th.interrupt();
-		
+		//th.interrupt();
 		System.out.println("Cerrar");
-		dat = timeline.getStatus();
-		if(timeline.getStatus().equals(dat)){
 			try{
-			dialogStage.close();
+				//th.interrupt();
+				//task.cancel();
+				//th.destroy();
+				//th.resume();
+				//th.setPriority(1);
+				//th.suspend();
+				th.checkAccess();
+				//timeline.stop();
+				dialogStage.close();
 			}
 			catch(Exception e){
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			System.out.println("Cerrado");			
 		}
-		
-		System.out.println(dat);
-	}
+	
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;		
 		System.out.println("Stage establecido");

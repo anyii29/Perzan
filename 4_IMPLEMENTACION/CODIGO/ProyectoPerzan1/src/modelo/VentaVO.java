@@ -1,49 +1,66 @@
 package modelo;
 
+import java.security.Timestamp;
+
 public class VentaVO {
-	private int id;
-	private String cliente;
-	private double importe;
-	private String vendedor;
-	private String fecha;
+	private int id, idVendedor,idCliente;
+	private Timestamp fechaHora;
 	
 	public VentaVO(){	
 	}
-	public VentaVO(int id, String cliente, double importe, String vendedor, String fecha){
+	public VentaVO(int id, int idVendedor, int idCliente, Timestamp fechaHora){
 		this.id = id;
-		this.cliente = cliente;
-		this.importe = importe;
-		this.vendedor = vendedor;
-		this.fecha = fecha;
+		this.idVendedor = idVendedor;
+		this.idCliente = idCliente;
+		this.fechaHora = fechaHora;
 	}
-	public String getCliente() {
-		return cliente;
-	}
-	public void setCliente(String cliente) {
-		this.cliente = cliente;
-	}
-	public double getImporte() {
-		return importe;
-	}
-	public void setImporte(double importe) {
-		this.importe = importe;
-	}
-	public String getVendedor() {
-		return vendedor;
-	}
-	public void setVendedor(String vendedor) {
-		this.vendedor = vendedor;
-	}
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getFecha() {
-		return fecha;
+	/**
+	 * @return the idVendedor
+	 */
+	public int getIdVendedor() {
+		return idVendedor;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	/**
+	 * @param idVendedor the idVendedor to set
+	 */
+	public void setIdVendedor(int idVendedor) {
+		this.idVendedor = idVendedor;
 	}
+	/**
+	 * @return the idCliente
+	 */
+	public int getIdCliente() {
+		return idCliente;
+	}
+	/**
+	 * @param idCliente the idCliente to set
+	 */
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+	/**
+	 * @return the fechaHora
+	 */
+	public Timestamp getFechaHora() {
+		return fechaHora;
+	}
+	/**
+	 * @param fechaHora the fechaHora to set
+	 */
+	public void setFechaHora(Timestamp fechaHora) {
+		this.fechaHora = fechaHora;
+	}
+	
 }

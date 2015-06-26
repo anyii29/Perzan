@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import modelo.Encrypt;
 import modelo.LoginEmpDAO;
 import modelo.LoginEmpVO;
 import javafx.event.ActionEvent;
@@ -32,8 +33,10 @@ public class LoginEmp implements Initializable {
 	@SuppressWarnings("unused")
 	private application.Main1 main1;
 	private Stage dialogStage;
-	private String usuario;
+	private LoginEmpVO usuario;
 	boolean result;
+	private Encrypt encrypt = new Encrypt();
+	static String tipo;
 	
 	public void login(ActionEvent event){
 		if(txtUsuario.getText().equals("")||txtPassword.getText().equals("")){
@@ -42,16 +45,16 @@ public class LoginEmp implements Initializable {
 		else{
 			
 			if(!(txtUsuario.getText().equals(""))&&!(txtPassword.getText().equals(""))){
-				LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText(),txtPassword.getText());
+				String password = encrypt.encryptText(txtPassword.getText());
+				LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText().trim(),
+						password, tipo);
+				System.out.println(tipo);
 				LoginEmpDAO usuarioEmpDAO = new LoginEmpDAO();
-				System.out.println(usuarioEmpVO.getUsuario() + usuarioEmpVO.getPassword());
 				if(usuarioEmpDAO.iniciar(usuarioEmpVO)){
 					dialogStage.close();
-					String nombre = usuarioEmpDAO.nombre(txtUsuario.getText());
-					setUsuario(nombre);	
-					//setUsuario(usuarioEmpVO.getUsuario());	
+					usuario = usuarioEmpDAO.obj();
 					Principal.loginEmp = true;
-					Principal.empleado = nombre;
+					Principal.empleado = usuario.getUsuario();
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
@@ -70,10 +73,11 @@ public class LoginEmp implements Initializable {
 	public void setMain1(application.Main1 main1) {
 		this.main1= main1;
 	}
-	public String getUsuario() {
+	public LoginEmpVO getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(String usuario){
-		this.usuario= usuario;
+	public void setUsuario(LoginEmpVO usuario) {
+		this.usuario = usuario;
 	}
+	
 }

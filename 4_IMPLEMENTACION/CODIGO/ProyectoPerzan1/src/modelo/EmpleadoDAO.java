@@ -4,24 +4,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.ObservableList;
+
 public class EmpleadoDAO implements iOp{
 	boolean result;
 	private int contt;
 	private int dato;
+	ObservableList<EmpleadoVO> empleados;
 	Conexion conex;
 	
-	public EmpleadoVO[] getDatos(){
-		int contador;
-		EmpleadoVO[] datos;
-		if(conex.conectado()){
+	public ObservableList<EmpleadoVO> getDatos(){
+		if(Conexion.getInstance() != null){
 			try{
+				conex.conectar();
 				PreparedStatement count = conex.getConnection().prepareStatement("SELECT COUNT(activo) FROM empleado WHERE activo = true");
 				ResultSet cont = count.executeQuery();
 				if(cont.next()){
 					contt = cont.getInt(1);
 				}
 				count.close();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, apellidoPaterno, apellidoMaterno, direccion, telefono, usuario, pass FROM empleado WHERE activo = true");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre,"
+						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
+						+ " telefono, usuario, password, tipo FROM empleado WHERE activo = 's'");
 				ResultSet res = consulta.executeQuery();
 				datos = new EmpleadoVO[contt];
 					contador = 0;

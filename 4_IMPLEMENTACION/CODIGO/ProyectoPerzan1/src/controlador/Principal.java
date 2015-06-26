@@ -3,6 +3,7 @@ package controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import modelo.LoginEmpDAO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,7 +44,8 @@ public class Principal implements Initializable{
 				ttAdmin.setText("Cambiar A Administrador");
 			}
 			else{
-				main1.showLoginAdm();
+				LoginEmp.tipo = "admin";
+				main1.showLoginEmp();
 				ttAdmin.setText("Iniciar Sesion");
 			}
 		}
@@ -56,6 +58,7 @@ public class Principal implements Initializable{
 				ttEmp.setText("Cambiar A Empleado");
 			}
 			else{
+				LoginEmp.tipo = "empleado";
 				main1.showLoginEmp();
 				ttEmp.setText("Iniciar Sesion");
 			}

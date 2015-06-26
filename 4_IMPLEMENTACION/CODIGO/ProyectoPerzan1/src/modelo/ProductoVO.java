@@ -6,22 +6,6 @@ public class ProductoVO {
 	private String marca;
 	private int idCategoria;
 	private int idMarca;
-	public int getIdCategoria() {
-		return idCategoria;
-	}
-
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
-	}
-
-	public int getIdMarca() {
-		return idMarca;
-	}
-
-	public void setIdMarca(int idMarca) {
-		this.idMarca = idMarca;
-	}
-
 	private String nombre;
 	private double precio;
 	private double precio2;
@@ -29,7 +13,6 @@ public class ProductoVO {
 	private int stockMax;
 	private int stockMin;
 	private String tipo;
-	
 	
 	public ProductoVO(){
 	}
@@ -61,7 +44,21 @@ public class ProductoVO {
 		this.tipo = tipo;
 	}
 
+	public int getIdCategoria() {
+		return idCategoria;
+	}
 
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	public int getIdMarca() {
+		return idMarca;
+	}
+
+	public void setIdMarca(int idMarca) {
+		this.idMarca = idMarca;
+	}
 	public int getId() {
 		return id;
 	}

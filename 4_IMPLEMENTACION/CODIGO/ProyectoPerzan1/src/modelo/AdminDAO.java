@@ -9,37 +9,6 @@ import modelo.Conexion;
 public class AdminDAO {
 	boolean result;
 	private Conexion conex;
-	public boolean iniciar(AdminVO usuarioVO) {
-		conex = Conexion.getInstance();
-		if(conex.conectado()){
-			try{
-				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT administrador,password from administrador where administrador = ? and password = ?");
-				consulta.setString(1,usuarioVO.getUsuario());
-				consulta.setString(2,usuarioVO.getPassword());
-				ResultSet res = consulta.executeQuery();
-				if(res.next()){
-					result = true;	
-				}
-				else{
-					result = false;
-				}
-				res.close();
-				}		
-				catch(SQLException e){
-					e.printStackTrace();
-				}
-				finally{
-					conex.desconectar();
-				}
-		}
-		if(result){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
 	public boolean user(String pass) {
 		boolean yes = false;
 		conex = Conexion.getInstance();
@@ -92,7 +61,7 @@ public class AdminDAO {
 			else{
 				try{
 					conex.conectar();
-					PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE administrador SET password = MD5(?) WHERE Id = 1");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE administrador (pasword) SET password = MD5(?) WHERE Id = 1");
 					consulta.setString(1, pass);
 					int res = consulta.executeUpdate();
 					if(res > 0){

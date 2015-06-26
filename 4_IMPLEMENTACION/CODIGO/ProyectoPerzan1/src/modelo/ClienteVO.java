@@ -18,6 +18,10 @@ public class ClienteVO extends Person {
 		this.referencia = referencia;
 	}
 
+	public ClienteVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @return the referencia
 	 */

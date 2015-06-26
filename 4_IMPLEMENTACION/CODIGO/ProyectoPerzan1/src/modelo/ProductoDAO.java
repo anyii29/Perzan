@@ -16,42 +16,30 @@ public class ProductoDAO implements iOp{
 	boolean result;
 	static int contt;
 	boolean enviado;
-	ProductoVO[] products;
-	Conexion conex;
+	Conexion conex = Conexion.getInstance();
+	ObservableList<ProductoVO> productos;
 	// revisar
-	public ProductoVO[] getDatos(){
-		int contador;
-		ProductoVO[] datos;
-		conex = Conexion.getInstance();
+	public ObservableList<ProductoVO> getDatos(){
+		productos = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement count = conex.getConnection().prepareStatement("SELECT COUNT(id) FROM producto WHERE activo = 's'");
-				ResultSet cont = count.executeQuery();
-				if(cont.next()){
-					contt = cont.getInt(1);
-				}
-				count.close();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipos FROM producto WHERE activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE activo = 's'");
 				ResultSet res = consulta.executeQuery();
-				datos = new ProductoVO[contt];
-				contador = 0;
 				while(res.next()){
 					int id= res.getInt("id");
 					String nombre = res.getString("nombre");
-					
 					double precio = res.getDouble("precio");
 					double precio2 = res.getDouble("precio2");
 					int stock = res.getInt("stock");
 					int stockMax = res.getInt("stock_max");
-					int stockMin= res.getInt("stockMin");
-					String tipo = res.getString("tipos");
-					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
-					datos[contador] = productoVO;
-					contador++;
+					int stockMin= res.getInt("stock_min");
+					String tipo = res.getString("tipo");
+					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2,
+							stock, stockMax, stockMin, tipo);
+					productos.add(productoVO);
 				}
 				consulta.close();
-				return datos;
 				}		
 			catch(SQLException e){
 					e.printStackTrace();
@@ -60,14 +48,15 @@ public class ProductoDAO implements iOp{
 				conex.desconectar();
 			}
 		}
-		return null;
+		return productos;
 	}
 	public ProductoVO lastInsert(){		
-		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipos FROM producto WHERE id = ? and activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT "
+						+ "id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
+						+ " stock_min, tipo FROM producto WHERE activo = 's' ORDER BY id DESC LIMIT 1");
 				consulta.setInt(1, dato);
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
@@ -78,14 +67,12 @@ public class ProductoDAO implements iOp{
 					double precio2 = res.getDouble("precio2");
 					int stock = res.getInt("stock");
 					int stockMax = res.getInt("stock_max");
-					int stockMin= res.getInt("stockMin");
-					String tipo = res.getString("tipos");
+					int stockMin= res.getInt("stock_min");
+					String tipo = res.getString("tipo");
 					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
 					return productoVO;
 				}
-				//}
 				consulta.close();
-				
 				}		
 			catch(SQLException e){
 					e.printStackTrace();
@@ -101,7 +88,9 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipos FROM producto WHERE id = ? and activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT"
+						+ " id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
+						+ " stock_min, tipo FROM producto WHERE id = ? and activo = 's'");
 				consulta.setInt(1, idP);
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
@@ -112,8 +101,8 @@ public class ProductoDAO implements iOp{
 					double precio2 = res.getDouble("precio2");
 					int stock = res.getInt("stock");
 					int stockMax = res.getInt("stock_max");
-					int stockMin= res.getInt("stockMin");
-					String tipo = res.getString("tipos");
+					int stockMin= res.getInt("stock_min");
+					String tipo = res.getString("tipo");
 					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
 					enviado = true;
 					return productoVO;
@@ -181,7 +170,9 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO producto  VALUES (default,?,?,?,?,?,?,?,?,?,default)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO producto"
+						+ " (id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
+						+ " stock_min, tipo)  VALUES (default,?,?,?,?,?,?,?,?,?,default)");
 				consulta.setString(1,productoVO.getNombre());
 				consulta.setInt(2, productoVO.getIdCategoria());
 				consulta.setInt(3, productoVO.getIdMarca());
@@ -231,7 +222,7 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE producto SET id= ?, nombre = ?, id_categoria = ?, id _marca = ?, precio = ?, precio2 = ?, stock = ?, stock_max = ?, stock_min = ?, tipos = ? WHERE id=?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE producto SET id= ?, nombre = ?, id_categoria = ?, id _marca = ?, precio = ?, precio2 = ?, stock = ?, stock_max = ?, stock_min = ?, tipo = ? WHERE id=?");
 				consulta.setInt(1,productoVO.getId());
 				consulta.setString(2,productoVO.getNombre());
 				consulta.setInt(3, productoVO.getIdCategoria());
@@ -306,7 +297,7 @@ public class ProductoDAO implements iOp{
 			if(nom.equals("")){
 				try{
 					conex.conectar();
-					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipos FROM producto WHERE `id` = ? OR `precio` = ? ");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE `id` = ? OR `precio` = ? ");
 					consulta.setInt(1, idP);
 					consulta.setDouble(2, prec);
 					ResultSet res = consulta.executeQuery();
@@ -319,8 +310,8 @@ public class ProductoDAO implements iOp{
 						double precio2 = res.getDouble("precio2");
 						int stock = res.getInt("stock");
 						int stockMax = res.getInt("stock_max");
-						int stockMin= res.getInt("stockMin");
-						String tipo = res.getString("tipos");
+						int stockMin= res.getInt("stock_min");
+						String tipo = res.getString("tipo");
 						ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
 						productosVO.add(productoVO);
 						i++;
@@ -340,7 +331,7 @@ public class ProductoDAO implements iOp{
 			}
 			else{
 				try{
-					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipos FROM producto WHERE `id` = ? OR `nombre` LIKE ? OR `precio` = ? ");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE `id` = ? OR `nombre` LIKE ? OR `precio` = ? ");
 					consulta.setInt(1, idP);
 					consulta.setString(2, nom1);
 					consulta.setDouble(3, prec);
@@ -354,8 +345,8 @@ public class ProductoDAO implements iOp{
 						double precio2 = res.getDouble("precio2");
 						int stock = res.getInt("stock");
 						int stockMax = res.getInt("stock_max");
-						int stockMin= res.getInt("stockMin");
-						String tipo = res.getString("tipos");
+						int stockMin= res.getInt("stock_min");
+						String tipo = res.getString("tipo");
 						ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
 						productosVO.add(productoVO);
 						i++;

@@ -4,78 +4,86 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EmpleadoDAO implements iOp{
 	boolean result;
-	private int contt;
-	private int dato;
 	ObservableList<EmpleadoVO> empleados;
 	Conexion conex;
 	
 	public ObservableList<EmpleadoVO> getDatos(){
-		if(Conexion.getInstance() != null){
+		empleados = FXCollections.observableArrayList();
+		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement count = conex.getConnection().prepareStatement("SELECT COUNT(activo) FROM empleado WHERE activo = true");
-				ResultSet cont = count.executeQuery();
-				if(cont.next()){
-					contt = cont.getInt(1);
-				}
-				count.close();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre,"
 						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
 						+ " telefono, usuario, password, tipo FROM empleado WHERE activo = 's'");
 				ResultSet res = consulta.executeQuery();
-				datos = new EmpleadoVO[contt];
-					contador = 0;
 					while(res.next()){
 						int id= res.getInt("id");
 						String nombre = res.getString("nombre");
-						String apPaterno = res.getString("apellidoPaterno");
-						String apMaterno = res.getString("apellidoMaterno");
-						String direccion = res.getString("direccion");
+						String apPaterno = res.getString("apellido_paterno");
+						String apMaterno = res.getString("apellido_materno");
+						int calle = res.getInt("calle");
+						int avenida = res.getInt("avenida");
+						int numero = res.getInt("numero");
+						String colonia = res.getString("colonia");
+						String municipio = res.getString("municipio");
 						String telefono = res.getString("telefono");
 						String usuario = res.getString("usuario");
-						String password = res.getString("pass");
-						EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, direccion, telefono, usuario, password);
-						datos[contador] = empleadoVO;
-						contador++;
+						String password = res.getString("password");
+						String tipo = res.getString("tipo");
+						EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
+								numero, colonia, municipio, telefono, usuario, password, tipo);
+						empleados.add(empleadoVO);
 					}
-				consulta.close();
-				conex.desconectar();
-				return datos;
+					consulta.close();
 			}		
 			catch(SQLException e){
-					System.out.println(e);
+					e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
-		return null;
+		return empleados;
 	}
 	public EmpleadoVO lastInsert(){		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, apellidoPaterno, apellidoMaterno, direccion, telefono, usuario, pass FROM empleado WHERE `id` = ?");
-				consulta.setInt(1, dato);
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre,"
+						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
+						+ " telefono, usuario, password, tipo FROM empleado WHERE activo = 's' order by id desc limit  1");
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
 					int id= res.getInt("id");
 					String nombre = res.getString("nombre");
-					String apPaterno = res.getString("apellidoPaterno");
-					String apMaterno = res.getString("apellidoMaterno");
-					String direccion = res.getString("direccion");
+					String apPaterno = res.getString("apellido_paterno");
+					String apMaterno = res.getString("apellido_materno");
+					int calle = res.getInt("calle");
+					int avenida = res.getInt("avenida");
+					int numero = res.getInt("numero");
+					String colonia = res.getString("colonia");
+					String municipio = res.getString("municipio");
 					String telefono = res.getString("telefono");
 					String usuario = res.getString("usuario");
-					String password = res.getString("pass");
-					EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, direccion, telefono, usuario, password);
+					String password = res.getString("password");
+					String tipo = res.getString("tipo");
+					EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
+							numero, colonia, municipio, telefono, usuario, password, tipo);
 					return empleadoVO;
 				}
 				consulta.close();
-				conex.desconectar();
 				}		
 			catch(SQLException e){
-					System.out.println(e);
+					e.printStackTrace();
 			}
+			finally{
+				conex.desconectar();
+			}
+			
 		}
 		
 		return null;
@@ -85,7 +93,7 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado set activo = 'false' WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado set activo = 'n' WHERE id = ?");
 				consulta.setInt(1, id);
 				int res = consulta.executeUpdate();
 				if(res > 0){
@@ -93,10 +101,12 @@ public class EmpleadoDAO implements iOp{
 				}
 				//}
 				consulta.close();
-				conex.desconectar();
 				}		
 			catch(SQLException e){
-					System.out.println(e);
+					e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
 		
@@ -114,15 +124,21 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO empleado VALUES (?,?,?,?,?,?,?,?,default)");
-				consulta.setNull(1,0);
-				consulta.setString(2,empleadoVO.getNombre());
-				consulta.setString(3,empleadoVO.getApPaterno());
-				consulta.setString(4, empleadoVO.getApMaterno());
-				consulta.setString(5, empleadoVO.getDireccion());
-				consulta.setString(6, empleadoVO.getTelefono());
-				consulta.setString(7, empleadoVO.getUsuario());
-				consulta.setString(8, empleadoVO.getPassword());
+				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO empleado(id, nombre,"
+						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
+						+ " telefono, usuario, password, tipo, activo ) VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?,default)");
+				consulta.setString(1,empleadoVO.getNombre());
+				consulta.setString(2,empleadoVO.getApPaterno());
+				consulta.setString(3,empleadoVO.getApMaterno());
+				consulta.setInt(4, empleadoVO.getCalle());
+				consulta.setInt(5, empleadoVO.getAvenida());
+				consulta.setInt(6, empleadoVO.getNumero());
+				consulta.setString(7, empleadoVO.getColonia());
+				consulta.setString(8, empleadoVO.getMunicipio());
+				consulta.setString(9, empleadoVO.getTelefono());
+				consulta.setString(10, empleadoVO.getUsuario());
+				consulta.setString(11, empleadoVO.getPassword());
+				consulta.setString(12, empleadoVO.getTipo());
 				int res = consulta.executeUpdate();
 				if(res > 0){
 					result= true;	
@@ -131,17 +147,13 @@ public class EmpleadoDAO implements iOp{
 					result = false;
 				}
 				consulta.close();
-				PreparedStatement last = conex.getConnection().prepareStatement("SELECT LAST_INSERT_ID()");
-				ResultSet lastIn = last.executeQuery();
-				if(lastIn.next()){
-					dato = lastIn.getInt(1);
-					System.out.println(dato);
-				}
-				last.close();
-				conex.desconectar();
 				}		
 				catch(SQLException e){
-					System.out.println(e);}
+					e.printStackTrace();
+				}
+			finally{
+				conex.desconectar();
+			}
 		}
 		if(result){
 			return true;
@@ -157,17 +169,23 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado SET id = ?, nombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, direccion = ?, telefono = ?, usuario = ?, pass = ? WHERE Id= ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado SET id = ?, nombre = ?,"
+						+ " apellido_paterno = ?, apellido_materno = ?, calle = ?, avenida = ?, numero = ?, colonia = ?, municipio = ?,"
+						+ " telefono = ?, usuario = ?, password = ?, tipo = ? WHERE id = ? ");
 				consulta.setInt(1, empleadoVO.getId());
 				consulta.setString(2,empleadoVO.getNombre());
 				consulta.setString(3,empleadoVO.getApPaterno());
-				consulta.setString(4, empleadoVO.getApMaterno());
-				consulta.setString(5, empleadoVO.getDireccion());
-				consulta.setString(6, empleadoVO.getTelefono());
-				consulta.setString(7, empleadoVO.getUsuario());
-				consulta.setString(8, empleadoVO.getPassword());
-				consulta.setInt(9, empleadoVO.getId());
-				
+				consulta.setString(4,empleadoVO.getApMaterno());
+				consulta.setInt(5, empleadoVO.getCalle());
+				consulta.setInt(6, empleadoVO.getAvenida());
+				consulta.setInt(7, empleadoVO.getNumero());
+				consulta.setString(8, empleadoVO.getColonia());
+				consulta.setString(9, empleadoVO.getMunicipio());
+				consulta.setString(10, empleadoVO.getTelefono());
+				consulta.setString(11, empleadoVO.getUsuario());
+				consulta.setString(12, empleadoVO.getPassword());
+				consulta.setString(13, empleadoVO.getTipo());
+				consulta.setInt(14, empleadoVO.getId());
 				int res = consulta.executeUpdate();
 				if(res > 0){
 					result= true;	
@@ -176,10 +194,13 @@ public class EmpleadoDAO implements iOp{
 					result = false;
 				}
 				consulta.close();
-				conex.desconectar();
 				}		
 				catch(SQLException e){
-					System.out.println(e);}
+					e.printStackTrace();
+				}
+			finally{
+				conex.desconectar();
+			}
 		}
 		if(result){
 			return true;

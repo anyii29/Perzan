@@ -1,5 +1,5 @@
 package modelo;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class CompraVO {
@@ -15,6 +15,9 @@ public class CompraVO {
 		this.total = total;
 		this.fechaPedido = fechaPedido;
 		this.fechaRecepcion = fechaRecepcion;
+	}
+
+	public CompraVO() {
 	}
 
 	public int getId() {

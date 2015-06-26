@@ -204,7 +204,7 @@ public class Empleado implements Initializable{
 				Calendar date = Calendar.getInstance();
 				Date time = date.getTime();
 				String fecha = String.valueOf(time);
-				VentaVO ventaVO = new VentaVO(0, txtClienteVentas.getText(), total, lblEmpleado.getText(),fecha);
+				VentaVO ventaVO = new VentaVO();
 				VentaDAO ventaDAO = new VentaDAO();
 				//int o = productosVenta.size();
 				int o = ventas.size();
@@ -302,7 +302,7 @@ public class Empleado implements Initializable{
 		lblEmpleado.setText(usuario);
 	}
 	public void listaProductos(){
-		ProductoDAO productoDAO =new ProductoDAO();
+		/*ProductoDAO productoDAO =new ProductoDAO();
 		 ProductoVO[] products = productoDAO.getDatos();
 		 int t = products.length;
 		 int p = 0;
@@ -311,7 +311,7 @@ public class Empleado implements Initializable{
 			 productos.add(productVO);
 			 t--;
 			 p++;
-		 }
+		 }*/
 	}
 	public void buscar(ActionEvent event){
 		Validar validar = new Validar();

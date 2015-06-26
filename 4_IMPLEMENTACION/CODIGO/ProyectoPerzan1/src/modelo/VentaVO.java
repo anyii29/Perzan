@@ -1,6 +1,7 @@
 package modelo;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 public class VentaVO {
 	private int id, idVendedor,idCliente;

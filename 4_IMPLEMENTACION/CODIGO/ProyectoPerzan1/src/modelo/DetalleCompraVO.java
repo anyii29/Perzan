@@ -1,16 +1,27 @@
 package modelo;
 
 public class DetalleCompraVO {
-	int id, idProducto, idCompra, cantidad;
-	float precioCompra, precioVenta1, precioVenta2;
+	private int id, cantidad, idProducto, idCompra;
+	private String producto;
+	private float precioCompra,total, precioVenta1, precioVenta2;
 	
-	public DetalleCompraVO(int id, int idProducto, int idCompra, int cantidad,
-			float precioCompra, float precioVenta1 , float precioVenta2){
+	public DetalleCompraVO(int id, String producto, int cantidad,
+			float precioCompra, float total, float precioVenta1 , float precioVenta2){
 		this.id = id;
-		this.idCompra = idCompra;
-		this.idProducto = idProducto;
+		this.producto = producto;
 		this.cantidad = cantidad;
 		this.precioCompra = precioCompra;
+		this.total = total;
+		this.precioVenta1 = precioVenta1;
+		this.precioVenta2 = precioVenta2;
+	}
+	public DetalleCompraVO(int id, int idProducto, int idCompra,
+			float precioCompra, float total, float precioVenta1 , float precioVenta2){
+		this.id = id;
+		this.idProducto = idProducto;
+		this.idCompra = idCompra;
+		this.precioCompra = precioCompra;
+		this.total = total;
 		this.precioVenta1 = precioVenta1;
 		this.precioVenta2 = precioVenta2;
 	}
@@ -27,6 +38,20 @@ public class DetalleCompraVO {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the cantidad
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -58,17 +83,17 @@ public class DetalleCompraVO {
 	}
 
 	/**
-	 * @return the cantidad
+	 * @return the producto
 	 */
-	public int getCantidad() {
-		return cantidad;
+	public String getProducto() {
+		return producto;
 	}
 
 	/**
-	 * @param cantidad the cantidad to set
+	 * @param producto the producto to set
 	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setProducto(String producto) {
+		this.producto = producto;
 	}
 
 	/**
@@ -83,6 +108,20 @@ public class DetalleCompraVO {
 	 */
 	public void setPrecioCompra(float precioCompra) {
 		this.precioCompra = precioCompra;
+	}
+
+	/**
+	 * @return the total
+	 */
+	public float getTotal() {
+		return total;
+	}
+
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(float total) {
+		this.total = total;
 	}
 
 	/**
@@ -112,7 +151,4 @@ public class DetalleCompraVO {
 	public void setPrecioVenta2(float precioVenta2) {
 		this.precioVenta2 = precioVenta2;
 	}
-	
-	
-
 }

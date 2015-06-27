@@ -160,10 +160,10 @@ public class Empleado implements Initializable{
 								System.out.println("ëntrar4");
 								//productoVO.setCantidad(cant - cantidad);
 								//productosVenta.add(productoVO);
-								double importe = productoVO.getPrecio()*cantidad;
+								//double importe = productoVO.getPrecio()*cantidad;
 								//total=total+importe;
-								VentaDetVO ventaDetVO = new VentaDetVO(productoVO.getId(), productoVO.getNombre(), productoVO.getPrecio(), cantidad, importe);
-								ventas.add(ventaDetVO);
+								/*VentaDetVO ventaDetVO = new VentaDetVO(productoVO.getId(), productoVO.getNombre(), productoVO.getPrecio(), cantidad, importe);
+								ventas.add(ventaDetVO);*/
 								totales();
 								String tot = String.valueOf(total);
 								lblTotal.setText(tot);
@@ -382,8 +382,8 @@ public class Empleado implements Initializable{
 		if(!(reg)){
 			if (prod != null) {	
 				
-				VentaDetVO ven = new VentaDetVO(prod.getId(),prod.getNombre(),prod.getPrecio(), 0, 0.0);
-				main1.showModVenta(ven);
+				/*VentaDetVO ven = new VentaDetVO(prod.getId(),prod.getNombre(),prod.getPrecio(), 0, 0.0);
+				main1.showModVenta(ven);*/
 			 	if(actualizado){
 			 		//total=total+ventaDetVO.getImporte();
 			 		//System.out.println(ventaDetVO.getImporte());

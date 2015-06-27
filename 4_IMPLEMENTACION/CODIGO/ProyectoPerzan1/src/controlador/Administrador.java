@@ -39,6 +39,7 @@ public class Administrador implements Initializable{
 	private application.Main1 main1;
 	private Validar validar = new Validar();
 	private Encrypt encrypt = new Encrypt();
+	private CategoriaVO categoriaVO;
 	
 
 	@Override
@@ -204,8 +205,6 @@ public class Administrador implements Initializable{
 	ObservableList<VentaVO>	ventas;
 	private List<Object> listaCategoria = new ArrayList<Object>();
 	private List<Object> listaMarca = new ArrayList<Object>();
-	private List<Object> listaCategoriaNom = new ArrayList<Object>();
-	private List<Object> listaMarcaNom = new ArrayList<Object>();
 	private int posicion;
 	
 	public void guardarRegistrar(ActionEvent event){
@@ -254,9 +253,9 @@ public class Administrador implements Initializable{
 						d++;
 					}
 					String tipo = (String) cbTipo.getValue();
-					ProductoVO productoVO = new ProductoVO(0 , txtNombreRegistrar.getText(),idC, idM,  precio, precio2, stock, stockMax, stockMin,tipo);
+					//ProductoVO productoVO = new ProductoVO(0 , txtNombreRegistrar.getText(),idC, idM,  precio, precio2, stock, stockMax, stockMin,tipo);
 					ProductoDAO productoDAO = new ProductoDAO();
-					if(productoDAO.registrar(productoVO)){
+					if(productoDAO.registrar("productoVO")){
 						JOptionPane.showMessageDialog(null, "Producto Registrado");
 						txtNombreRegistrar.setText(null);
 						txtPrecio.setText(null);
@@ -385,41 +384,42 @@ public class Administrador implements Initializable{
 		}
 */	}
 	private void fillCategoria(){
-		ProductoDAO productoDAO = new ProductoDAO();
-		CategoriaVO catVO;
+		CategoriaVO catVO = new CategoriaVO();
 		try{
-			listaCategoria = productoDAO.listarCategoria();
-			int size = listaCategoria.size();
-			int val = 0;
-			//int c = 0;
-			while(val != size){
-				catVO = (CategoriaVO) listaCategoria.get(val);
-				listaCategoriaNom.add(catVO.getNombre());
-				val++;
-			}
-			ObservableList<Object> Olista = FXCollections.observableArrayList(listaCategoriaNom);
-			cbCategoria.getItems().addAll(Olista);
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("error");
-		}
-		
-	}
-	private void fillMarca(){
-		ProductoDAO productoDAO = new ProductoDAO();
-		MarcaVO marVO;
-		try{
-			listaMarca = productoDAO.listarMarca();
-			int size = listaMarca.size();
+			listaCategoria = FXCollections.observableArrayList();
+			listaCategoria = catVO.listarCategoria();
+			/*int size = listaMarca.size();
 			int val = 0;
 			//int c = 0;
 			while(val != size){
 				marVO = (MarcaVO) listaMarca.get(val);
-				listaMarcaNom.add(marVO.getNombre());
+				cbMarca.getItems().add(marVO.getNombre());
 				val++;
-			}
-			ObservableList<Object> Olista = FXCollections.observableArrayList(listaMarcaNom);
-			cbMarca.getItems().addAll(Olista);
+			}*/
+			cbCategoria.getItems().addAll(listaCategoria);
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("error");
+		}
+	}
+	
+	private void fillMarca(){
+		MarcaVO marVO = new MarcaVO();
+		try{
+			listaMarca = FXCollections.observableArrayList();
+			listaMarca = marVO.listarMarca();
+			/*int size = listaMarca.size();
+			int val = 0;
+			//int c = 0;
+			while(val != size){
+				marVO = (MarcaVO) listaMarca.get(val);
+				cbMarca.getItems().add(marVO.getNombre());
+				val++;
+			}*/
+			cbMarca.getItems().addAll(listaMarca);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("error");
@@ -674,9 +674,9 @@ public class Administrador implements Initializable{
 		pfConfContrasenaP.setText(null);
 */	}
 	public void cerrarSesion(ActionEvent event){
-/*		Principal.loginAdm = false;
-		main1.showLoginAdm();
-*/	}
+		Principal.loginAdm = false;
+		main1.showLoginEmp();
+	}
 	public void setMain1(application.Main1 main1) {
 		this.main1 = main1;
 	}

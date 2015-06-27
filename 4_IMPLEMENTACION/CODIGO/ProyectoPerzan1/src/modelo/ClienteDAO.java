@@ -52,8 +52,10 @@ public class ClienteDAO{
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE compra set id = ?, nombre = ?, apellido_paterno = ?, apellido_materno = ?, calle = ?, avenida = ?, numero = ?, colonia = ?"
-						+ "municipio = ?, referencia = ? WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE cliente"
+						+ " set id = ?, nombre = ?, apellido_paterno = ?, apellido_materno = ?,"
+						+ " calle = ?, avenida = ?, numero = ?, colonia = ?"
+						+ " municipio = ?, referencia = ? WHERE id = ?");
 				consulta.setInt(1, clienteVO.getId());
 				consulta.setString(2, clienteVO.getNombre());
 				consulta.setString(3, clienteVO.getApPaterno());

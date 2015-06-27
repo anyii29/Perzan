@@ -1,8 +1,9 @@
 package modelo;
 
 public class DetalleVentaVO {
-	int id, idProducto, cantidad, idVenta;
-	float precio;
+	private int id, idProducto, cantidad, idVenta;
+	private String producto;
+	private float precio, total;
 	
 	public DetalleVentaVO(int id, int idProducto, int cantidad, int idVenta, float precio){
 		this.id = id;
@@ -10,6 +11,13 @@ public class DetalleVentaVO {
 		this.cantidad = cantidad;
 		this.idVenta = idVenta;
 		this.precio = precio;
+	}
+	public DetalleVentaVO(int id, String producto, float precio,int cantidad, float total){
+		this.id = id;
+		this.producto = producto;
+		this.precio = precio;
+		this.cantidad = cantidad;
+		this.total = total;
 	}
 
 	/**

@@ -56,7 +56,8 @@ public class CompraDAO {
 		}
 		return result;
 	}
-	
+	// pendiente
+	// ***************************************************************************************************
 	public ObservableList<CompraVO> getDatos(){
 		CompraVO compraVO;
 		compras = FXCollections.observableArrayList();

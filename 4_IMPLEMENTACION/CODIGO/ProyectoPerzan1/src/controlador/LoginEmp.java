@@ -43,27 +43,39 @@ public class LoginEmp implements Initializable {
 			JOptionPane.showMessageDialog(null, "Complementa Los Campos");
 		}
 		else{
-			
-			if(!(txtUsuario.getText().equals(""))&&!(txtPassword.getText().equals(""))){
-				String password = encrypt.encryptText(txtPassword.getText());
-				LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText().trim(),
-						password, tipo);
-				System.out.println(tipo);
-				LoginEmpDAO usuarioEmpDAO = new LoginEmpDAO();
-				if(usuarioEmpDAO.iniciar(usuarioEmpVO)){
-					dialogStage.close();
-					usuario = usuarioEmpDAO.obj();
-					Principal.loginEmp = true;
+			String password = encrypt.encryptText(txtPassword.getText());
+			LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText().trim(),
+					password, tipo);
+			System.out.println(tipo);
+			LoginEmpDAO usuarioEmpDAO = new LoginEmpDAO();
+			if(usuarioEmpDAO.iniciar(usuarioEmpVO)){
+				usuario = usuarioEmpDAO.obj();
+				if(usuario.getTipo().equals("admin")){
 					Principal.empleado = usuario.getUsuario();
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
-					txtPassword.setText("");
+					Principal.empleado = usuario.getUsuario();
 				}
+				dialogStage.close();
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
+				txtPassword.setText("");
 			}
 		}
 	}
-
+	/**
+	 * @return the tipo
+	 */
+	public static String getTipo() {
+		return tipo;
+	}
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public static void setTipo(String tipo) {
+		LoginEmp.tipo = tipo;
+	}
 	public void cancelar(ActionEvent event){
 		dialogStage.close();
 	}

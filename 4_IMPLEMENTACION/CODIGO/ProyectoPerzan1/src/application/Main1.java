@@ -1,5 +1,5 @@
 package application;
-	
+
 import java.io.IOException;
 
 import modelo.EmpleadoVO;
@@ -25,45 +25,45 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class Main1 extends Application {
-	
-    private Stage primaryStage;
-    private BorderPane rootLayout;
-    private Principal controlleroot;
+
+	private Stage primaryStage;
+	private BorderPane rootLayout;
+	private Principal controlleroot;
 	private LoginEmpVO usuario;
 	public Stage dStage;
 	@SuppressWarnings("unused")
 	private controlador.Principal principal;
-    public Main1() {
-    }
+	public Main1() {
+	}
 
-    @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("PERZAN");
-        RootLayout();
-        //splash();
-        empty();
-        //splash();
-        
-    }
-    public void RootLayout() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main1.class.getResource("Principal.fxml"));
-            rootLayout = (BorderPane) loader.load();
-            Scene scene = new Scene(rootLayout);
-            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.getIcons().add(new Image("application/images/perzanIco.png"));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-            //dStage.close();
-            controlleroot = loader.getController();
+	@Override
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("PERZAN");
+		RootLayout();
+		//splash();
+		empty();
+		//splash();
+
+	}
+	public void RootLayout() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("Principal.fxml"));
+			rootLayout = (BorderPane) loader.load();
+			Scene scene = new Scene(rootLayout);
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.getIcons().add(new Image("application/images/perzanIco.png"));
+			primaryStage.setResizable(false);
+			primaryStage.show();
+			//dStage.close();
+			controlleroot = loader.getController();
 			controlleroot.setMain1(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	public void showLoginEmp() {
 		try {
 			empty();
@@ -85,14 +85,20 @@ public class Main1 extends Application {
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
 			usuario = controller.getUsuario();
-			if(usuario != null && usuario.getTipo().equals("admin")){
+			if(LoginEmp.getTipo().equals("admin")){
 				viewAdministrador();
+				Principal.loginAdm = true;
+				System.out.println("main admin");
 			}
-			if(usuario != null && usuario.getTipo().equals("empleado")){
-				viewEmpleado(usuario.getUsuario());
+			else{
+				if(usuario != null && (usuario.getTipo().equals("admin")
+						|| usuario.getTipo().equals("empleado"))){
+					viewEmpleado(usuario.getUsuario());
+					Principal.loginEmp = true;
+				}
 			}
-			
-		} catch (IOException e) {	
+		}
+		catch (IOException e) {	
 			e.printStackTrace();
 		}
 	}
@@ -116,7 +122,7 @@ public class Main1 extends Application {
 			controller.setProductoVO(productoVO);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
-			
+
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
@@ -141,7 +147,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(0.7);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
-			
+
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
@@ -166,7 +172,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(0.7);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
-			
+
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
@@ -179,39 +185,39 @@ public class Main1 extends Application {
 			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Administrador controller = loader.getController();
 			controller.setMain1(this);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-    public void viewEmpleado(String usuario) {
-        try {
-        	FXMLLoader loader = new FXMLLoader(Main1.class.getResource("Empleado.fxml"));
+	public void viewEmpleado(String usuario) {
+		try {
+			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("Empleado.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
 			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Empleado controller = loader.getController();
 			controller.setMain1(this);
 			controller.setUsuario(usuario);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void empty() {
-        try {
-        	FXMLLoader loader = new FXMLLoader(Main1.class.getResource("Empty.fxml"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void empty() {
+		try {
+			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("Empty.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage); 
 			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public Stage getPrimaryStage() {
-    	return primaryStage;
-    }
-    public void splash(){
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+	public void splash(){
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main1.class.getResource("Splash.fxml"));

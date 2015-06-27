@@ -2,8 +2,6 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import modelo.LoginEmpDAO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,8 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
 public class Principal implements Initializable{
-	static boolean loginAdm;
-	static boolean loginEmp;
+	static public boolean loginAdm;
+	static public boolean loginEmp;
 	static String empleado;
 	private application.Main1 main1;
 	@Override
@@ -24,6 +22,8 @@ public class Principal implements Initializable{
 		ttEmp.setText("Iniciar Sesion");
 	}
 	public Principal(){	
+		loginAdm = false;
+		loginEmp = false;
 	}
 	@FXML
 	private Button btnAdmin;

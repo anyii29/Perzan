@@ -86,11 +86,11 @@ public class ModProducto implements Initializable {
 	public void setProductoVO(ProductoVO productoVO) {
 		this.productoVO = productoVO;
 		
-		String precio = String.valueOf(productoVO.getPrecio());
+		//String precio = String.valueOf(productoVO.getPrecio());
 		String cantidad = String.valueOf(productoVO.getStock());
 		
-		txtNombre.setText(productoVO.getNombre());
-		txtPrecio.setText(precio);
+		//txtNombre.setText(productoVO.getNombre());
+		//txtPrecio.setText(precio);
 		txtCantidad.setText(cantidad);
 	}
 

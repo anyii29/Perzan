@@ -12,11 +12,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ProductoDAO implements iOp{
-	int dato;
-	boolean result;
-	static int contt;
-	boolean enviado;
-	Conexion conex = Conexion.getInstance();
+	private int dato;
+	private boolean result;
+	private static int contt;
+	private boolean enviado;
+	private CategoriaVO catVO;
+	private MarcaVO marVO;
+	private Conexion conex = Conexion.getInstance();
 	ObservableList<ProductoVO> productos;
 	// revisar
 	public ObservableList<ProductoVO> getDatos(){
@@ -24,19 +26,30 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT producto.id,"
+							+ " categoria.id as id_categoria, categoria.nombre AS categoria,"
+							+ " producto.descripcion, marca.id as id_marca, marca.nombre AS marca,"
+							+ " producto.precio1, producto.precio2, producto.stock, producto.stock_max,"
+							+ " producto.stock_min, producto.tipo FROM producto"
+							+ " inner JOIN categoria ON categoria.id = producto.id_categoria"
+							+ " inner JOIN marca ON marca.id = producto.id_marca where activo = 's'");
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id= res.getInt("id");
-					String nombre = res.getString("nombre");
-					double precio = res.getDouble("precio");
+					int idCat = res.getInt("id_categoria");
+					String nombreCat = res.getString("categoria");
+					catVO = new CategoriaVO(idCat, nombreCat);
+					String descripcion = res.getString("descripcion");
+					int idMar = res.getInt("id_marca");
+					String nombreMar = res.getString("marca");
+					marVO = new MarcaVO(idMar, nombreMar);
+					double precio1 = res.getDouble("precio1");
 					double precio2 = res.getDouble("precio2");
 					int stock = res.getInt("stock");
 					int stockMax = res.getInt("stock_max");
 					int stockMin= res.getInt("stock_min");
 					String tipo = res.getString("tipo");
-					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2,
-							stock, stockMax, stockMin, tipo);
+					ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
 					productos.add(productoVO);
 				}
 				consulta.close();
@@ -54,22 +67,32 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT "
-						+ "id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
-						+ " stock_min, tipo FROM producto WHERE activo = 's' ORDER BY id DESC LIMIT 1");
-				consulta.setInt(1, dato);
+				PreparedStatement consulta = conex.getConnection().prepareStatement(
+						"SELECT producto.id,"
+							+ " categoria.id as id_categoria, categoria.nombre AS categoria,"
+							+ " producto.descripcion, marca.id as id_marca, marca.nombre AS marca,"
+							+ " producto.precio1, producto.precio2, producto.stock, producto.stock_max,"
+							+ " producto.stock_min, producto.tipo FROM producto"
+							+ " inner JOIN categoria ON categoria.id = producto.id_categoria"
+							+ " inner JOIN marca ON marca.id = producto.id_marca WHERE activo = 's' ORDER BY id DESC LIMIT 1");
+				//consulta.setInt(1, dato);
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
 					int id= res.getInt("id");
-					String nombre = res.getString("nombre");
-					
-					double precio = res.getDouble("precio");
+					int idCat = res.getInt("id_categoria");
+					String nombreCat = res.getString("categoria");
+					catVO = new CategoriaVO(idCat, nombreCat);
+					String descripcion = res.getString("descripcion");
+					int idMar = res.getInt("id_marca");
+					String nombreMar = res.getString("marca");
+					marVO = new MarcaVO(idMar, nombreMar);
+					double precio1 = res.getDouble("precio1");
 					double precio2 = res.getDouble("precio2");
 					int stock = res.getInt("stock");
 					int stockMax = res.getInt("stock_max");
 					int stockMin= res.getInt("stock_min");
 					String tipo = res.getString("tipo");
-					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
+					ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
 					return productoVO;
 				}
 				consulta.close();
@@ -88,25 +111,32 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT"
-						+ " id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
-						+ " stock_min, tipo FROM producto WHERE id = ? and activo = 's'");
-				consulta.setInt(1, idP);
-				ResultSet res = consulta.executeQuery();
-				if(res.next()){
-					int id= res.getInt("id");
-					String nombre = res.getString("nombre");
-					
-					double precio = res.getDouble("precio");
-					double precio2 = res.getDouble("precio2");
-					int stock = res.getInt("stock");
-					int stockMax = res.getInt("stock_max");
-					int stockMin= res.getInt("stock_min");
-					String tipo = res.getString("tipo");
-					ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
-					enviado = true;
-					return productoVO;
-					
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT producto.id,"
+						+ " categoria.id as id_categoria, categoria.nombre AS categoria,"
+						+ " producto.descripcion, marca.id as id_marca, marca.nombre AS marca,"
+						+ " producto.precio1, producto.precio2, producto.stock, producto.stock_max,"
+						+ " producto.stock_min, producto.tipo FROM producto"
+						+ " inner JOIN categoria ON categoria.id = producto.id_categoria"
+						+ " inner JOIN marca ON marca.id = producto.id_marca WHERE id = ? ORDER BY id DESC LIMIT 1");
+			consulta.setInt(1, idP);
+			ResultSet res = consulta.executeQuery();
+			if(res.next()){
+				int id= res.getInt("id");
+				int idCat = res.getInt("id_categoria");
+				String nombreCat = res.getString("categoria");
+				catVO = new CategoriaVO(idCat, nombreCat);
+				String descripcion = res.getString("descripcion");
+				int idMar = res.getInt("id_marca");
+				String nombreMar = res.getString("marca");
+				marVO = new MarcaVO(idMar, nombreMar);
+				double precio1 = res.getDouble("precio1");
+				double precio2 = res.getDouble("precio2");
+				int stock = res.getInt("stock");
+				int stockMax = res.getInt("stock_max");
+				int stockMin= res.getInt("stock_min");
+				String tipo = res.getString("tipo");
+				ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
+				return productoVO;
 				}
 				else{
 					enviado = false;
@@ -171,12 +201,12 @@ public class ProductoDAO implements iOp{
 			try{
 				conex.conectar();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO producto"
-						+ " (id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max,"
-						+ " stock_min, tipo)  VALUES (default,?,?,?,?,?,?,?,?,?,default)");
-				consulta.setString(1,productoVO.getNombre());
-				consulta.setInt(2, productoVO.getIdCategoria());
-				consulta.setInt(3, productoVO.getIdMarca());
-				consulta.setDouble(4, productoVO.getPrecio());
+						+ " (id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,"
+						+ " stock_min, tipo, activo)  VALUES (default,?,?,?,?,?,?,?,?,?,default)");
+				consulta.setInt(1, productoVO.getCategoria().getId());
+				consulta.setString(2, productoVO.getDescripcion());
+				consulta.setInt(3, productoVO.getMarca().getId());
+				consulta.setDouble(4, productoVO.getPrecio1());
 				consulta.setDouble(5, productoVO.getPrecio2());
 				consulta.setInt(6, productoVO.getStock());
 				consulta.setInt(7, productoVO.getStockMax());
@@ -218,16 +248,19 @@ public class ProductoDAO implements iOp{
 	public boolean modificar(Object obj) {
 		ProductoVO productoVO = new ProductoVO();
 		productoVO = (ProductoVO) obj;
+		boolean result = false;
 		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE producto SET id= ?, nombre = ?, id_categoria = ?, id _marca = ?, precio = ?, precio2 = ?, stock = ?, stock_max = ?, stock_min = ?, tipo = ? WHERE id=?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE producto"
+						+ " SET id= ?,  id_categoria = ?, descripcion = ?, id _marca = ?, precio1 = ?,"
+						+ " precio2 = ?, stock = ?, stock_max = ?, stock_min = ?, tipo = ? WHERE id=?");
 				consulta.setInt(1,productoVO.getId());
-				consulta.setString(2,productoVO.getNombre());
-				consulta.setInt(3, productoVO.getIdCategoria());
-				consulta.setInt(4, productoVO.getIdMarca());
-				consulta.setDouble(5,productoVO.getPrecio());
+				consulta.setInt(2, productoVO.getCategoria().getId());
+				consulta.setString(3,productoVO.getDescripcion());
+				consulta.setInt(4, productoVO.getMarca().getId());
+				consulta.setDouble(5,productoVO.getPrecio1());
 				consulta.setDouble(6,productoVO.getPrecio2());
 				consulta.setInt(7, productoVO.getStock());
 				consulta.setInt(8, productoVO.getStockMax());
@@ -236,9 +269,6 @@ public class ProductoDAO implements iOp{
 				int res = consulta.executeUpdate();
 				if(res > 0){
 					result= true;	
-				}
-				else{
-					result = false;
 				}
 				consulta.close();
 				
@@ -250,12 +280,7 @@ public class ProductoDAO implements iOp{
 				conex.desconectar();
 			}
 		}
-		if(result){
-			return true;
-		}
-		else{
-			return false;
-		}		
+		return result;		
 	}
 	public boolean venta(int id, int stock) {
 		conex = Conexion.getInstance();
@@ -292,27 +317,41 @@ public class ProductoDAO implements iOp{
 	public ObservableList<ProductoVO> getBuscado(int idP, String nom, double prec){		
 		conex = Conexion.getInstance();
 		ObservableList<ProductoVO> productosVO = FXCollections.observableArrayList();
+		CategoriaVO catVO;
+		MarcaVO marVO;
 		String nom1 = "%" + nom + "%";
 		if(conex.conectado()){
 			if(nom.equals("")){
 				try{
 					conex.conectar();
-					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE `id` = ? OR `precio` = ? ");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT producto.id,"
+							+ " categoria.id as id_categoria, categoria.nombre AS categoria,"
+							+ " producto.descripcion, marca.id as id_marca, marca.nombre AS marca,"
+							+ " producto.precio1, producto.precio2, producto.stock, producto.stock_max,"
+							+ " producto.stock_min, producto.tipo FROM producto"
+							+ " inner JOIN categoria ON categoria.id = producto.id_categoria"
+							+ " inner JOIN marca ON marca.id = producto.id_marca "
+							+ " WHERE `id` = ? OR `precio1` = ? OR `precio2`");
 					consulta.setInt(1, idP);
 					consulta.setDouble(2, prec);
 					ResultSet res = consulta.executeQuery();
 					int i = 0;
 					while(res.next()){
 						int id= res.getInt("id");
-						String nombre = res.getString("nombre");
-						
-						double precio = res.getDouble("precio");
+						int idCat = res.getInt("id_categoria");
+						String nombreCat = res.getString("categoria");
+						catVO = new CategoriaVO(idCat, nombreCat);
+						String descripcion = res.getString("descripcion");
+						int idMar = res.getInt("id_marca");
+						String nombreMar = res.getString("marca");
+						marVO = new MarcaVO(idMar, nombreMar);
+						double precio1 = res.getDouble("precio1");
 						double precio2 = res.getDouble("precio2");
 						int stock = res.getInt("stock");
 						int stockMax = res.getInt("stock_max");
 						int stockMin= res.getInt("stock_min");
 						String tipo = res.getString("tipo");
-						ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
+						ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
 						productosVO.add(productoVO);
 						i++;
 					}
@@ -331,7 +370,7 @@ public class ProductoDAO implements iOp{
 			}
 			else{
 				try{
-					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE `id` = ? OR `nombre` LIKE ? OR `precio` = ? ");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre, id_categoria, id_marca, precio, precio2, stock, stock_max, stock_min, tipo FROM producto WHERE `id` = ? OR `descripcion` LIKE ? OR `precio` = ? ");
 					consulta.setInt(1, idP);
 					consulta.setString(2, nom1);
 					consulta.setDouble(3, prec);
@@ -347,8 +386,8 @@ public class ProductoDAO implements iOp{
 						int stockMax = res.getInt("stock_max");
 						int stockMin= res.getInt("stock_min");
 						String tipo = res.getString("tipo");
-						ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
-						productosVO.add(productoVO);
+						//ProductoVO productoVO = new ProductoVO(id, nombre, "categoria", "marca", precio, precio2, stock, stockMax, stockMin, tipo);
+						//productosVO.add(productoVO);
 						i++;
 					}
 					if(i != 0){
@@ -367,48 +406,5 @@ public class ProductoDAO implements iOp{
 		}
 		return productosVO;
 	}
-	public List<Object> listarCategoria(){
-		conex = Conexion.getInstance();
-		List<Object> lista = new ArrayList<Object>();
-		try {
-			conex.conectar();
-			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT id, nombre FROM categoria");
-			ResultSet res = consulta.executeQuery();
-			while(res.next()){
-				String nombre =res.getString("nombre");
-				int id = res.getInt("id");
-				CategoriaVO categoriaVO = new CategoriaVO(id, nombre);
-				lista.add(categoriaVO);
-			}
-			res.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally{
-			conex.desconectar();
-		}
-		return lista;
-	}
-	public List<Object> listarMarca(){
-		conex = Conexion.getInstance();
-		List<Object> lista = new ArrayList<Object>();
-		try {
-			conex.conectar();
-			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT id, nombre FROM marca");
-			ResultSet res = consulta.executeQuery();
-			while(res.next()){
-				String nombre =res.getString("nombre");
-				int id = res.getInt("id");
-				MarcaVO marcaVO= new MarcaVO(id, nombre);
-				lista.add(marcaVO);
-			}
-			res.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally{
-			conex.desconectar();
-		}
-		return lista;
-	}
+	
 }

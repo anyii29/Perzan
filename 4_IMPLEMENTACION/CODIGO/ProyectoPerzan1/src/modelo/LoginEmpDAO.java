@@ -7,16 +7,18 @@ import java.sql.SQLException;
 import modelo.Conexion;
 
 public class LoginEmpDAO {
-	boolean result;
 	Conexion conex;
 	LoginEmpVO loginE = new LoginEmpVO();
 
 	public boolean iniciar(LoginEmpVO usuarioEmpVO) {
+		boolean result = false;
 		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT usuario,password,tipo from empleado where usuario = ? and password = ? and tipo = ? and activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT usuario,"
+						+ " password, tipo from empleado where usuario = ? and password = ? and"
+						+ " (tipo = 'admin' or tipo = ?) and activo = 's'");
 				consulta.setString(1,usuarioEmpVO.getUsuario());
 				consulta.setString(2,usuarioEmpVO.getPassword());
 				consulta.setString(3,usuarioEmpVO.getTipo());
@@ -26,9 +28,6 @@ public class LoginEmpDAO {
 					loginE.setPassword(res.getString("password"));
 					loginE.setTipo(res.getString("tipo"));
 					result = true;
-				}
-				else{
-					result = false;
 				}
 				res.close();
 				}		
@@ -40,12 +39,7 @@ public class LoginEmpDAO {
 				conex.desconectar();
 			}
 		}
-		if(result){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return result;
 	}
 	
 	public LoginEmpVO obj() {

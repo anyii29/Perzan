@@ -19,9 +19,10 @@ public class VentaDAO {
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-			PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO venta (id, id_vendedor, id_cliente, fecha_hora) VALUES (default,?,?,default)");
+			PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO venta (id, id_vendedor, id_cliente, total,  fecha_hora) VALUES (default,?,?,?,default)");
 			consulta.setInt(1, ventaVO.getIdVendedor());
-			consulta.setInt(1, ventaVO.getIdCliente());
+			consulta.setInt(2, ventaVO.getIdCliente());
+			consulta.setFloat(3, ventaVO.getTotal());
 			int res = consulta.executeUpdate();
 			if(res > 0){
 				result= true;	
@@ -43,14 +44,15 @@ public class VentaDAO {
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, fecha_hora FROM venta");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, total, fecha_hora FROM venta");
 				ResultSet res = consulta.executeQuery();
 					while(res.next()){
 						int id= res.getInt("id");
 						int idVendedor = res.getInt("id_vendedor");
 						int idCliente = res.getInt("id_cliente");
+						float total = res.getFloat("total");
 						Timestamp fechaHora = res.getTimestamp("fecha_hora");
-						VentaVO ventaVO = new VentaVO(id, idVendedor, idCliente, fechaHora);
+						VentaVO ventaVO = new VentaVO(id, idVendedor, idCliente, total, fechaHora);
 						ventas.add(ventaVO);
 					}
 					consulta.close();
@@ -67,14 +69,15 @@ public class VentaDAO {
 	public VentaVO lastInsert(){		
 		if(conex.conectado()){
 			try{
-			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, fecha_hora FROM venta ORDER BY id DESC LIMIT 1");
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, total, fecha_hora FROM venta ORDER BY id DESC LIMIT 1");
 			ResultSet res = consulta.executeQuery();
 			if(res.next()){
 				int id= res.getInt("id");
 				int idVendedor = res.getInt("id_vendedor");
 				int idCliente = res.getInt("id_cliente");
+				float total = res.getFloat("total");
 				Timestamp fechaHora = res.getTimestamp("fecha_hora");
-				VentaVO ventaVO = new VentaVO(id, idVendedor, idCliente, fechaHora);
+				VentaVO ventaVO = new VentaVO(id, idVendedor, idCliente, total, fechaHora);
 				return ventaVO;
 			}
 			consulta.close();

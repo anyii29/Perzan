@@ -26,6 +26,9 @@ public class DetalleCompraVO {
 		this.precioVenta2 = precioVenta2;
 	}
 
+	public DetalleCompraVO() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * @return the id
 	 */

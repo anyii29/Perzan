@@ -18,10 +18,7 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO"
-						+ "(id, nombre, apellido_paterno, apellido_materno, empresa, calle,"
-						+ "avenida, numero, colonia, municipio, telefono, activo) VALUES"
-						+ "(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarproveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				consulta.setString(1, proveedorVO.getNombre());
 				consulta.setString(2, proveedorVO.getApPaterno());
 				consulta.setString(3, proveedorVO.getApMaterno());
@@ -55,10 +52,7 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE proveedor"
-						+ "id = ?, nombre = ?, apellido_paterno = ?, apellido_materno = ?, empresa = ?, calle = ?,"
-						+ "avenida = ?, numero = ?, colonia = ?, municipio = ?, telefono = ?"
-						+ "WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarproveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				consulta.setInt(1, proveedorVO.getId());
 				consulta.setString(2, proveedorVO.getNombre());
 				consulta.setString(3, proveedorVO.getApPaterno());
@@ -70,7 +64,6 @@ public class ProveedorDAO implements iOp {
 				consulta.setString(9, proveedorVO.getColonia());
 				consulta.setString(10, proveedorVO.getMunicipio());
 				consulta.setString(11, proveedorVO.getTelefono());
-				consulta.setInt(12, proveedorVO.getId());
 				int res = consulta.executeUpdate();
 				if(res > 0){
 					result = true;
@@ -92,8 +85,7 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE proveedor"
-						+ "activo = 'n' WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminarproveedor(?)");
 				consulta.setInt(1, i);
 				int res = consulta.executeUpdate();
 				if(res > 0){
@@ -115,23 +107,20 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT"
-							+ "id, nombre, apellido_paterno, apellido_materno, empresa, calle,"
-							+ "avenida, numero, colonia, municipio, telefono FROM proveedor"
-							+ "where activo = 's' ORDER BY id LIMIT 1");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproveedor()");
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
-					int id = res.getInt("id");
-					String nombre = res.getString("nombre");
-					String apPaterno = res.getString("apellido_paterno");
-					String apMaterno = res.getString("apellido_materno");
-					String empresa = res.getString("empresa");
-					int calle = res.getInt("calle");
-					int avenida = res.getInt("avenida");
-					int numero = res.getInt("numero");
-					String colonia = res.getString("colonia");
-					String municipio = res.getString("municipio");
-					String telefono = res.getString("telefono");
+					int id = res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apPaterno = res.getString("fapellido_paterno");
+					String apMaterno = res.getString("fapellido_materno");
+					String empresa = res.getString("fempresa");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String telefono = res.getString("ftelefono");
 					ProveedorVO proveedorVO = new ProveedorVO(id, nombre, apPaterno, apMaterno,
 							empresa, calle, avenida, numero, colonia, municipio, telefono);
 					return proveedorVO;
@@ -139,6 +128,9 @@ public class ProveedorDAO implements iOp {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
 		return null;
@@ -148,23 +140,20 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT"
-							+ "id, nombre, apellido_paterno, apellido_materno, empresa, calle,"
-							+ "avenida, numero, colonia, municipio, telefono FROM proveedor"
-							+ "where activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproveedores()");
 				ResultSet res = consulta.executeQuery();
-				if(res.next()){
-					int id = res.getInt("id");
-					String nombre = res.getString("nombre");
-					String apPaterno = res.getString("apellido_paterno");
-					String apMaterno = res.getString("apellido_materno");
-					String empresa = res.getString("empresa");
-					int calle = res.getInt("calle");
-					int avenida = res.getInt("avenida");
-					int numero = res.getInt("numero");
-					String colonia = res.getString("colonia");
-					String municipio = res.getString("municipio");
-					String telefono = res.getString("telefono");
+				while(res.next()){
+					int id = res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apPaterno = res.getString("fapellido_paterno");
+					String apMaterno = res.getString("fapellido_materno");
+					String empresa = res.getString("fempresa");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String telefono = res.getString("ftelefono");
 					ProveedorVO proveedorVO = new ProveedorVO(id, nombre, apPaterno, apMaterno,
 							empresa, calle, avenida, numero, colonia, municipio, telefono);
 					proveedores.add(proveedorVO);

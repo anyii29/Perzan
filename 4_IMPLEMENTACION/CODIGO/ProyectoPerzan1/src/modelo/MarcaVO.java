@@ -18,9 +18,9 @@ public class MarcaVO extends CategoriaVO{
 	public MarcaVO() {
 	}
 	
-	public ObservableList<Object> listarMarca(){
+	public ObservableList<MarcaVO> listarMarca(){
 		conex = Conexion.getInstance();
-		ObservableList<Object> lista = FXCollections.observableArrayList();
+		ObservableList<MarcaVO> lista = FXCollections.observableArrayList();
 		try {
 			conex.conectar();
 			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT id, nombre FROM marca");

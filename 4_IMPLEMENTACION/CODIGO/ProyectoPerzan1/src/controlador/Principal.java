@@ -13,7 +13,7 @@ public class Principal implements Initializable{
 	static public boolean loginAdm;
 	static public boolean loginEmp;
 	static String empleado;
-	private application.Main1 main1;
+	private view.Main1 main1;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnEmpleado.setOnAction(new showLoginEmp());
@@ -68,7 +68,7 @@ public class Principal implements Initializable{
 		System.exit(0);
 	}
 	
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1=main1;
 	}
 }

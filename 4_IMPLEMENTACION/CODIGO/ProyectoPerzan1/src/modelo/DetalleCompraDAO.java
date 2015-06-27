@@ -16,9 +16,7 @@ public class DetalleCompraDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO detallecompra"
-						+ "(id, id_producto, id_compra, cantidad, precio_compra, precio_venta1, precio_venta2)"
-						+ "VALUES (default,?,?,?,?,?,?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregardetallecompra(?,?,?,?,?,?)");
 				consulta.setInt(1, dCompraVO.getIdProducto());
 				consulta.setInt(2, dCompraVO.getIdCompra());
 				consulta.setInt(3, dCompraVO.getCantidad());
@@ -40,22 +38,13 @@ public class DetalleCompraDAO {
 		return result;
 	}
 	
-	public ObservableList<DetalleCompraVO> getDatos(int idCompra){
+	public ObservableList<DetalleCompraVO> getDatos(){
 		detalleCompras = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT "
-						+ " detallecompra.id, concat(categoria.nombre,' ', producto.descripcion)"
-						+ " as producto,"
-						+ " detallecompra.cantidad, detallecompra.precio_compra,"
-						+ " detallecompra.cantidad * detallecompra.precio_compra AS total,"
-						+ " detallecompra.precio_venta1, detallecompra.precio_venta2"
-						+ " FROM detallecompra"
-						+ " inner JOIN producto ON producto.id = detallecompra.id_producto"
-						+ " inner JOIN categoria ON categoria.id = producto.id_categoria"
-						+ "	WHERE detallecompra.id_compra = ?");
-				consulta.setInt(1, idCompra);
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionardetallecompras()");
+				//consulta.setInt(1, idCompra);
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("id");
@@ -72,6 +61,9 @@ public class DetalleCompraDAO {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
 		return detalleCompras;

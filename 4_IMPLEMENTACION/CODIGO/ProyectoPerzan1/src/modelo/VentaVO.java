@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class VentaVO {
 	private int id, idVendedor,idCliente;
+	private String vendedor, cliente;
 	private float total;
 	private Timestamp fechaHora;
 	
@@ -14,6 +15,13 @@ public class VentaVO {
 		this.id = id;
 		this.idVendedor = idVendedor;
 		this.idCliente = idCliente;
+		this.fechaHora = fechaHora;
+		this.setTotal(total);
+	}
+	public VentaVO(int id, String vendedor, String cliente, float total, Timestamp fechaHora){
+		this.id = id;
+		this.vendedor = vendedor;
+		this.cliente = cliente;
 		this.fechaHora = fechaHora;
 		this.setTotal(total);
 	}
@@ -52,6 +60,30 @@ public class VentaVO {
 	 */
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
+	}
+	/**
+	 * @return the vendedor
+	 */
+	public String getVendedor() {
+		return vendedor;
+	}
+	/**
+	 * @param vendedor the vendedor to set
+	 */
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
+	}
+	/**
+	 * @return the cliente
+	 */
+	public String getCliente() {
+		return cliente;
+	}
+	/**
+	 * @param cliente the cliente to set
+	 */
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 	public float getTotal() {
 		return total;

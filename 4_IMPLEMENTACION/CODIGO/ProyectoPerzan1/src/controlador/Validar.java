@@ -10,7 +10,7 @@ public class Validar {
 		return dato.matches("(([A-Z]{1})([a-z]+)([0-9]+))+");	
 	}
 	public boolean cadena(String dato){
-		return dato.matches("([A-Za-zÁÉÍÓÚáéíóúñÑ0-9/]+\\s*)+");	
+		return dato.matches("([0-9/])([A-Za-zÁÉÍÓÚáéíóúñÑ]+\\s*)+([0-9/])");	
 	}
 	public boolean usuario(String dato){
 		return dato.matches("([A-Za-z]+)([0-9]+)");	

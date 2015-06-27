@@ -20,6 +20,9 @@ public class DetalleVentaVO {
 		this.total = total;
 	}
 
+	public DetalleVentaVO() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * @return the id
 	 */
@@ -88,6 +91,30 @@ public class DetalleVentaVO {
 	 */
 	public void setPrecio(float precio) {
 		this.precio = precio;
+	}
+	/**
+	 * @return the producto
+	 */
+	public String getProducto() {
+		return producto;
+	}
+	/**
+	 * @param producto the producto to set
+	 */
+	public void setProducto(String producto) {
+		this.producto = producto;
+	}
+	/**
+	 * @return the total
+	 */
+	public float getTotal() {
+		return total;
+	}
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(float total) {
+		this.total = total;
 	}
 	
 

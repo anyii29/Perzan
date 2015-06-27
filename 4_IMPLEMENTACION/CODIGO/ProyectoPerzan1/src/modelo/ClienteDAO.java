@@ -18,9 +18,7 @@ public class ClienteDAO{
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("Insert into cliente"
-						+ "(id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia"
-						+ "municipio, referencia) VALUES (default,?,?,?,?,?,?,?,?,?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarcliente(?,?,?,?,?,?,?,?)");
 				consulta.setString(1, clienteVO.getNombre());
 				consulta.setString(2, clienteVO.getApPaterno());
 				consulta.setString(3, clienteVO.getApMaterno());
@@ -52,10 +50,7 @@ public class ClienteDAO{
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE cliente"
-						+ " set id = ?, nombre = ?, apellido_paterno = ?, apellido_materno = ?,"
-						+ " calle = ?, avenida = ?, numero = ?, colonia = ?"
-						+ " municipio = ?, referencia = ? WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarcliente(?,?,?,?,?,?,?,?,?,?)");
 				consulta.setInt(1, clienteVO.getId());
 				consulta.setString(2, clienteVO.getNombre());
 				consulta.setString(3, clienteVO.getApPaterno());
@@ -66,7 +61,6 @@ public class ClienteDAO{
 				consulta.setString(8, clienteVO.getColonia());
 				consulta.setString(9, clienteVO.getMunicipio());
 				consulta.setString(10, clienteVO.getReferencia());
-				consulta.setInt(11, clienteVO.getId());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -84,9 +78,7 @@ public class ClienteDAO{
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT "
-						+ "id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia"
-							+ "municipio, referencia FROM cliente");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * from fn_seleccionarclientes()");
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("id");
@@ -107,7 +99,9 @@ public class ClienteDAO{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			finally{
+				conex.desconectar();
+			}			
 		}
 		return clientes;
 		

@@ -2,7 +2,7 @@ package controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main1;
+import view.Main1;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,7 +35,7 @@ public class Splash implements Initializable{
 	boolean hecho = false;
 	Timeline timeline;
 	Thread th;
-	application.Main1 main1;
+	view.Main1 main1;
 	private Status dat;
 	public void run(){
 		  task = new Task<Void>() {

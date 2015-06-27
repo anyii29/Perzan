@@ -31,7 +31,7 @@ public class LoginEmp implements Initializable {
 	@FXML
 	private Button btnCancelar;
 	@SuppressWarnings("unused")
-	private application.Main1 main1;
+	private view.Main1 main1;
 	private Stage dialogStage;
 	private LoginEmpVO usuario;
 	boolean result;
@@ -82,7 +82,7 @@ public class LoginEmp implements Initializable {
 	public void setDialogStage(Stage dialogStage) {
 		 this.dialogStage = dialogStage;
 	}
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1= main1;
 	}
 	public LoginEmpVO getUsuario() {

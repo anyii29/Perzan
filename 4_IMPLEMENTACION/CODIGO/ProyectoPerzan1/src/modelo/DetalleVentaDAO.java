@@ -16,8 +16,7 @@ public class DetalleVentaDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO detalleventa"
-						+ "(id, id_producto, precio, cantidad, id_venta) VALUES (default, ?, ?, ?, ?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregardetalleventa(?, ?, ?, ?)");
 				consulta.setInt(1, dVentaVO.getIdProducto());
 				consulta.setFloat(2, dVentaVO.getPrecio());
 				consulta.setInt(3, dVentaVO.getCantidad());
@@ -38,20 +37,14 @@ public class DetalleVentaDAO {
 		return result;
 	}
 	
-	public ObservableList<DetalleVentaVO> getDatos(int idVenta){
+	public ObservableList<DetalleVentaVO> getDatos(){
 		detalleVentas = FXCollections.observableArrayList();
 		DetalleVentaVO detVenVO;
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT detalleventa.id,"
-						+ " concat(categoria.nombre, ' ', producto.descripcion) as producto,"
-						+ " detalleventa.precio,    detalleventa.cantidad,"
-						+ " detalleventa.precio * detalleventa.cantidad AS total FROM detalleventa"
-						+ " JOIN producto ON producto.id = detalleventa.id_producto"
-						+ " JOIN categoria ON categoria.id = producto.id_categoria "
-						+ " where detalleventa.id_venta = ?");
-				consulta.setInt(1, idVenta);
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionardetalleventas()");
+				//consulta.setInt(1, idVenta);
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("id");

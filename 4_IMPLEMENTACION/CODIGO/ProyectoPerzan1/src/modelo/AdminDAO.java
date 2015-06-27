@@ -15,11 +15,14 @@ public class AdminDAO {
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT password from administrador as pass where password = ?");
+				//PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT password from administrador as pass where password = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_adminpassword(?)");
 				consulta.setString(1, pass);
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
-					String password = res.getString("password");
+					//String password = res.getString("password");
+					String password = res.getString(0);
+					
 					yes = true;
 				}
 				res.close();
@@ -39,7 +42,7 @@ public class AdminDAO {
 			if(!(usuario.equals(""))){
 				try{
 					conex.conectar();
-					PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE administrador SET administrador = ?, password = MD5(?) WHERE Id = 1");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificaradminpassword(?,?)");
 					consulta.setString(1, usuario);
 					consulta.setString(2,	pass);
 					int res = consulta.executeUpdate();
@@ -61,7 +64,7 @@ public class AdminDAO {
 			else{
 				try{
 					conex.conectar();
-					PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE administrador (pasword) SET password = MD5(?) WHERE Id = 1");
+					PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarpassword(?)");
 					consulta.setString(1, pass);
 					int res = consulta.executeUpdate();
 					if(res > 0){

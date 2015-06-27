@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 public class CategoriaVO {
 	protected int id;
 	protected String nombre;
-	protected Conexion conex;
+	protected Conexion conex = Conexion.getInstance();
 	
 	
 	public int getId() {
@@ -36,9 +36,8 @@ public class CategoriaVO {
 	public CategoriaVO() {
 		
 	}
-	public ObservableList<Object> listarCategoria(){
-		conex = Conexion.getInstance();
-		ObservableList<Object> lista = FXCollections.observableArrayList();
+	public ObservableList<CategoriaVO> listarCategoria(){
+		ObservableList<CategoriaVO> lista = FXCollections.observableArrayList();
 		try {
 			conex.conectar();
 			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT id, nombre FROM categoria");
@@ -63,5 +62,27 @@ public class CategoriaVO {
 	
 	public String toString(){
 		return nombre;
+	}
+	
+	public boolean ingresarCat(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_agregarcategoria(?)");
+				consulta.setString(1, this.getNombre());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
 	}
 }

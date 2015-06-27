@@ -4,14 +4,22 @@ import java.util.Date;
 
 public class CompraVO {
 	
-	private int id, idProvedor;
+	private int id, idProveedor;
+	private String empresa;
 	private float total;
 	private Date fechaPedido;
 	private Timestamp fechaRecepcion;
 	
-	public CompraVO(int id, int idProvedor, float total, Date fechaPedido, Timestamp fechaRecepcion){
+	public CompraVO(int id, int idProveedor, float total, Date fechaPedido, Timestamp fechaRecepcion){
 		this.id = id;
-		this.idProvedor = idProvedor;
+		this.idProveedor = idProveedor;
+		this.total = total;
+		this.fechaPedido = fechaPedido;
+		this.fechaRecepcion = fechaRecepcion;
+	}
+	public CompraVO(int id, String empresa, float total, Date fechaPedido, Timestamp fechaRecepcion){
+		this.id = id;
+		this.empresa = empresa;
 		this.total = total;
 		this.fechaPedido = fechaPedido;
 		this.fechaRecepcion = fechaRecepcion;
@@ -29,13 +37,19 @@ public class CompraVO {
 	}
 
 	public int getIdProvedor() {
-		return idProvedor;
+		return idProveedor;
 	}
 
 	public void setIdProvedor(int idProvedor) {
-		this.idProvedor = idProvedor;
+		this.idProveedor = idProvedor;
 	}
 
+	public String getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
 	public float getTotal() {
 		return total;
 	}

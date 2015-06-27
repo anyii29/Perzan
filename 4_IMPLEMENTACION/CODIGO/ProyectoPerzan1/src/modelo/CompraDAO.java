@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class CompraDAO {
-	private Conexion conex;
+	private Conexion conex = Conexion.getInstance();
 	ObservableList<CompraVO> compras;	
 		
 	public boolean insertar(Object obj){
@@ -20,8 +20,7 @@ public class CompraDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO compra"
-						+ "(id, id_proveedor, total, fecha_pedido, fecha_recepcion) VALUES (default,?,?,default,default)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarcompra(?,?)");
 				consulta.setInt(1, compraVO.getIdProvedor());
 				consulta.setFloat(2, compraVO.getTotal());
 				int res = consulta.executeUpdate();
@@ -43,7 +42,7 @@ public class CompraDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta =conex.getConnection().prepareStatement("update compra set fecha_recepcion = default where id = ?");
+				PreparedStatement consulta =conex.getConnection().prepareStatement("SELECT fn_modificarcompra(?)");
 				consulta.setInt(1, id);
 				int res = consulta.executeUpdate();
 				if(res > 0){
@@ -52,6 +51,9 @@ public class CompraDAO {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
 		return result;
@@ -64,16 +66,16 @@ public class CompraDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_proveedor,"
-						+ "total, fecha_pedido, fecha_recepcion from compra");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * from fn_seleccionarcompras()");
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("id");
-					int idProvedor = res.getInt("id_proveedor");
+					String empresa = res.getString("empresa");
+					//int idProvedor = res.getInt("id_proveedor");
 					float total = res.getFloat("total");
 					Date fechaPedido = res.getDate("fecha_pedido");
 					Timestamp fechaRecepcion = res.getTimestamp("fecha_recepcion");
-					compraVO = new CompraVO(id, idProvedor, total, fechaPedido, fechaRecepcion);
+					compraVO = new CompraVO(id, empresa, total, fechaPedido, fechaRecepcion);
 					compras.add(compraVO);
 				}
 				consulta.close();
@@ -92,8 +94,7 @@ public class CompraDAO {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_proveedor,"
-						+ "total, fecha_pedido, fecha_recepcion FROM compra ORDER BY id DESC LIMIT 1");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_selecionarultimacompra()");
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("id");

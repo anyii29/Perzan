@@ -19,7 +19,7 @@ public class VentaDAO {
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-			PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO venta (id, id_vendedor, id_cliente, total,  fecha_hora) VALUES (default,?,?,?,default)");
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarventa(?,?,?)");
 			consulta.setInt(1, ventaVO.getIdVendedor());
 			consulta.setInt(2, ventaVO.getIdCliente());
 			consulta.setFloat(3, ventaVO.getTotal());
@@ -44,15 +44,16 @@ public class VentaDAO {
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, total, fecha_hora FROM venta");
+				//PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, total, fecha_hora FROM venta");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarventas()");
 				ResultSet res = consulta.executeQuery();
 					while(res.next()){
-						int id= res.getInt("id");
-						int idVendedor = res.getInt("id_vendedor");
-						int idCliente = res.getInt("id_cliente");
+						int id= res.getInt("fid");
+						String vendedor = res.getString("fvendedor");
+						String cliente = res.getString("fcliente");
 						float total = res.getFloat("total");
 						Timestamp fechaHora = res.getTimestamp("fecha_hora");
-						VentaVO ventaVO = new VentaVO(id, idVendedor, idCliente, total, fechaHora);
+						VentaVO ventaVO = new VentaVO(id, vendedor, cliente, total, fechaHora);
 						ventas.add(ventaVO);
 					}
 					consulta.close();

@@ -47,7 +47,7 @@ public class Empleado implements Initializable{
 		
 	}
 	
-	private application.Main1 main1;
+	private view.Main1 main1;
 	@FXML
 	private TextField txtIdVentas;
 	@FXML
@@ -291,7 +291,7 @@ public class Empleado implements Initializable{
 		Principal.loginEmp = false;
 		main1.showLoginEmp();
 	}
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1 = main1;
 	}
 	public String getUsuario() {

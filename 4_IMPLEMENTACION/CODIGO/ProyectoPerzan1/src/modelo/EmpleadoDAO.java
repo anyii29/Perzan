@@ -10,31 +10,29 @@ import javafx.collections.ObservableList;
 public class EmpleadoDAO implements iOp{
 	boolean result;
 	ObservableList<EmpleadoVO> empleados;
-	Conexion conex;
+	Conexion conex = Conexion.getInstance();
 	
 	public ObservableList<EmpleadoVO> getDatos(){
 		empleados = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre,"
-						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
-						+ " telefono, usuario, password, tipo FROM empleado WHERE activo = 's'");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * fn_seleccionarempleados()");
 				ResultSet res = consulta.executeQuery();
 					while(res.next()){
-						int id= res.getInt("id");
-						String nombre = res.getString("nombre");
-						String apPaterno = res.getString("apellido_paterno");
-						String apMaterno = res.getString("apellido_materno");
-						int calle = res.getInt("calle");
-						int avenida = res.getInt("avenida");
-						int numero = res.getInt("numero");
-						String colonia = res.getString("colonia");
-						String municipio = res.getString("municipio");
-						String telefono = res.getString("telefono");
-						String usuario = res.getString("usuario");
-						String password = res.getString("password");
-						String tipo = res.getString("tipo");
+						int id= res.getInt("fid");
+						String nombre = res.getString("fnombre");
+						String apPaterno = res.getString("fapellido_paterno");
+						String apMaterno = res.getString("fapellido_materno");
+						int calle = res.getInt("fcalle");
+						int avenida = res.getInt("favenida");
+						int numero = res.getInt("fnumero");
+						String colonia = res.getString("fcolonia");
+						String municipio = res.getString("fmunicipio");
+						String telefono = res.getString("ftelefono");
+						String usuario = res.getString("fusuario");
+						String password = res.getString("fpassword");
+						String tipo = res.getString("ftipo");
 						EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
 								numero, colonia, municipio, telefono, usuario, password, tipo);
 						empleados.add(empleadoVO);
@@ -53,24 +51,22 @@ public class EmpleadoDAO implements iOp{
 	public EmpleadoVO lastInsert(){		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, nombre,"
-						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
-						+ " telefono, usuario, password, tipo FROM empleado WHERE activo = 's' order by id desc limit  1");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarultimoempleado()");
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
-					int id= res.getInt("id");
-					String nombre = res.getString("nombre");
-					String apPaterno = res.getString("apellido_paterno");
-					String apMaterno = res.getString("apellido_materno");
-					int calle = res.getInt("calle");
-					int avenida = res.getInt("avenida");
-					int numero = res.getInt("numero");
-					String colonia = res.getString("colonia");
-					String municipio = res.getString("municipio");
-					String telefono = res.getString("telefono");
-					String usuario = res.getString("usuario");
-					String password = res.getString("password");
-					String tipo = res.getString("tipo");
+					int id= res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apPaterno = res.getString("fapellido_paterno");
+					String apMaterno = res.getString("fapellido_materno");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String telefono = res.getString("ftelefono");
+					String usuario = res.getString("fusuario");
+					String password = res.getString("fpassword");
+					String tipo = res.getString("ftipo");
 					EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
 							numero, colonia, municipio, telefono, usuario, password, tipo);
 					return empleadoVO;
@@ -93,7 +89,7 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado set activo = 'n' WHERE id = ?");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminarempleado(?)");
 				consulta.setInt(1, id);
 				int res = consulta.executeUpdate();
 				if(res > 0){
@@ -124,9 +120,7 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO empleado(id, nombre,"
-						+ " apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,"
-						+ " telefono, usuario, password, tipo, activo ) VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?,default)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarempleado(?,?,?,?,?,?,?,?,?,?,?,?)");
 				consulta.setString(1,empleadoVO.getNombre());
 				consulta.setString(2,empleadoVO.getApPaterno());
 				consulta.setString(3,empleadoVO.getApMaterno());
@@ -169,9 +163,7 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("UPDATE empleado SET id = ?, nombre = ?,"
-						+ " apellido_paterno = ?, apellido_materno = ?, calle = ?, avenida = ?, numero = ?, colonia = ?, municipio = ?,"
-						+ " telefono = ?, usuario = ?, password = ?, tipo = ? WHERE id = ? ");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarempleado(?,?,?,?,?,?,?,?,?,?,?,?)");
 				consulta.setInt(1, empleadoVO.getId());
 				consulta.setString(2,empleadoVO.getNombre());
 				consulta.setString(3,empleadoVO.getApPaterno());

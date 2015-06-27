@@ -30,7 +30,7 @@ public class Conexion {
 
 	
 	private Conexion(){
-		setBd("perzan1");
+		setBd("perzan");
 		usuario = "postgres";
 		contrasena = "12345";
 		ip = "localhost";

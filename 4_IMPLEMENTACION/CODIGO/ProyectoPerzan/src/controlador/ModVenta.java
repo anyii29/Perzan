@@ -46,7 +46,7 @@ public class ModVenta implements Initializable{
 				Validar validar = new Validar();
 				if(!(validar.entero(txtCantidad.getText())) && !(txtCantidad.getText().equals("0"))){i++; JOptionPane.showMessageDialog(null, "La cantidad debe ser \n un dato entero diferente \n de 0");}
 				if (i == 0){
-					int cant = productoVO.getCantidad();
+					int cant = productoVO.getStock();
 					int cantidad = Integer.parseInt(txtCantidad.getText());
 					if((cant-cantidad) >= 0 ){
 			    	    double precio = Double.valueOf(txtPrecio.getText());

@@ -2,7 +2,6 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,10 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
 public class Principal implements Initializable{
-	static boolean loginAdm;
-	static boolean loginEmp;
+	static public boolean loginAdm;
+	static public boolean loginEmp;
 	static String empleado;
-	private application.Main1 main1;
+	private view.Main1 main1;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnEmpleado.setOnAction(new showLoginEmp());
@@ -23,6 +22,8 @@ public class Principal implements Initializable{
 		ttEmp.setText("Iniciar Sesion");
 	}
 	public Principal(){	
+		loginAdm = false;
+		loginEmp = false;
 	}
 	@FXML
 	private Button btnAdmin;
@@ -43,7 +44,8 @@ public class Principal implements Initializable{
 				ttAdmin.setText("Cambiar A Administrador");
 			}
 			else{
-				main1.showLoginAdm();
+				LoginEmp.tipo = "admin";
+				main1.showLoginEmp();
 				ttAdmin.setText("Iniciar Sesion");
 			}
 		}
@@ -56,6 +58,7 @@ public class Principal implements Initializable{
 				ttEmp.setText("Cambiar A Empleado");
 			}
 			else{
+				LoginEmp.tipo = "empleado";
 				main1.showLoginEmp();
 				ttEmp.setText("Iniciar Sesion");
 			}
@@ -65,7 +68,7 @@ public class Principal implements Initializable{
 		System.exit(0);
 	}
 	
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1=main1;
 	}
 }

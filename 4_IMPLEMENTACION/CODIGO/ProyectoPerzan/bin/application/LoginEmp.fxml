@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="305.0" styleClass="dialogStage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LoginEmp">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="305.0" styleClass="dialogStage" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LoginEmp">
    <children>
       <Label layoutX="110.0" layoutY="14.0" text="INICIAR SESIÓN" />
       <Label layoutX="132.0" layoutY="41.0" text="Usuario" />
@@ -19,6 +19,6 @@
             <Tooltip text="Contraseña" />
          </tooltip></PasswordField>
       <Button fx:id="btnLogin" layoutX="87.0" layoutY="137.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Button fx:id="btnCancelar" layoutX="164.0" layoutY="137.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="btnCancelar" layoutX="192.0" layoutY="137.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
    </children>
 </AnchorPane>

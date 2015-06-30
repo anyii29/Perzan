@@ -47,7 +47,7 @@ public class Empleado implements Initializable{
 		
 	}
 	
-	private application.Main1 main1;
+	private view.Main1 main1;
 	@FXML
 	private TextField txtIdVentas;
 	@FXML
@@ -127,14 +127,12 @@ public class Empleado implements Initializable{
 				Validar validar = new Validar();
 				int id = 0;
 				if(validar.entero(txtIdVentas.getText())){
-					System.out.println("ëntrar");
 					int tam = ventas.size();
 					int a = 0;
 					id= Integer.parseInt(txtIdVentas.getText());
 					while(a<tam && !(reg)){
 						VentaDetVO venta = ventas.get(a);
 						a++;
-						System.out.println(a);
 						if(venta.getId()==id){
 							reg = true;
 						}
@@ -144,26 +142,22 @@ public class Empleado implements Initializable{
 					ttId.setText("Campo Erroneo Ej: \"1\"");
 					}
 				if(!(reg)){
-					System.out.println("ëntrar1");
 					int i = 0;
 					if(validar.entero(txtIdVentas.getText())){ttId.setText(null);}else{ i++; ttId.setText("Campo Erroneo Ej: \"1\"");}
 					if(validar.entero(txtCantidadVentas.getText())){ttCantidad.setText(null);}else{ i++; ttCantidad.setText("Campo Erroneo Ej: \"1\"");}
 					if(i == 0){
-						System.out.println("ëntrar2");
 						ProductoDAO productoDAO= new ProductoDAO();
 						ProductoVO productoVO = productoDAO.getProducto(id);
 						if(productoDAO.got()){
-							System.out.println("ëntrar3");
-							int cant = productoVO.getCantidad();
+							int cant = productoVO.getStock();
 							int cantidad = Integer.parseInt(txtCantidadVentas.getText());
 							if((cant-cantidad) >= 0 ){
-								System.out.println("ëntrar4");
 								//productoVO.setCantidad(cant - cantidad);
 								//productosVenta.add(productoVO);
-								double importe = productoVO.getPrecio()*cantidad;
+								//double importe = productoVO.getPrecio()*cantidad;
 								//total=total+importe;
-								VentaDetVO ventaDetVO = new VentaDetVO(productoVO.getId(), productoVO.getNombre(), productoVO.getPrecio(), cantidad, importe);
-								ventas.add(ventaDetVO);
+								/*VentaDetVO ventaDetVO = new VentaDetVO(productoVO.getId(), productoVO.getNombre(), productoVO.getPrecio(), cantidad, importe);
+								ventas.add(ventaDetVO);*/
 								totales();
 								String tot = String.valueOf(total);
 								lblTotal.setText(tot);
@@ -204,12 +198,11 @@ public class Empleado implements Initializable{
 				Calendar date = Calendar.getInstance();
 				Date time = date.getTime();
 				String fecha = String.valueOf(time);
-				VentaVO ventaVO = new VentaVO(0, txtClienteVentas.getText(), total, lblEmpleado.getText(),fecha);
+				VentaVO ventaVO = new VentaVO();
 				VentaDAO ventaDAO = new VentaDAO();
 				//int o = productosVenta.size();
 				int o = ventas.size();
 				//o--;
-				System.out.println("size" + o);
 				ProductoDAO productoDAO = new ProductoDAO();
 				int error = 0;
 				for(int a = 0;a < o; a++){
@@ -262,7 +255,6 @@ public class Empleado implements Initializable{
 		 		totales();
 		 		String tot = String.valueOf(total);
 				lblTotal.setText(tot);
-		 		System.out.println(posicion);
 			 	actualizado = false;
 		 	}
 		}
@@ -291,7 +283,7 @@ public class Empleado implements Initializable{
 		Principal.loginEmp = false;
 		main1.showLoginEmp();
 	}
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1 = main1;
 	}
 	public String getUsuario() {
@@ -302,7 +294,7 @@ public class Empleado implements Initializable{
 		lblEmpleado.setText(usuario);
 	}
 	public void listaProductos(){
-		ProductoDAO productoDAO =new ProductoDAO();
+		/*ProductoDAO productoDAO =new ProductoDAO();
 		 ProductoVO[] products = productoDAO.getDatos();
 		 int t = products.length;
 		 int p = 0;
@@ -311,7 +303,7 @@ public class Empleado implements Initializable{
 			 productos.add(productVO);
 			 t--;
 			 p++;
-		 }
+		 }*/
 	}
 	public void buscar(ActionEvent event){
 		Validar validar = new Validar();
@@ -346,7 +338,7 @@ public class Empleado implements Initializable{
 			}
 		}
 		if(i != 0){
-			ObservableList<ProductoVO> productosGet = productoDAO.getBuscado(id,txtNombreB.getText() , precio);
+			ObservableList<ProductoVO> productosGet = null;/* = productoDAO.getBuscado(id,txtNombreB.getText() , precio);*/
 			if(productoDAO.got()){
 				productos.removeAll(productos);
 				productos.addAll(productosGet);
@@ -382,8 +374,8 @@ public class Empleado implements Initializable{
 		if(!(reg)){
 			if (prod != null) {	
 				
-				VentaDetVO ven = new VentaDetVO(prod.getId(),prod.getNombre(),prod.getPrecio(), 0, 0.0);
-				main1.showModVenta(ven);
+				/*VentaDetVO ven = new VentaDetVO(prod.getId(),prod.getNombre(),prod.getPrecio(), 0, 0.0);
+				main1.showModVenta(ven);*/
 			 	if(actualizado){
 			 		//total=total+ventaDetVO.getImporte();
 			 		//System.out.println(ventaDetVO.getImporte());

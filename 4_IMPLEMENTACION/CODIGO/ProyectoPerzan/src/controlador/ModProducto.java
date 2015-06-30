@@ -55,7 +55,7 @@ public class ModProducto implements Initializable {
 				int id = productoVO.getId();
 				double precio= Double.valueOf(txtPrecio.getText());
 				int cantidad=Integer.parseInt(txtCantidad.getText());
-				ProductoVO productoVO = new ProductoVO(id , txtNombre.getText(), precio, cantidad);
+				//ProductoVO productoVO = new ProductoVO(id , txtNombre.getText(), precio, cantidad);
 				ProductoDAO productoDAO = new ProductoDAO();
 				if(productoDAO.modificar(productoVO)){
 					JOptionPane.showMessageDialog(null, "Producto Actualizado");
@@ -86,11 +86,11 @@ public class ModProducto implements Initializable {
 	public void setProductoVO(ProductoVO productoVO) {
 		this.productoVO = productoVO;
 		
-		String precio = String.valueOf(productoVO.getPrecio());
-		String cantidad = String.valueOf(productoVO.getCantidad());
+		//String precio = String.valueOf(productoVO.getPrecio());
+		String cantidad = String.valueOf(productoVO.getStock());
 		
-		txtNombre.setText(productoVO.getNombre());
-		txtPrecio.setText(precio);
+		//txtNombre.setText(productoVO.getNombre());
+		//txtPrecio.setText(precio);
 		txtCantidad.setText(cantidad);
 	}
 

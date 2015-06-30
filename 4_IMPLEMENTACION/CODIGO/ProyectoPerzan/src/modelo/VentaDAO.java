@@ -3,104 +3,91 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class VentaDAO {
 	boolean result;
 	private int contt;
 	private int dato;
+	private Conexion conex = Conexion.getInstance();
+	ObservableList<VentaVO> ventas;
 	public boolean registrar(VentaVO ventaVO) {
-		Conexion conex = new Conexion();
+		boolean result = false;
 		if(conex.conectado()){
 			try{
-			PreparedStatement consulta = conex.getConnection().prepareStatement("INSERT INTO ventas VALUES (?,?,?,?,?)");
-			consulta.setNull(1,0);
-			consulta.setString(2, ventaVO.getCliente());
-			consulta.setDouble(3, ventaVO.getImporte());
-			consulta.setString(4, ventaVO.getVendedor());
-			consulta.setString(5, ventaVO.getFecha());
-				
+				conex.conectar();
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarventa(?,?,?)");
+			consulta.setInt(1, ventaVO.getIdVendedor());
+			consulta.setInt(2, ventaVO.getIdCliente());
+			consulta.setFloat(3, ventaVO.getTotal());
 			int res = consulta.executeUpdate();
 			if(res > 0){
 				result= true;	
 			}
-			else{
-				result = false;
-			}PreparedStatement last = conex.getConnection().prepareStatement("SELECT LAST_INSERT_ID()");
-			ResultSet lastIn = last.executeQuery();
-			if(lastIn.next()){
-				dato = lastIn.getInt(1);
-				System.out.println(dato);
-			}
-			last.close();
 			consulta.close();
-			conex.desconectar();
 			}		
 			catch(SQLException e){
-				System.out.println(e);
+				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
-		if(result){
-			return true;
-		}
-		else{
-			return false;
-		}		
+		return result;		
 	}
 
-	public VentaVO[] getDatos(){
-		int contador;
-		VentaVO[] datos;
-		Conexion conex = new Conexion();
+	public ObservableList<VentaVO> getDatos(){
+		ventas = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try{
-				PreparedStatement count = conex.getConnection().prepareStatement("SELECT COUNT(DISTINCT id) FROM ventas");
-				ResultSet cont = count.executeQuery();
-				if(cont.next()){
-					contt = cont.getInt(1);
-				}
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM ventas");
+				conex.conectar();
+				//PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT id, id_vendedor, id_cliente, total, fecha_hora FROM venta");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarventas()");
 				ResultSet res = consulta.executeQuery();
-				datos = new VentaVO[contt];
-					contador = 0;
 					while(res.next()){
-						int id= res.getInt("id");
-						String cliente = res.getString("cliente");
-						double importe = res.getDouble("importe");
-						String vendedor = res.getString("vendedor");
-						String fecha = res.getString("fecha");
-						VentaVO ventaVO = new VentaVO(id, cliente, importe, vendedor, fecha);
-						datos[contador] = ventaVO;
-						contador++;
+						int id= res.getInt("fid");
+						String vendedor = res.getString("fvendedor");
+						String cliente = res.getString("fcliente");
+						float total = res.getFloat("ftotal");
+						Timestamp fechaHora = res.getTimestamp("fecha_hora");
+						VentaVO ventaVO = new VentaVO(id, vendedor, cliente, total, fechaHora);
+						ventas.add(ventaVO);
 					}
-					return datos;
-				}		
+					consulta.close();
+				}
 			catch(SQLException e){
-					System.out.println(e);
+					e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
-		return null;
+		return ventas;
 	}
 	public VentaVO lastInsert(){		
-		Conexion conex = new Conexion();
 		if(conex.conectado()){
 			try{
-			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM ventas WHERE `id` = ?");
-			consulta.setInt(1, dato);
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarultimaventa();");
 			ResultSet res = consulta.executeQuery();
 			if(res.next()){
-				int id= res.getInt("id");
-				String cliente = res.getString("cliente");
-				double importe = res.getDouble("importe");
-				String vendedor = res.getString("vendedor");
-				String fecha = res.getString("fecha");
-				VentaVO ventaVO = new VentaVO(id, cliente, importe, vendedor, fecha);
+				int id= res.getInt("fid");
+				String vendedor = res.getString("fvendedor");
+				String cliente = res.getString("fcliente");
+				float total = res.getFloat("ftotal");
+				Timestamp fechaHora = res.getTimestamp("fecha_hora");
+				VentaVO ventaVO = new VentaVO(id, vendedor, cliente, total, fechaHora);
 				return ventaVO;
 			}
 			consulta.close();
-			conex.desconectar();
 			}		
 		catch(SQLException e){
-				System.out.println(e);
+				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
 			}
 		}
 		return null;

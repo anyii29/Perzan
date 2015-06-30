@@ -79,7 +79,7 @@ public class ModEmpleado implements Initializable{
 			if(!(validar.usuario(txtUsuario.getText()))){ i++; ttUsuario.setText("Campo Erroneo Ej: \"usuario1\"");}else{ttUsuario.setText(null);}
 			if(!(validar.contrasena(txtContrasena.getText()))){ i++; ttContrasena.setText("Campo Erroneo  Ej: \"usuario1\"");}else{ttContrasena.setText(null);}
 			if(i == 0){
-				EmpleadoVO empleadoVO = new EmpleadoVO(id, txtNombre.getText(), txtApPaterno.getText(), txtApMaterno.getText(), txtDireccion.getText(),txtTelefono.getText(), txtUsuario.getText(), txtContrasena.getText());
+				//EmpleadoVO empleadoVO = new EmpleadoVO(id, txtNombre.getText(), txtApPaterno.getText(), txtApMaterno.getText(), txtDireccion.getText(),txtTelefono.getText(), txtUsuario.getText(), txtContrasena.getText());
 				EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 				if(empleadoDAO.modificar(empleadoVO)){
 					JOptionPane.showMessageDialog(null, "Empleado Actualizado!");
@@ -105,7 +105,7 @@ public class ModEmpleado implements Initializable{
 		txtNombre.setText(empleadoVO.getNombre());
 		txtApPaterno.setText(empleadoVO.getApPaterno());
 		txtApMaterno.setText(empleadoVO.getApMaterno());
-		txtDireccion.setText(empleadoVO.getDireccion());
+		//txtDireccion.setText(empleadoVO.getDireccion());
 		txtTelefono.setText(empleadoVO.getTelefono());
 		txtUsuario.setText(empleadoVO.getUsuario());
 		txtContrasena.setText(empleadoVO.getPassword());

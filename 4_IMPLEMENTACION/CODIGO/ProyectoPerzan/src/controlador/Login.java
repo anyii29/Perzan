@@ -5,8 +5,9 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import modelo.UsuarioDAO;
-import modelo.UsuarioVO;
+import modelo.AdminDAO;
+import modelo.AdminVO;
+import modelo.Encrypt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,14 +35,16 @@ public class Login implements Initializable {
 	boolean result;
 	private Stage dialogStage;
 	private String usuario;
+	private Encrypt encrypt = new Encrypt();
 	public void login(ActionEvent event){
 		if(txtUsuario.getText().equals("")||txtPassword.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Complementa Los Campos");
 		}
 		else{	
 			if(!(txtUsuario.getText().equals(""))&&!(txtPassword.getText().equals(""))){
-				UsuarioVO usuarioVO = new UsuarioVO(txtUsuario.getText(),txtPassword.getText());
-				UsuarioDAO usuarioDAO = new UsuarioDAO();
+				String password = encrypt.encryptText(txtPassword.getText());
+				AdminVO usuarioVO = new AdminVO(txtUsuario.getText(),password);
+				AdminDAO usuarioDAO = new AdminDAO();
 				if(usuarioDAO.iniciar(usuarioVO)){
 					setUsuario(usuarioVO.getUsuario());					
 					dialogStage.close();

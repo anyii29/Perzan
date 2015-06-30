@@ -2,63 +2,122 @@ package modelo;
 
 import java.sql.*;
 
-import javax.swing.JOptionPane;
-
 public class Conexion {
-	static String bd = "Perzan";
-	static String login = "root";
-	static String password = "12345";
-	static String url = "jdbc:mysql://localhost/"+bd;
-	boolean conexion = false;
+	private String bd;
+	private String usuario;
+	private String contrasena;
+	private String servidor;
+	private String ip;
+	private int puerto;
+	private static Conexion instancia;
+	private Connection con;
 	
-	Connection conn = null;
-	public Conexion(){
-		conectar();
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
+
+	
+	private Conexion(){
+		setBd("perzan");
+		usuario = "postgres";
+		contrasena = "12345";
+		ip = "localhost";
+		puerto = 5432;
+		servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
 	}
 	
-	public void conectar(){
+	private Conexion(String bd, String usuario, String contrasena, String ip, int puerto){
+		this.servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
+		this.bd = bd;
+		this.usuario = usuario;
+		this.contrasena = contrasena;
+		this.ip = ip;
+		this.puerto = puerto;
+		con = null;
+	}
+	
+	public static Conexion getInstance(){
+		if(instancia == null){
+			instancia = new Conexion();
+		}
+		return instancia;
+			
+	}
+	
+	public String conectar(){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url, login, password);
-			if(conn!=null){
-				conexion = true;
-			}
-		}
-		catch(SQLException e){
-			System.out.println(e);
-		}
-		catch(ClassNotFoundException e){
-			System.out.println(e);
-		}
-		catch(Exception e){
-			System.out.println(e);
+			this.servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
+			//verifica que el driver este presente en el proyecto
+			Class.forName("org.postgresql.Driver");
+			//establecer conexion
+			con = DriverManager.getConnection(servidor, usuario, contrasena);
+			System.out.println("Conexión éxitosa");
+			return "Conexión éxitosa";
+		}catch(Exception e){
+			e .printStackTrace();
+			return "No se establecio la conexion. Consulte a su administrador";
 		}
 	}
-	public boolean conectado(){
-		boolean dat = false;
-		if(conexion){
-			System.out.println("Conexion a BD: "+bd+ " Establecida");
-			dat = true;
+	/*
+	 * metodo para desconectar.
+	 */
+	public String desconectar(){
+		try{
+			con.close();
+			System.out.println("Se ha desconectado del servidor");
+			return "Se ha desconectado del servidor";
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("La conexion esta siendo ocupada, no se puede desconectar");
+			return "La conexion esta siendo ocupada, no se puede desconectar";
 		}
-		else{
-			JOptionPane.showMessageDialog(null, "Fallo conexion a Base de Datos!\n Verificar Conexion.");
-		}
-		if(dat){
+	}
+
+	public Connection getConnection(){
+		return con;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	public String getBd() {
+		return bd;
+	}
+
+	public void setBd(String bd) {
+		this.bd = bd;
+	}
+
+	public boolean conectado() {
+		if(instancia != null){
 			return true;
 		}
 		else{
 			return false;
 		}
+		
 	}
-	public Connection getConnection(){
-		return conn;
-	}
-	public void desconectar(){
-		conn = null;
-	}
-	public static void main(String [] args){
-		Conexion cn = new Conexion();
-		cn.getConnection();
-	}
-
 }

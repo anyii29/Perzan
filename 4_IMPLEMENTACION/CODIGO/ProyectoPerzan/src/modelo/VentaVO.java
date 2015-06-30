@@ -1,49 +1,107 @@
 package modelo;
 
+import java.sql.Timestamp;
+
+
 public class VentaVO {
-	private int id;
-	private String cliente;
-	private double importe;
-	private String vendedor;
-	private String fecha;
+	private int id, idVendedor,idCliente;
+	private String vendedor, cliente;
+	private float total;
+	private Timestamp fechaHora;
 	
 	public VentaVO(){	
 	}
-	public VentaVO(int id, String cliente, double importe, String vendedor, String fecha){
+	public VentaVO(int id, int idVendedor, int idCliente, float total, Timestamp fechaHora){
 		this.id = id;
-		this.cliente = cliente;
-		this.importe = importe;
+		this.idVendedor = idVendedor;
+		this.idCliente = idCliente;
+		this.fechaHora = fechaHora;
+		this.setTotal(total);
+	}
+	public VentaVO(int id, String vendedor, String cliente, float total, Timestamp fechaHora){
+		this.id = id;
 		this.vendedor = vendedor;
-		this.fecha = fecha;
-	}
-	public String getCliente() {
-		return cliente;
-	}
-	public void setCliente(String cliente) {
 		this.cliente = cliente;
+		this.fechaHora = fechaHora;
+		this.setTotal(total);
 	}
-	public double getImporte() {
-		return importe;
-	}
-	public void setImporte(double importe) {
-		this.importe = importe;
-	}
-	public String getVendedor() {
-		return vendedor;
-	}
-	public void setVendedor(String vendedor) {
-		this.vendedor = vendedor;
-	}
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getFecha() {
-		return fecha;
+	/**
+	 * @return the idVendedor
+	 */
+	public int getIdVendedor() {
+		return idVendedor;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	/**
+	 * @param idVendedor the idVendedor to set
+	 */
+	public void setIdVendedor(int idVendedor) {
+		this.idVendedor = idVendedor;
 	}
+	/**
+	 * @return the idCliente
+	 */
+	public int getIdCliente() {
+		return idCliente;
+	}
+	/**
+	 * @param idCliente the idCliente to set
+	 */
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+	/**
+	 * @return the vendedor
+	 */
+	public String getVendedor() {
+		return vendedor;
+	}
+	/**
+	 * @param vendedor the vendedor to set
+	 */
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
+	}
+	/**
+	 * @return the cliente
+	 */
+	public String getCliente() {
+		return cliente;
+	}
+	/**
+	 * @param cliente the cliente to set
+	 */
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
+	}
+	public float getTotal() {
+		return total;
+	}
+	public void setTotal(float total) {
+		this.total = total;
+	}
+	/**
+	 * @return the fechaHora
+	 */
+	public Timestamp getFechaHora() {
+		return fechaHora;
+	}
+	/**
+	 * @param fechaHora the fechaHora to set
+	 */
+	public void setFechaHora(Timestamp fechaHora) {
+		this.fechaHora = fechaHora;
+	}
+	
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
@@ -7,57 +8,90 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="474.0" prefWidth="617.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Administrador">
+<AnchorPane prefHeight="474.0" prefWidth="964.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Administrador">
    <children>
       <Label layoutX="229.0" layoutY="14.0" text="ADMINISTRADOR" />
-      <TabPane layoutX="10.0" layoutY="33.0" prefHeight="410.0" prefWidth="580.0" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="10.0" layoutY="33.0" prefHeight="410.0" prefWidth="937.0" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Productos">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
                      <children>
-                        <SplitPane dividerPositions="0.3546712802768166" layoutX="-2.0" layoutY="2.0" prefHeight="377.0" prefWidth="580.0" styleClass="background">
+                        <SplitPane dividerPositions="0.29242262540021347" layoutX="-2.0" layoutY="2.0" prefHeight="379.0" prefWidth="937.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TextField fx:id="txtNombreRegistrar" layoutX="14.0" layoutY="70.0">
+                                    <TextField fx:id="txtNombreRegistrar" layoutX="142.0" layoutY="50.0" prefHeight="25.0" prefWidth="105.0">
                                        <tooltip>
                                           <Tooltip fx:id="ttNombreProd" />
-                                       </tooltip></TextField>
-                                    <TextField fx:id="txtPrecioRegistrar" layoutX="14.0" layoutY="154.0" promptText="00.00">
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtPrecio" layoutX="144.0" layoutY="130.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00">
                                        <tooltip>
                                           <Tooltip fx:id="ttPrecioProd" />
                                        </tooltip></TextField>
-                                    <TextField fx:id="txtCantidadRegistrar" layoutX="14.0" layoutY="238.0" onAction="#guardarRegistrar">
+                                    <TextField fx:id="txtStock" layoutX="145.0" layoutY="209.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
                                        <tooltip>
                                           <Tooltip fx:id="ttCantidadProd" />
                                        </tooltip></TextField>
-                                    <Button fx:id="btnGuadarRegistrar" layoutX="19.0" layoutY="295.0" mnemonicParsing="false" onAction="#guardarRegistrar" text="Guardar" />
-                                    <Button fx:id="btnLimpiarRegistrar" layoutX="107.0" layoutY="295.0" mnemonicParsing="false" onAction="#limpiarRegistrar" text="Limpiar" />
-                                    <Label layoutX="65.0" layoutY="211.0" text="Cantidad" />
-                                    <Label layoutX="72.0" layoutY="125.0" text="Precio" />
-                                    <Label layoutX="65.0" layoutY="44.0" text="Nombre " />
-                                    <Label layoutX="71.0" layoutY="14.0" text="REGISTRAR" />
+                                    <Button fx:id="btnGuadarRegistrar" layoutX="57.0" layoutY="346.0" mnemonicParsing="false" onAction="#guardarRegistrar" text="Guardar" />
+                                    <Button fx:id="btnLimpiarRegistrar" layoutX="174.0" layoutY="346.0" mnemonicParsing="false" onAction="#limpiarRegistrar" text="Limpiar" />
+                                    <Label layoutX="57.0" layoutY="213.0" text="Stock" />
+                                    <Label layoutX="57.0" layoutY="134.0" text="Precio" />
+                                    <Label layoutX="150.0" layoutY="32.0" text="Descripción" />
+                                    <Label layoutX="101.0" layoutY="14.0" text="REGISTRAR" />
+                                    <TextField fx:id="txtPrecio2" layoutX="142.0" layoutY="170.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttPrecioProd1" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Label layoutX="57.0" layoutY="174.0" text="Precio 2" />
+                                    <Label layoutX="42.0" layoutY="248.0" text="Stock Max" />
+                                    <Label layoutX="44.0" layoutY="284.0" text="Stock Min" />
+                                    <TextField fx:id="txtStockMax" layoutX="145.0" layoutY="245.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttCantidadProd1" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtStockMin" layoutX="145.0" layoutY="280.0" onAction="#guardarRegistrar" prefHeight="25.0" prefWidth="104.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttCantidadProd2" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Label layoutX="65.0" layoutY="317.0" text="Tipo" />
+                                    <ComboBox fx:id="cbMarca" layoutX="34.0" layoutY="50.0" prefHeight="25.0" prefWidth="96.0" promptText="Marca" />
+                                    <ComboBox fx:id="cbCategoria" layoutX="145.0" layoutY="88.0" prefHeight="25.0" prefWidth="101.0" promptText="Categoria" />
+                                    <ComboBox fx:id="cbTipo" layoutX="142.0" layoutY="314.0" prefHeight="25.0" prefWidth="107.0" promptText="Tipo" />
+                                    <Label layoutX="46.0" layoutY="32.0" text="Categoria" />
+                                    <Label layoutX="58.0" layoutY="92.0" text="Marca" />
                                  </children>
                               </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="376.0" prefWidth="630.0">
                                  <children>
-                                    <TableView fx:id="tvProductos" layoutX="34.0" layoutY="24.0" prefHeight="262.0" prefWidth="303.0">
+                                    <TableView fx:id="tvProductos" layoutY="21.0" prefHeight="287.0" prefWidth="659.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                          <TableColumn fx:id="tcIdProd" prefWidth="75.0" text="Id" />
-                                          <TableColumn fx:id="tcNombreProd" prefWidth="75.0" text="Nombre" />
-                                          <TableColumn fx:id="tcCantidadProd" prefWidth="75.0" text="Cantidad" />
-                                          <TableColumn fx:id="tcPrecioProd" prefWidth="75.0" text="Precio" />
+                                          <TableColumn fx:id="tcCategoriaProd" prefWidth="69.0" text="Categoria" />
+                                          <TableColumn fx:id="tcNombreProd" prefWidth="94.0" text="Nombre" />
+                                          <TableColumn fx:id="tcMarcaProd" prefWidth="61.0" text="Marca" />
+                                          <TableColumn fx:id="tcPrecio1Prod" prefWidth="59.0" text="Precio1" />
+                                          <TableColumn fx:id="tcPrecio2Prod" prefWidth="55.0" text="Precio2" />
+                                          <TableColumn fx:id="tcStockProd" prefWidth="75.0" text="Stock" />
+                                          <TableColumn fx:id="tcStockMaxProd" prefWidth="67.0" text="StockMax" />
+                                          <TableColumn fx:id="tcStockMaxProd" prefWidth="64.0" text="StockMin" />
+                                          <TableColumn fx:id="tcTipoProd" prefWidth="75.0" text="Tipo" />
                                        </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
-                                    <Button fx:id="btnModificar" layoutX="197.0" layoutY="336.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-                                    <Button fx:id="btnEliminar" layoutX="278.0" layoutY="336.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
-                                    <TextField fx:id="txtBuscar" layoutX="195.0" layoutY="299.0" onAction="#buscar" prefHeight="25.0" prefWidth="72.0" promptText="Nombre">
+                                    <Button fx:id="btnModificar" layoutX="491.0" layoutY="336.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+                                    <Button fx:id="btnEliminar" layoutX="567.0" layoutY="336.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+                                    <TextField fx:id="txtBuscar" layoutX="476.0" layoutY="299.0" onAction="#buscar" prefHeight="9.0" prefWidth="72.0" promptText="Nombre">
                                        <tooltip>
                                           <Tooltip text="Ingresa nombr de producto." />
                                        </tooltip></TextField>
-                                    <Button fx:id="btnBuscar" layoutX="286.0" layoutY="299.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-                                    <Button fx:id="btnProductos" layoutX="109.0" layoutY="299.0" mnemonicParsing="false" onAction="#mostrarProductos" text="Productos">
+                                    <Button fx:id="btnBuscar" layoutX="575.0" layoutY="300.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                                    <Button fx:id="btnProductos" layoutX="389.0" layoutY="300.0" mnemonicParsing="false" onAction="#mostrarProductos" text="Productos">
                                        <tooltip>
                                           <Tooltip text="Muestra todos los productos disponibles." />
                                        </tooltip>
@@ -70,80 +104,120 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="Caracteristicas Producto">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <Label layoutX="158.0" layoutY="32.0" text="Categoria" />
+                        <Label layoutX="652.0" layoutY="32.0" text="Marca" />
+                        <Separator layoutX="430.0" layoutY="1.0" orientation="VERTICAL" prefHeight="378.0" prefWidth="14.0" />
+                        <Label layoutX="81.0" layoutY="62.0" text="Nombre" />
+                        <TextField fx:id="txtNombreCat" layoutX="54.0" layoutY="98.0" prefHeight="25.0" prefWidth="114.0" />
+                        <TableView fx:id="tvCategoria" layoutX="194.0" layoutY="62.0" prefHeight="261.0" prefWidth="155.0">
+                          <columns>
+                            <TableColumn fx:id="tcIdCat" prefWidth="75.0" text="Id" />
+                            <TableColumn fx:id="tcNombreCat" prefWidth="75.0" text="Nombre" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnIngresarCat" layoutX="86.0" layoutY="151.0" mnemonicParsing="false" onAction="#ingresarCat" text="Ingresar" />
+                        <Button fx:id="btnModificarCat" layoutX="83.0" layoutY="193.0" mnemonicParsing="false" onAction="#modificarCat" text="Modificar" />
+                        <Button fx:id="btnEliminarCat" layoutX="87.0" layoutY="237.0" mnemonicParsing="false" onAction="#eliminarCat" text="Eliminar" />
+                        <Button fx:id="btnEliminarMar" layoutX="561.0" layoutY="234.0" mnemonicParsing="false" onAction="#eliminarMar" text="Eliminar" />
+                        <Button fx:id="btnModificarMar" layoutX="557.0" layoutY="190.0" mnemonicParsing="false" onAction="#modificarMar" text="Modificar" />
+                        <Button fx:id="btnIngresarMar" layoutX="560.0" layoutY="148.0" mnemonicParsing="false" onAction="#ingresarMar" text="Ingresar" />
+                        <TableView fx:id="tvMarca" layoutX="668.0" layoutY="59.0" prefHeight="261.0" prefWidth="155.0">
+                           <columns>
+                              <TableColumn fx:id="tcIdMar" prefWidth="75.0" text="Id" />
+                              <TableColumn fx:id="tcNombreMar" prefWidth="75.0" text="Nombre" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="txtNombreMar" layoutX="528.0" layoutY="95.0" prefHeight="25.0" prefWidth="114.0" />
+                        <Label layoutX="555.0" layoutY="59.0" text="Nombre" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
           <Tab text="Empleado">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
                      <children>
-                        <TabPane layoutX="1.0" layoutY="3.0" prefHeight="378.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane layoutX="1.0" layoutY="3.0" prefHeight="379.0" prefWidth="937.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <tabs>
                             <Tab text="Registrar">
                                  <content>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
                                        <children>
-                                          <Label layoutX="40.0" layoutY="23.0" text="Nombre" />
-                                          <Label layoutX="38.0" layoutY="73.0" text="Apelllido Paterno" />
-                                          <Label layoutX="140.0" layoutY="73.0" text="Apellido Materno" />
-                                          <Label layoutX="38.0" layoutY="126.0" text="Dirección" />
-                                          <Label layoutX="40.0" layoutY="183.0" text="Teléfono" />
-                                          <Label layoutX="40.0" layoutY="246.0" text="Usuario" />
-                                          <Label layoutX="130.0" layoutY="246.0" text="Password" />
-                                          <TextField fx:id="txtNombreRegEmp" layoutX="37.0" layoutY="44.0">
+                                          <Label layoutX="37.0" layoutY="21.0" text="Nombre" />
+                                          <Label layoutX="205.0" layoutY="21.0" prefHeight="18.0" prefWidth="128.0" text="Apellido Paterno" />
+                                          <Label layoutX="342.0" layoutY="21.0" text="Apellido Materno" />
+                                          <Label layoutX="192.0" layoutY="74.0" text="Dirección" />
+                                          <Label layoutX="491.0" layoutY="20.0" text="Teléfono" />
+                                          <Label layoutX="490.0" layoutY="96.0" text="Usuario" />
+                                          <Label layoutX="577.0" layoutY="96.0" text="Password" />
+                                          <TextField fx:id="txtNombreEmp" layoutX="36.0" layoutY="42.0" prefHeight="25.0" prefWidth="154.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttNombreEmp" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtAPaternoRegEmp" layoutX="37.0" layoutY="94.0" prefHeight="25.0" prefWidth="95.0">
+                                          <TextField fx:id="txtAPaternoEmp" layoutX="203.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttApPaterno" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtAMaternoRegEmp" layoutX="140.0" layoutY="94.0" prefHeight="25.0" prefWidth="95.0">
+                                          <TextField fx:id="txtAMaternoEmp" layoutX="342.0" layoutY="42.0" prefHeight="25.0" prefWidth="132.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttApMaterno" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtDireccionRegEmp" layoutX="37.0" layoutY="150.0">
+                                          <TextField fx:id="txtCalleEmp" layoutX="32.0" layoutY="114.0" prefHeight="25.0" prefWidth="56.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttDireccion" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtTelefonoRegEmp" layoutX="39.0" layoutY="207.0" prefHeight="25.0" prefWidth="152.0" promptText="555-555-55-55">
+                                          <TextField fx:id="txtTelefonoEmp" layoutX="491.0" layoutY="42.0" prefHeight="25.0" prefWidth="152.0" promptText="555-555-55-55">
                                              <tooltip>
                                                 <Tooltip fx:id="ttTelefono" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtUsuarioRegEmp" layoutX="33.0" layoutY="263.0" onAction="#guardarRegEmp" prefHeight="25.0" prefWidth="74.0">
+                                          <TextField fx:id="txtUsuarioEmp" layoutX="483.0" layoutY="113.0" prefHeight="25.0" prefWidth="74.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttUsuario" />
                                              </tooltip></TextField>
-                                          <TextField fx:id="txtPasswordRegEmp" layoutX="118.0" layoutY="263.0" onAction="#guardarRegEmp" prefHeight="25.0" prefWidth="74.0">
+                                          <TextField fx:id="txtPasswordEmp" layoutX="575.0" layoutY="115.0" prefHeight="25.0" prefWidth="74.0">
                                              <tooltip>
                                                 <Tooltip fx:id="ttPassword" />
                                              </tooltip></TextField>
-                                          <Button fx:id="btnGuardarRegEmp" layoutX="42.0" layoutY="302.0" mnemonicParsing="false" onAction="#guardarRegEmp" text="Guardar" />
-                                          <Button fx:id="btnLimpiarRegEmp" layoutX="132.0" layoutY="302.0" mnemonicParsing="false" onAction="#limpiarRegEmp" text="Limpiar" />
-                                          <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="306.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                                          <Button fx:id="btnGuardarEmp" layoutX="700.0" layoutY="43.0" mnemonicParsing="false" onAction="#guardarEmp" text="Guardar" />
+                                          <Button fx:id="btnLimpiarEmp" layoutX="702.0" layoutY="114.0" mnemonicParsing="false" onAction="#limpiarEmp" text="Limpiar" />
+                                          <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="1064.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../images/Live%20Messenger.jpg" />
+                                                <Image url="@images/Live%20Messenger.jpg" />
                                              </image>
                                           </ImageView>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab text="Empleados">
-                                 <content>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
-                                       <children>
-                                          <TableView fx:id="tvEmpleados" prefHeight="297.0" prefWidth="572.0">
+                                          <Label layoutX="42.0" layoutY="92.0" text="Calle" />
+                                          <Label layoutX="111.0" layoutY="92.0" text="Avenida" />
+                                          <Label layoutX="185.0" layoutY="94.0" text="Numero" />
+                                          <Label layoutX="272.0" layoutY="94.0" text="Colonia" />
+                                          <Label layoutX="368.0" layoutY="94.0" text="Municipio" />
+                                          <TextField fx:id="txtAvenidaEmp" layoutX="107.0" layoutY="114.0" prefHeight="25.0" prefWidth="58.0" />
+                                          <TextField fx:id="txtNumeroEmp" layoutX="183.0" layoutY="115.0" prefHeight="25.0" prefWidth="62.0" />
+                                          <TextField fx:id="txtColoniaEmp" layoutX="260.0" layoutY="114.0" prefHeight="25.0" prefWidth="83.0" />
+                                          <TextField fx:id="txtMunicipioEmp" layoutX="367.0" layoutY="114.0" prefHeight="25.0" prefWidth="77.0" />
+                                          <TableView fx:id="tvEmpleados" layoutX="1.0" layoutY="174.0" prefHeight="138.0" prefWidth="937.0">
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
                                              <columns>
-                                                <TableColumn fx:id="tcIdEmp" prefWidth="37.0" text="Id" />
-                                                <TableColumn fx:id="tcNombreEmp" prefWidth="64.0" text="Nombre" />
-                                                <TableColumn fx:id="tcAPaternoEmp" prefWidth="81.0" text="Ap Paterno" />
-                                                <TableColumn fx:id="tcAMaternoEmp" prefWidth="78.0" text="Ap Materno" />
-                                                <TableColumn fx:id="tcDireccionEmp" prefWidth="77.0" text="Dirección" />
-                                                <TableColumn fx:id="tcTelefonoEmp" prefWidth="65.0" text="Teléfono" />
-                                                <TableColumn fx:id="tcUsuarioEmp" prefWidth="65.0" text="Usuario" />
-                                                <TableColumn fx:id="tcContrasenaEmp" prefWidth="74.0" text="Contraseña" />
+                                                <TableColumn fx:id="tcNombreEmp" prefWidth="121.0" text="Nombre" />
+                                                <TableColumn fx:id="tcAPaternoEmp" prefWidth="78.0" text="Ap Paterno" />
+                                                <TableColumn fx:id="tcAMaternoEmp" prefWidth="79.0" text="Ap Materno" />
+                                                <TableColumn fx:id="tcCalleEmp" prefWidth="40.0" text="Calle" />
+                                                <TableColumn fx:id="tcAvenidaEmp" prefWidth="58.0" text="Avenida" />
+                                                <TableColumn fx:id="tcNumeroEmp" prefWidth="61.0" text="No. Casa" />
+                                                <TableColumn fx:id="tcColoniaEmp" prefWidth="64.0" text="Colonia" />
+                                                <TableColumn fx:id="tcMunicipioEmp" prefWidth="75.0" text="Municipio" />
+                                                <TableColumn fx:id="tcTelefonoEmp" prefWidth="126.0" text="Teléfono" />
+                                                <TableColumn fx:id="tcUsuarioEmp" prefWidth="67.0" text="Usuario" />
+                                                <TableColumn fx:id="tcContrasenaEmp" prefWidth="78.0" text="Contraseña" />
                                              </columns>
                                           </TableView>
-                                          <Button fx:id="btnEliminarEmp" layoutX="501.0" layoutY="304.0" mnemonicParsing="false" onAction="#eliminarModEmp" text="Eliminar" />
-                                          <Button fx:id="btnModificarEmp" layoutX="423.0" layoutY="304.0" mnemonicParsing="false" onAction="#modificarEmp" text="Modificar" />
+                                          <Button fx:id="btnModificarEmp" layoutX="355.0" layoutY="321.0" mnemonicParsing="false" onAction="#modificarEmp" text="Modificar" />
+                                          <Button fx:id="btnEliminarEmp" layoutX="485.0" layoutY="321.0" mnemonicParsing="false" onAction="#eliminarModEmp" text="Eliminar" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -154,19 +228,221 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Proveedor">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+                           <children>
+                              <Label layoutX="175.0" layoutY="24.0" text="Nombre" />
+                              <Label layoutX="344.0" layoutY="24.0" prefHeight="18.0" prefWidth="128.0" text="Apellido Paterno" />
+                              <Label layoutX="481.0" layoutY="24.0" text="Apellido Materno" />
+                              <Label layoutX="331.0" layoutY="77.0" text="Dirección" />
+                              <Label layoutX="630.0" layoutY="23.0" text="Teléfono" />
+                              <TextField fx:id="txtNombrePro" layoutX="175.0" layoutY="45.0" prefHeight="25.0" prefWidth="154.0">
+                                 <tooltip>
+                                    <Tooltip fx:id="ttNombreEmp1" />
+                                 </tooltip>
+                              </TextField>
+                              <TextField fx:id="txtAPaternoPro" layoutX="342.0" layoutY="45.0" prefHeight="25.0" prefWidth="131.0">
+                                 <tooltip>
+                                    <Tooltip fx:id="ttApPaterno1" />
+                                 </tooltip>
+                              </TextField>
+                              <TextField fx:id="txtAMaternoPro" layoutX="481.0" layoutY="45.0" prefHeight="25.0" prefWidth="132.0">
+                                 <tooltip>
+                                    <Tooltip fx:id="ttApMaterno1" />
+                                 </tooltip>
+                              </TextField>
+                              <TextField fx:id="txtCallePro" layoutX="171.0" layoutY="117.0" prefHeight="25.0" prefWidth="56.0">
+                                 <tooltip>
+                                    <Tooltip fx:id="ttDireccion1" />
+                                 </tooltip>
+                              </TextField>
+                              <TextField fx:id="txtTelefonoPro" layoutX="630.0" layoutY="45.0" prefHeight="25.0" prefWidth="152.0" promptText="555-555-55-55">
+                                 <tooltip>
+                                    <Tooltip fx:id="ttTelefono1" />
+                                 </tooltip>
+                              </TextField>
+                              <Button fx:id="btnGuardarPro" layoutX="630.0" layoutY="117.0" mnemonicParsing="false" onAction="#guardarPro" text="Guardar" />
+                              <Button fx:id="btnLimpiarPro" layoutX="736.0" layoutY="119.0" mnemonicParsing="false" onAction="#limpiarPro" text="Limpiar" />
+                              <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="1064.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Live%20Messenger.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="181.0" layoutY="95.0" text="Calle" />
+                              <Label layoutX="250.0" layoutY="95.0" text="Avenida" />
+                              <Label layoutX="324.0" layoutY="97.0" text="Numero" />
+                              <Label layoutX="411.0" layoutY="97.0" text="Colonia" />
+                              <Label layoutX="507.0" layoutY="97.0" text="Municipio" />
+                              <TextField fx:id="txtAvenidaPro" layoutX="246.0" layoutY="117.0" prefHeight="25.0" prefWidth="58.0" />
+                              <TextField fx:id="txtNumeroPro" layoutX="322.0" layoutY="118.0" prefHeight="25.0" prefWidth="62.0" />
+                              <TextField fx:id="txtColoniaPro" layoutX="399.0" layoutY="117.0" prefHeight="25.0" prefWidth="83.0" />
+                              <TextField fx:id="txtMunicipioPro" layoutX="506.0" layoutY="117.0" prefHeight="25.0" prefWidth="77.0" />
+                              <TableView fx:id="tvProveedor" layoutX="35.0" layoutY="174.0" prefHeight="138.0" prefWidth="883.0">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <columns>
+                                    <TableColumn fx:id="tcNombrePro" prefWidth="121.0" text="Nombre" />
+                                    <TableColumn fx:id="tcAPaternoPro" prefWidth="78.0" text="Ap Paterno" />
+                                    <TableColumn fx:id="tcAMaternoPro" prefWidth="79.0" text="Ap Materno" />
+                                    <TableColumn fx:id="tcCallePro" prefWidth="40.0" text="Calle" />
+                                    <TableColumn fx:id="tcAvenidaPro" prefWidth="58.0" text="Avenida" />
+                                    <TableColumn fx:id="tcNumeroPro" prefWidth="61.0" text="No. Casa" />
+                                    <TableColumn fx:id="tcColoniaPro" prefWidth="64.0" text="Colonia" />
+                                    <TableColumn fx:id="tcMunicipioPro" prefWidth="75.0" text="Municipio" />
+                                    <TableColumn fx:id="tcTelefonoPro" prefWidth="126.0" text="Teléfono" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnModificarPro" layoutX="387.0" layoutY="319.0" mnemonicParsing="false" onAction="#modificarPro" text="Modificar" />
+                              <Button fx:id="btnEliminarEmp1" layoutX="517.0" layoutY="319.0" mnemonicParsing="false" onAction="#eliminarPro" text="Eliminar" />
+                           </children>
+                        </AnchorPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Cliente">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="937.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane prefHeight="354.0" prefWidth="533.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutX="175.0" layoutY="24.0" text="Nombre" />
+                                    <Label layoutX="344.0" layoutY="24.0" prefHeight="18.0" prefWidth="128.0" text="Apellido Paterno" />
+                                    <Label layoutX="481.0" layoutY="24.0" text="Apellido Materno" />
+                                    <Label layoutX="331.0" layoutY="77.0" text="Dirección" />
+                                    <Label layoutX="630.0" layoutY="23.0" text="Teléfono" />
+                                    <TextField fx:id="txtNombreCli" layoutX="175.0" layoutY="45.0" prefHeight="25.0" prefWidth="154.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttNombreEmp11" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtAPaternoCli" layoutX="342.0" layoutY="45.0" prefHeight="25.0" prefWidth="131.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttApPaterno11" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtAMaternoCli" layoutX="481.0" layoutY="45.0" prefHeight="25.0" prefWidth="132.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttApMaterno11" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtCalleCli" layoutX="171.0" layoutY="117.0" prefHeight="25.0" prefWidth="56.0">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttDireccion11" />
+                                       </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="txtTelefonoCli" layoutX="630.0" layoutY="45.0" prefHeight="25.0" prefWidth="152.0" promptText="555-555-55-55">
+                                       <tooltip>
+                                          <Tooltip fx:id="ttTelefono11" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Button fx:id="btnGuardarCli" layoutX="800.0" layoutY="118.0" mnemonicParsing="false" onAction="#guardarRegEmp" text="Guardar" />
+                                    <Button fx:id="btnLimpiarCli" layoutX="801.0" layoutY="46.0" mnemonicParsing="false" onAction="#limpiarRegEmp" text="Limpiar" />
+                                    <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="1064.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/Live%20Messenger.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="181.0" layoutY="95.0" text="Calle" />
+                                    <Label layoutX="250.0" layoutY="95.0" text="Avenida" />
+                                    <Label layoutX="324.0" layoutY="97.0" text="Numero" />
+                                    <Label layoutX="411.0" layoutY="97.0" text="Colonia" />
+                                    <Label layoutX="507.0" layoutY="97.0" text="Municipio" />
+                                    <TextField fx:id="txtAvenidaCli" layoutX="246.0" layoutY="117.0" prefHeight="25.0" prefWidth="58.0" />
+                                    <TextField fx:id="txtNumeroCli" layoutX="322.0" layoutY="118.0" prefHeight="25.0" prefWidth="62.0" />
+                                    <TextField fx:id="txtColoniaCli" layoutX="399.0" layoutY="117.0" prefHeight="25.0" prefWidth="83.0" />
+                                    <TextField fx:id="txtMunicipioCli" layoutX="506.0" layoutY="117.0" prefHeight="25.0" prefWidth="77.0" />
+                                    <TableView fx:id="tvCliente" layoutX="35.0" layoutY="174.0" prefHeight="138.0" prefWidth="883.0">
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <columns>
+                                          <TableColumn fx:id="tcNombreCli" prefWidth="121.0" text="Nombre" />
+                                          <TableColumn fx:id="tcAPaternoCli" prefWidth="78.0" text="Ap Paterno" />
+                                          <TableColumn fx:id="tcAMaternoCli" prefWidth="79.0" text="Ap Materno" />
+                                          <TableColumn fx:id="tcCalleCli" prefWidth="40.0" text="Calle" />
+                                          <TableColumn fx:id="tcAvenidaCli" prefWidth="58.0" text="Avenida" />
+                                          <TableColumn fx:id="tcNumeroCli" prefWidth="61.0" text="No. Casa" />
+                                          <TableColumn fx:id="tcColoniaCli" prefWidth="64.0" text="Colonia" />
+                                          <TableColumn fx:id="tcMunicipioCli" prefWidth="75.0" text="Municipio" />
+                                          <TableColumn fx:id="tcReferenciaCli" prefWidth="75.0" text="Referencia" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="btnModificarCli" layoutX="387.0" layoutY="319.0" mnemonicParsing="false" onAction="#modificarCli" text="Modificar" />
+                                    <Button fx:id="btnEliminarCli" layoutX="517.0" layoutY="319.0" mnemonicParsing="false" onAction="#eliminarCli" text="Eliminar" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="629.0" layoutY="74.0" text="Referencia" />
+                        <TextArea fx:id="txtReferenciaCli" layoutX="596.0" layoutY="92.0" prefHeight="60.0" prefWidth="185.0" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Compras">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
+                     <children>
+                        <TableView fx:id="tvCompra" layoutX="12.0" layoutY="51.0" prefHeight="292.0" prefWidth="372.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="553.0" AnchorPane.topAnchor="51.0">
+                          <columns>
+                            <TableColumn fx:id="tcEmpresaCom" prefWidth="75.0" text="Empresa" />
+                            <TableColumn fx:id="tcTotalCom" prefWidth="75.0" text="Total" />
+                              <TableColumn fx:id="tcFechaPedidoCom" prefWidth="75.0" text="Fecha Pedido" />
+                              <TableColumn fx:id="tcFechaRecepcionCom" prefWidth="75.0" text="Fecha Recepcion" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnActualizarRecepcion" layoutX="239.0" layoutY="342.0" mnemonicParsing="false" onAction="#actualizarRecepcionCom" text="Actualizar Recepción" />
+                        <Label layoutX="174.0" layoutY="14.0" text="Compras" />
+                        <Label layoutX="584.0" layoutY="5.0" text="Detalles Por Compra" />
+                        <TableView fx:id="tvDetalleCompra" layoutX="429.0" layoutY="52.0" prefHeight="291.0" prefWidth="494.0">
+                          <columns>
+                            <TableColumn fx:id="tcProductoDCom" prefWidth="75.0" text="Producto" />
+                            <TableColumn fx:id="tcCantidadDCom" prefWidth="65.0" text="Cantidad" />
+                              <TableColumn fx:id="tcPrecioCompraDCom" prefWidth="97.0" text="Precio Compra" />
+                              <TableColumn fx:id="tcTotalDCom" prefWidth="75.0" text="Total" />
+                              <TableColumn fx:id="tcPrecioVenta1DCom" prefWidth="75.0" text="PrecioVenta1" />
+                              <TableColumn fx:id="tcPrecioVenta2DCom" prefWidth="75.0" text="Precio Venta2" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
             <Tab text="Ventas">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
                      <children>
-                        <TableView fx:id="tvVentas" layoutX="14.0" layoutY="49.0" prefHeight="271.0" prefWidth="553.0">
+                        <TableView fx:id="tvVenta" layoutX="14.0" layoutY="49.0" prefHeight="287.0" prefWidth="458.0">
                           <columns>
-                            <TableColumn fx:id="tcIdVen" prefWidth="75.0" text="Id" />
-                            <TableColumn fx:id="tcClienteVen" prefWidth="75.0" text="Cliente" />
-                              <TableColumn fx:id="tcImporteVen" prefWidth="75.0" text="Importe" />
                               <TableColumn fx:id="tcVendedorVen" prefWidth="162.0" text="Vendedor" />
-                              <TableColumn fx:id="tcFechaVen" minWidth="1.0" prefWidth="139.0" text="Fecha" />
+                            <TableColumn fx:id="tcClienteVen" prefWidth="75.0" text="Cliente" />
+                              <TableColumn fx:id="tcTotalVen" prefWidth="75.0" text="Total" />
+                              <TableColumn fx:id="tcFechaHoraVen" minWidth="1.0" prefWidth="139.0" text="Fecha/Hora" />
                           </columns>
                         </TableView>
+                        <TableView fx:id="tvDetalleVenta" layoutX="529.0" layoutY="49.0" prefHeight="288.0" prefWidth="390.0">
+                          <columns>
+                            <TableColumn fx:id="tcProductoDVen" prefWidth="75.0" text="Producto" />
+                            <TableColumn fx:id="tcPrecioDCom" prefWidth="75.0" text="Precio" />
+                              <TableColumn fx:id="tcCantidadDCom" prefWidth="75.0" text="Cantidad" />
+                              <TableColumn fx:id="tcTotalDCom" prefWidth="75.0" text="Total" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label layoutX="189.0" layoutY="14.0" text="Ventas" />
+                        <Label layoutX="642.0" layoutY="15.0" text="Detalles Por Venta" />
                      </children>
                   </AnchorPane>
                </content>
@@ -175,44 +451,44 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="533.0" styleClass="background">
                      <children>
-                        <TextField fx:id="txtUsuarioP" layoutX="41.0" layoutY="95.0">
+                        <TextField fx:id="txtUsuarioP" layoutX="116.0" layoutY="90.0">
                            <tooltip>
                               <Tooltip fx:id="ttUsuarioP" />
                            </tooltip>
                         </TextField>
-                        <Label layoutX="50.0" layoutY="31.0" text="CAMBIAR CONTRASEÑA" />
-                        <Label layoutX="66.0" layoutY="62.0" text="Usuario (Opcional)" />
-                        <Label layoutX="67.0" layoutY="129.0" text="Contraseña Actual" />
-                        <Label layoutX="67.0" layoutY="184.0" text="Nueva Contraseña" />
-                        <Label layoutX="58.0" layoutY="246.0" text="Confirmar Contraseña" />
-                        <ImageView fitHeight="242.0" fitWidth="318.0" layoutX="223.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+                        <Label layoutX="107.0" layoutY="33.0" text="CAMBIAR CONTRASEÑA" />
+                        <Label layoutX="133.0" layoutY="63.0" text="Usuario (Opcional)" />
+                        <Label layoutX="134.0" layoutY="125.0" text="Contraseña Actual" />
+                        <Label layoutX="134.0" layoutY="190.0" text="Nueva Contraseña" />
+                        <Label layoutX="121.0" layoutY="248.0" text="Confirmar Contraseña" />
+                        <ImageView fitHeight="242.0" fitWidth="318.0" layoutX="353.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/PERZAN%20FINAL.png" />
+                              <Image url="@images/PERZAN%20FINAL.png" />
                            </image>
                         </ImageView>
-                        <PasswordField fx:id="pfContrasenaP" layoutX="42.0" layoutY="152.0">
+                        <PasswordField fx:id="pfContrasenaP" layoutX="115.0" layoutY="152.0">
                            <tooltip>
                               <Tooltip fx:id="ttContrasenaP" />
                            </tooltip>
                         </PasswordField>
-                        <PasswordField fx:id="pfNewContrasenaP" layoutX="41.0" layoutY="212.0">
+                        <PasswordField fx:id="pfNewContrasenaP" layoutX="115.0" layoutY="215.0">
                            <tooltip>
                               <Tooltip fx:id="ttNewContrasenaP" />
                            </tooltip>
                         </PasswordField>
-                        <PasswordField fx:id="pfConfContrasenaP" layoutX="41.0" layoutY="273.0" onAction="#cambiarContrasena">
+                        <PasswordField fx:id="pfConfContrasenaP" layoutX="116.0" layoutY="279.0" onAction="#cambiarContrasena">
                            <tooltip>
                               <Tooltip fx:id="ttConfContrasenaP" />
                            </tooltip>
                         </PasswordField>
-                        <Button fx:id="btnAceptarP" layoutX="42.0" layoutY="314.0" mnemonicParsing="false" onAction="#cambiarContrasena" text="Aceptar" />
-                        <Button fx:id="btnCancelarP" layoutX="133.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarP" text="Cancelar" />
+                        <Button fx:id="btnAceptarP" layoutX="134.0" layoutY="314.0" mnemonicParsing="false" onAction="#cambiarContrasena" text="Aceptar" />
+                        <Button fx:id="btnCancelarP" layoutX="216.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelarP" text="Cancelar" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="btnCerrarSesion" layoutX="499.0" layoutY="443.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+      <Button fx:id="btnCerrarSesion" layoutX="870.0" layoutY="6.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
    </children>
 </AnchorPane>

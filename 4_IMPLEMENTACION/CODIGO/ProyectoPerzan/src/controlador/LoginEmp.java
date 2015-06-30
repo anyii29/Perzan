@@ -5,8 +5,9 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import modelo.UsuarioEmpDAO;
-import modelo.UsuarioEmpVO;
+import modelo.Encrypt;
+import modelo.LoginEmpDAO;
+import modelo.LoginEmpVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,50 +31,64 @@ public class LoginEmp implements Initializable {
 	@FXML
 	private Button btnCancelar;
 	@SuppressWarnings("unused")
-	private application.Main1 main1;
+	private view.Main1 main1;
 	private Stage dialogStage;
-	private String usuario;
+	private LoginEmpVO usuario;
 	boolean result;
+	private Encrypt encrypt = new Encrypt();
+	static String tipo;
 	
 	public void login(ActionEvent event){
 		if(txtUsuario.getText().equals("")||txtPassword.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Complementa Los Campos");
 		}
 		else{
-			
-			if(!(txtUsuario.getText().equals(""))&&!(txtPassword.getText().equals(""))){
-				UsuarioEmpVO usuarioEmpVO = new UsuarioEmpVO(txtUsuario.getText(),txtPassword.getText());
-				UsuarioEmpDAO usuarioEmpDAO = new UsuarioEmpDAO();
-				System.out.println(usuarioEmpVO.getUsuario() + usuarioEmpVO.getPassword());
-				if(usuarioEmpDAO.iniciar(usuarioEmpVO)){
-					dialogStage.close();
-					String nombre = usuarioEmpDAO.nombre(txtUsuario.getText());
-					setUsuario(nombre);	
-					//setUsuario(usuarioEmpVO.getUsuario());	
-					Principal.loginEmp = true;
-					Principal.empleado = nombre;
+			String password = encrypt.encryptText(txtPassword.getText());
+			LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText().trim(),
+					password, tipo);
+			LoginEmpDAO usuarioEmpDAO = new LoginEmpDAO();
+			if(usuarioEmpDAO.iniciar(usuarioEmpVO)){
+				usuario = usuarioEmpDAO.obj();
+				if(usuario.getTipo().equals("admin")){
+					Principal.empleado = usuario.getUsuario();
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
-					txtPassword.setText("");
+					Principal.empleado = usuario.getUsuario();
 				}
+				dialogStage.close();
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
+				txtPassword.setText("");
 			}
 		}
 	}
-
+	/**
+	 * @return the tipo
+	 */
+	public static String getTipo() {
+		return tipo;
+	}
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public static void setTipo(String tipo) {
+		LoginEmp.tipo = tipo;
+	}
 	public void cancelar(ActionEvent event){
 		dialogStage.close();
 	}
 	public void setDialogStage(Stage dialogStage) {
 		 this.dialogStage = dialogStage;
 	}
-	public void setMain1(application.Main1 main1) {
+	public void setMain1(view.Main1 main1) {
 		this.main1= main1;
 	}
-	public String getUsuario() {
+	public LoginEmpVO getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(String usuario){
-		this.usuario= usuario;
+	public void setUsuario(LoginEmpVO usuario) {
+		this.usuario = usuario;
 	}
+	
 }

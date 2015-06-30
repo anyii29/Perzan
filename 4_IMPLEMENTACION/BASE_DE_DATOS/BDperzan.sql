@@ -351,6 +351,31 @@ ALTER TABLE "venta" ADD FOREIGN KEY ("id_vendedor") REFERENCES "empleado" ("id")
 
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*****************************************************************************************************************************************************
+create or replace function fn_login(fnusuario character varying(25), fnpassword character varying(32),fntipo character varying(8))
+returns table(fusuario character varying(25), fpassword character varying(32), ftipo character varying(8)) as $$
+begin
+return query SELECT usuario, password, tipo 
+from empleado where usuario = fnusuario and password = fnpassword and (tipo = 'admin' or tipo = fntipo) and activo = 's';
+end
+$$ language plpgsql;
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*****************************************************************************************************************************************************
+create or replace function fn_seleccionarcategoria()
+returns table(fid integer, fnombre character varying(25)) as $$
+begin
+return query SELECT id, nombre FROM categoria where activo = 's';
+end
+$$ language plpgsql;
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*****************************************************************************************************************************************************
+create or replace function fn_seleccionarmarca()
+returns table(fid integer, fnombre character varying(25)) as $$
+begin
+return query SELECT id, nombre FROM marca where activo = 's';
+end
+$$ language plpgsql;
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*****************************************************************************************************************************************************
 create or replace function fn_agregarcategoria(nombre character varying(50))
 returns void as $$ 
 declare maxid integer;
@@ -718,8 +743,8 @@ $$ language plpgsql;
 --*******************************************************************************************************************************************************
 
 create or replace function fn_seleccionardetallecompras()
-returns table(id integer, producto character varying(50), cantidad integer, precio_compra real,
-total real, precio_venta1 real, precio_venta2 real) as $$
+returns table(id integer, producto text, cantidad integer, precio_compra real,
+total double precision, precio_venta1 real, precio_venta2 real) as $$
 begin
 return query SELECT detallecompra.id as id, concat(categoria.nombre,' ', producto.descripcion)
  as producto, detallecompra.cantidad as cantidad, detallecompra.precio_compra as precio_compra,
@@ -733,7 +758,7 @@ $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionardetalleventas()
-returns table(id integer,producto character varying(50),precio real, cantidad integer, total real) as $$
+returns table(id integer,producto text,precio real, cantidad integer, total double precision) as $$
 begin
 return query SELECT detalleventa.id as id,
 concat(categoria.nombre, ' ', producto.descripcion) as producto,
@@ -773,7 +798,7 @@ $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarproductos()
-returns table( fid integer,fid_categoria integer, fcategoria character varying(25), fproducto character varying(25),
+returns table( fid integer,fid_categoria integer, fcategoria character varying(25), fdescripcion character varying(25),
 fid_marca integer, fmarca character varying(20), fprecio1 real, fprecio2 real, fstock integer, fstock_max integer,
 fstock_min integer, ftipo character varying(8)) as $$
 begin
@@ -845,7 +870,7 @@ $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarventas()
-returns table( fid integer,fvendedor character varying(50),fcliente character varying(50), ftotal real, fecha_hora timestamp) as $$
+returns table( fid integer,fvendedor text,fcliente text, ftotal real, fecha_hora timestamp) as $$
 begin
 return query select venta.id as id,
  concat(empleado.nombre, ' ', empleado.apellido_paterno, ' ', empleado.apellido_materno) as vendedor,
@@ -854,6 +879,20 @@ return query select venta.id as id,
    venta.fecha_hora as fecha_hora from venta
     inner join empleado on empleado.id = venta.id_vendedor
      inner join cliente on cliente.id = venta.id_cliente;
+end
+$$ language plpgsql;
+--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*******************************************************************************************************************************************************
+create or replace function fn_seleccionarultimaventa()
+returns table( fid integer,fvendedor text,fcliente text, ftotal real, fecha_hora timestamp) as $$
+begin
+return query select venta.id as id,
+ concat(empleado.nombre, ' ', empleado.apellido_paterno, ' ', empleado.apellido_materno) as vendedor,
+  concat(cliente.nombre,' ', cliente.apellido_paterno, ' ',cliente.apellido_materno) as cliente,
+  venta.total as total,
+   venta.fecha_hora as fecha_hora from venta
+    inner join empleado on empleado.id = venta.id_vendedor
+     inner join cliente on cliente.id = venta.id_cliente ORDER BY id DESC LIMIT 1;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="259.0" styleClass="dialogStage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ModEmpleado">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="259.0" styleClass="dialogStage" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ModEmpleado">
    <children>
       <Label layoutX="66.0" layoutY="14.0" text="MODIFICAR EMPLEADO" />
       <Label layoutX="108.0" layoutY="41.0" text="Nombre" />
@@ -31,7 +31,7 @@
          <tooltip>
             <Tooltip fx:id="ttDireccion" />
          </tooltip></TextField>
-      <TextField fx:id="txtTelefono" layoutX="55.0" layoutY="224.0" prefHeight="25.0" prefWidth="149.0" promptText="555-555-55-55">
+      <TextField fx:id="txtTelefono" layoutX="55.0" layoutY="224.0" prefHeight="25.0" prefWidth="173.0" promptText="555-555-55-55">
          <tooltip>
             <Tooltip fx:id="ttTelefono" />
          </tooltip></TextField>
@@ -44,6 +44,6 @@
             <Tooltip fx:id="ttContrasena" />
          </tooltip></TextField>
       <Button fx:id="btnRegistrar" layoutX="55.0" layoutY="350.0" mnemonicParsing="false" onAction="#registrar" text="Registrar" />
-      <Button fx:id="btnCancelar" layoutX="143.0" layoutY="350.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="btnCancelar" layoutX="170.0" layoutY="350.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
    </children>
 </AnchorPane>

@@ -7,22 +7,22 @@
 }
 
 .label {
-    -fx-font-size: 12pt;
-    -fx-font-family: "lcd";
+    -fx-font-size: 11pt;
+    -fx-font-family: "Clarendon BT";
     -fx-text-fill: white;
     -fx-opacity: 0.6;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "lcd";
+    -fx-font-family: "Clarendon BT";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
-    -fx-font-family: "lcd";
+    -fx-font-family: "Clarendon BT";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
@@ -31,8 +31,6 @@
     -fx-base: #669966;
     -fx-control-inner-background: #669966;
     -fx-background-color: #669966;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
     -fx-padding: 5;
 }
 
@@ -53,10 +51,10 @@
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "lcd";
+    -fx-font-size: 8pt;
+    -fx-font-family: "Constantia";
     -fx-text-fill: white;
-    -fx-alignment: center-left;
+    -fx-alignment: center;
     -fx-opacity: 1;
 }
 
@@ -82,7 +80,7 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
@@ -93,8 +91,10 @@
 }
 
 .text-field {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Comic Sans MS";
+    -fx-padding: 3;
+    
 }
 
 /* 
@@ -104,7 +104,7 @@
  */
 .button {
     -fx-background-radius: 12;
-    -fx-padding: 5;
+    -fx-padding: 3;
     -fx-shadow-highlight-color: #f0f0f0;
     -fx-body-color: linear-gradient(from 0em 0em to 0em 2.083333em, white, #D7D7D7, white);
 }
@@ -135,7 +135,7 @@
 }
 
 .button:default {
-	-fx-font-family: "Arial";
+	-fx-font-family: "Calisto MT";
     -fx-background-color: -fx-focus-color;
     -fx-text-fill: #ffffff;
 }
@@ -145,19 +145,59 @@
 }
 .tab-pane {
 	-fx-background-color:  #3a3a3a;
-    -fx-text-fill: #ffffff;
 }
  .tab {
- 	-fx-background-radius: 10;
+ 	-fx-background-radius: 11;
     -fx-padding: 2;
     -fx-shadow-highlight-color: f0f0f0;
     -fx-body-color: linear-gradient(from 0em 0em to 0em 2.083333em, white, #D7D7D7, white);
     }
     
 .tooltip {
-	-fx-font-color: #2f6beb;
 	-fx-background-color: #315196;
-    -fx-padding: 5;
+    -fx-padding: 3;
     -fx-shadow-highlight-color: #f0f0f0;
     -fx-body-color: linear-gradient(from 0em 0em to 0em 2.083333em, black, #2f6beb, black);
+}
+/*******************************************************************************
+ *                                                                             *
+ * ProgressBar                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.progress-bar {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ProgressBarSkin";
+    -fx-background-color:
+        -fx-box-border,
+        linear-gradient(to bottom, derive(-fx-color,30%) 5%, derive(-fx-color,-17%));
+    -fx-background-insets: 0, 1;
+    -fx-indeterminate-bar-length: 60;
+    -fx-indeterminate-bar-escape: true;
+    -fx-indeterminate-bar-flip: true;
+    -fx-indeterminate-bar-animation-time: 2;
+    -fx-focus-traversable: true;
+}
+
+.progress-bar .bar {
+    -fx-background-color:
+        -fx-box-border,
+        linear-gradient(to bottom, derive(-fx-accent,95%), derive(-fx-accent,10%)),
+        linear-gradient(to bottom, derive(-fx-accent,38%), -fx-accent);
+    -fx-background-insets: 0, 1, 2;
+    -fx-padding: 0.416667em; /* 5 */
+}
+
+.progress-bar:indeterminate .bar {
+    -fx-background-color: linear-gradient(to left, transparent, -fx-accent);
+}
+
+.progress-bar .track {
+     -fx-background-color:
+        -fx-box-border,
+        linear-gradient(to bottom, derive(-fx-color,-15%), derive(-fx-color,2.2%) 20%, derive(-fx-color,60%));
+    -fx-background-insets:  0, 1;
+}
+
+.progress-bar:disabled {
+    -fx-opacity: 1.0
 }

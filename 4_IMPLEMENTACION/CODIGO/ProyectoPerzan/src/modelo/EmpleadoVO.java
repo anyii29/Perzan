@@ -1,112 +1,63 @@
 package modelo;
 
-public class EmpleadoVO {
-	private int id;
-	private String nombre;
-	private String apPaterno;
-	private String apMaterno;
-	private String direccion;
-	private String telefono;
-	private String usuario;
-	private String password;
-	
+public class EmpleadoVO extends Person {
+	private String usuario, password, tipo;
 	
 	public EmpleadoVO(){
 		
 	}
-	public EmpleadoVO(int id, String nombre, String apPaterno, String apMaterno, String direccion, String telefono, String usuario,String password){
-		this.setId(id);
-		this.nombre= nombre;
-		this.apPaterno= apPaterno;
-		this.apMaterno= apMaterno;
-		this.direccion= direccion;
-		this.telefono= telefono;
-		this.usuario= usuario;
-		this.password= password;
-		
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
+	public EmpleadoVO(int id , String nombre, String apPaterno, String apMaterno, int calle,
+			int avenida, int numero, String colonia, String municipio,
+			String telefono, String usuario, String password, String tipo){
+		this.id = id;
 		this.nombre = nombre;
-	}
-
-
-	public String getApPaterno() {
-		return apPaterno;
-	}
-
-
-	public void setApPaterno(String apPaterno) {
 		this.apPaterno = apPaterno;
-	}
-
-
-	public String getApMaterno() {
-		return apMaterno;
-	}
-
-
-	public void setApMaterno(String apMaterno) {
 		this.apMaterno = apMaterno;
-	}
-
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-
-	
-
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-
-	public void setTelefono(String telefono) {
+		this.calle = calle;
+		this.avenida = avenida;
+		this.numero = numero;
+		this.colonia = colonia;
+		this.municipio = municipio;
 		this.telefono = telefono;
+		this.usuario = usuario;
+		this.password = password;
+		this.tipo = tipo;
 	}
-
-
+	/**
+	 * @return the usuario
+	 */
 	public String getUsuario() {
 		return usuario;
 	}
-
-
+	/**
+	 * @param usuario the usuario to set
+	 */
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
-
+	/**
+	 * @return the password
+	 */
 	public String getPassword() {
 		return password;
 	}
-
-
+	/**
+	 * @param password the password to set
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-	public int getId() {
-		return id;
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
 	}
-
-
-	public void setId(int id) {
-		this.id = id;
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
-
+		
 }

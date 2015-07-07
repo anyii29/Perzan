@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="238.0" styleClass="dialogStage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ModProducto">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="252.0" styleClass="dialogStage" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ModProducto">
    <children>
       <Label layoutX="53.0" layoutY="14.0" text="MODIFICAR PRODUCTO" />
       <Label layoutX="97.0" layoutY="47.0" text="Nombre" />
@@ -25,6 +25,6 @@
             <Tooltip fx:id="ttCantidad" />
          </tooltip></TextField>
       <Button fx:id="btnRegistrar" layoutX="39.0" layoutY="264.0" mnemonicParsing="false" onAction="#registrar" text="Registrar" />
-      <Button fx:id="btnCancelar" layoutX="137.0" layoutY="264.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="btnCancelar" layoutX="165.0" layoutY="264.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
    </children>
 </AnchorPane>

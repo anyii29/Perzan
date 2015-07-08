@@ -134,6 +134,28 @@ CREATE TABLE "venta" (
 )
 ;
 
+CREATE TABLE "ajusteinventario" (
+"id" int4 NOT NULL,
+"id_producto" int4 not null,
+"causa" character varying(255)  not null,
+"existencia_actual" int4 not null,
+"nueva_existencia" int4 not null,
+"id_empleado" int4 not null,
+"fecha_hora" timestamp default now() not null
+)
+;
+
+ALTER TABLE "ajusteinventario" ADD PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Checks structure for table ajusteinventario
+-- ----------------------------
+alter table ajusteinventario add check(id > 0);
+alter table ajusteinventario add check(id_producto > 0);
+alter table ajusteinventario add check(length(rtrim(ltrim(causa))) > 5 and rtrim(ltrim(causa)) = causa);
+alter table ajusteinventario add check(existencia_actual >= 0);
+alter table ajusteinventario add check(nueva_existencia >= 0);
+alter table ajusteinventario add check(id_empleado > 0);
 
 -- ----------------------------
 -- Uniques structure for table categoria
@@ -344,6 +366,11 @@ ALTER TABLE "producto" ADD FOREIGN KEY ("id_marca") REFERENCES "marca" ("id") ON
 -- ----------------------------
 ALTER TABLE "venta" ADD FOREIGN KEY ("id_cliente") REFERENCES "cliente" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE "venta" ADD FOREIGN KEY ("id_vendedor") REFERENCES "empleado" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
+
+ALTER TABLE "ajusteinventario" ADD FOREIGN KEY ("id_producto") REFERENCES "producto" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ajusteinventario" ADD FOREIGN KEY ("id_empleado") REFERENCES "empleado" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ---------------------------
 ----funciones---------------
@@ -697,22 +724,15 @@ create or replace function fn_adminpassword(fpassword character varying(32))
 returns character varying(32) as $$
 declare pass character varying(32);
 begin
-select password into pass from empleado where password = fpassword;
+select password into pass from empleado where password = fpassword and tipo = 'admin';
 return pass;
-end
-$$ language plpgsql;
-
-create or replace function fn_modificaradminpassword(fadmin character varying(25), fpassword character varying(32))
-returns void as $$
-begin
-UPDATE empleado SET usuario = fadmin, password = fpassword where password = fpassword;
 end
 $$ language plpgsql;
 
 create or replace function fn_modificarpassword(fpassword character varying(32))
 returns void as $$
 begin
-UPDATE empleado SET password = fpassword where password = fpassword;
+UPDATE empleado SET password = fpassword where password = fpassword and tipo = 'admin';
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -721,6 +741,15 @@ create or replace function fn_seleccionarclientes()
 returns setof cliente as $$
 begin
 return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente;
+end
+$$ language plpgsql;
+--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*******************************************************************************************************************************************************
+create or replace function fn_seleccionarultimocliente()()
+returns setof cliente as $$
+begin
+return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente 
+order by id desc limit 1;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -853,7 +882,7 @@ returns table( fid integer,fnombre character varying(25),fapellido_paterno chara
 begin
 return query SELECT id, nombre, apellido_paterno, apellido_materno, empresa, calle,
 avenida, numero, colonia, municipio, telefono FROM proveedor 
-where activo = 's' ORDER BY id LIMIT 1;
+where activo = 's' ORDER BY id DESC LIMIT 1;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -895,6 +924,24 @@ return query select venta.id as id,
      inner join cliente on cliente.id = venta.id_cliente ORDER BY id DESC LIMIT 1;
 end
 $$ language plpgsql;
+--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--*******************************************************************************************************************************************************
+create or replace function fn_ajusteinventario(fid_producto integer, fcausa character varying(255), fexistencia_actual integer, fnueva_existencia integer, fid_empleado integer)
+returns void as $$
+declare maxid integer;
+declare total integer;
+begin 
+select count(id) into total from ajusteinventario;
+if total = 0 then
+maxid := 1;
+else
+select (max(id)+1) into maxid from ajusteinventario;
+end if;
+insert into ajusteinventario(id, id_producto, causa, existencia_actual, nueva_existencia, id_empleado, fecha_hora)
+ values ( maxid, id_producto, causa, existencia_actual, nueva_existencia, id_empleado, now());
+end
+$$ language plpgsql;
+
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 -- ---------------------

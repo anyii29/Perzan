@@ -85,4 +85,47 @@ public class CategoriaVO {
 		}
 		return false;
 	}
+	public boolean eliminarCat(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_eliminarcategoria(?)");
+				consulta.setInt(1, this.getId());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
+	public boolean modificarCat(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificarcategoria(?,?)");
+				consulta.setInt(1, this.getId());
+				consulta.setString(2, this.getNombre());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
 }

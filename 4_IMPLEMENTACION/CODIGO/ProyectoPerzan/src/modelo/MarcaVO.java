@@ -47,5 +47,69 @@ public class MarcaVO extends CategoriaVO{
 		return nombre;
 	}
 	
+	public boolean ingresarMar(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_agregarmarca(?)");
+				consulta.setString(1, this.getNombre());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
+	public boolean eliminarMar(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_eliminarmarca(?)");
+				consulta.setInt(1, this.getId());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
+	public boolean modificarMar(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificarmarca(?,?)");
+				consulta.setInt(1, this.getId());
+				consulta.setString(2, this.getNombre());
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
 
 }

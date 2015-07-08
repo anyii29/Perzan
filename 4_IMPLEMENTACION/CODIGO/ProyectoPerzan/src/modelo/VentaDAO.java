@@ -23,8 +23,8 @@ public class VentaDAO {
 			consulta.setInt(1, ventaVO.getIdVendedor());
 			consulta.setInt(2, ventaVO.getIdCliente());
 			consulta.setFloat(3, ventaVO.getTotal());
-			int res = consulta.executeUpdate();
-			if(res > 0){
+			boolean res = consulta.execute();
+			if(res){
 				result= true;	
 			}
 			consulta.close();

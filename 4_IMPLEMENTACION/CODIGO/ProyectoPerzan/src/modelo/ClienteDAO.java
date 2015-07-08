@@ -18,7 +18,7 @@ public class ClienteDAO{
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarcliente(?,?,?,?,?,?,?,?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarcliente(?,?,?,?,?,?,?,?,?)");
 				consulta.setString(1, clienteVO.getNombre());
 				consulta.setString(2, clienteVO.getApPaterno());
 				consulta.setString(3, clienteVO.getApMaterno());
@@ -28,8 +28,8 @@ public class ClienteDAO{
 				consulta.setString(7, clienteVO.getColonia());
 				consulta.setString(8, clienteVO.getMunicipio());
 				consulta.setString(9, clienteVO.getReferencia());
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 			} catch (SQLException e) {
@@ -104,6 +104,40 @@ public class ClienteDAO{
 			}			
 		}
 		return clientes;
+		
+	}
+	
+	public ClienteVO lastInsert(){
+		ClienteVO clienteVO = null;
+		if(conex.conectado()){
+			try {
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarultimocliente()");
+				ResultSet res = consulta.executeQuery();
+				while(res.next()){
+					int id = res.getInt("id");
+					String nombre = res.getString("nombre");
+					String apellidoPaterno = res.getString("apellido_paterno");
+					String apellidoMaterno = res.getString("apellido_materno");
+					int calle = res.getInt("calle");
+					int avenida = res.getInt("avenida");
+					int numero = res.getInt("numero");
+					String colonia = res.getString("colonia");
+					String municipio = res.getString("municipio");
+					String referencia = res.getString("referencia");
+					clienteVO = new ClienteVO(id, nombre, apellidoPaterno, apellidoMaterno, calle, avenida,
+							numero, colonia, municipio, referencia);
+					return clienteVO;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
+			}			
+		}
+		return clienteVO;
 		
 	}
 

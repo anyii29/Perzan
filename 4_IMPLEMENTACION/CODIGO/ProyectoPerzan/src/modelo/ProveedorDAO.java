@@ -29,8 +29,8 @@ public class ProveedorDAO implements iOp {
 				consulta.setString(8, proveedorVO.getColonia());
 				consulta.setString(9, proveedorVO.getMunicipio());
 				consulta.setString(10, proveedorVO.getTelefono());
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 				consulta.close();
@@ -52,7 +52,7 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarproveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificaproveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				consulta.setInt(1, proveedorVO.getId());
 				consulta.setString(2, proveedorVO.getNombre());
 				consulta.setString(3, proveedorVO.getApPaterno());
@@ -64,8 +64,8 @@ public class ProveedorDAO implements iOp {
 				consulta.setString(9, proveedorVO.getColonia());
 				consulta.setString(10, proveedorVO.getMunicipio());
 				consulta.setString(11, proveedorVO.getTelefono());
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 				consulta.close();
@@ -85,10 +85,10 @@ public class ProveedorDAO implements iOp {
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminarproveedor(?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminaproveedor(?)");
 				consulta.setInt(1, i);
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 				consulta.close();

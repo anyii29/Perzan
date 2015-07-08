@@ -1,13 +1,32 @@
 package controlador;
 
+import java.io.ObjectStreamField;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import javax.swing.JOptionPane;
 
 import view.Main1;
+import modelo.AdminDAO;
 import modelo.CategoriaVO;
 import modelo.ClienteDAO;
 import modelo.ClienteVO;
@@ -20,6 +39,7 @@ import modelo.DetalleVentaVO;
 import modelo.EmpleadoDAO;
 import modelo.EmpleadoVO;
 import modelo.Encrypt;
+import modelo.InventarioVO;
 import modelo.MarcaVO;
 import modelo.ProductoDAO;
 import modelo.ProductoVO;
@@ -27,15 +47,27 @@ import modelo.ProveedorDAO;
 import modelo.ProveedorVO;
 import modelo.VentaDAO;
 import modelo.VentaVO;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableObjectValue;
+import javafx.beans.value.WritableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.FocusModel;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -43,6 +75,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
 
 public class Administrador implements Initializable {
 
@@ -68,8 +102,6 @@ public class Administrador implements Initializable {
 	private VentaDAO ventaDAO;
 	private DetalleVentaDAO detalleVentaDAO;
 	private ObservableList<ProductoVO> productos;
-	private ObservableList<CategoriaVO> categorias;
-	private ObservableList<MarcaVO> marcas;
 	private ObservableList<EmpleadoVO> empleados;
 	private ObservableList<ProveedorVO> proveedores;
 	private ObservableList<ClienteVO> clientes;
@@ -77,6 +109,9 @@ public class Administrador implements Initializable {
 	private ObservableList<DetalleCompraVO> detalleCompras;
 	private ObservableList<VentaVO> ventas;
 	private ObservableList<DetalleVentaVO> detalleVentas;
+	private ObservableList<CategoriaVO> categorias;
+	private ObservableList<MarcaVO> marcas;
+	private FilteredList<ProductoVO> productosFound;
 	
 	public Administrador(){
 		validar = new Validar();
@@ -110,10 +145,6 @@ public class Administrador implements Initializable {
 		this.fillMarca();
 		this.tableProducto();
 		this.fillTableProducto();
-		this.tableCategoria();
-		this.fillTableCategoria();
-		this.tableMarca();
-		this.fillTableMarca();
 		this.tableEmpleado();
 		this.fillTableEmpleado();
 		this.tableProveedor();
@@ -128,7 +159,27 @@ public class Administrador implements Initializable {
 		this.fillTableVenta();
 		this.tableDetalleVenta();
 		this.fillTableDetalleVenta();
-		
+		btnModificar.setDisable(true);
+		btnModificarCli.setDisable(true);
+		btnModificarPro.setDisable(true);
+		btnModificarEmp.setDisable(true);
+		btnEliminar.setDisable(true);
+		btnEliminarEmp.setDisable(true);
+		btnEliminarPro.setDisable(true);
+		btnGuardarPro.setDisable(true);
+		btnGuardarCli.setDisable(true);
+		btnGuardarEmp.setDisable(true);
+		btnGuardarProd.setDisable(true);
+		this.disableFieldsProducto();
+		this.disableFieldsCliente();
+		this.disableFieldsEmpleado();
+		this.disableFieldsProveedor();
+		productosFound = new FilteredList<>(productos);
+		tcLista.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("nombreProducto"));
+		tvListProducts.setItems(productos);
+		txtIdP.setDisable(true);
+		txtDescripcionP.setDisable(true);
+		txtExistenciaP.setDisable(true);
 	}
     
     @FXML private Tooltip ttApMaterno11;
@@ -159,35 +210,38 @@ public class Administrador implements Initializable {
     @FXML private Tooltip ttPrecioProd1;  
     @FXML private Tooltip ttApPaterno1;   
     @FXML private Button btnLimpiarEmp;  
-    @FXML private Button btnEliminarCli;
+    //@FXML private Button btnEliminarCli;
     @FXML private Button btnModificarPro;
     @FXML private Button btnGuardarPro;
     @FXML private Button btnModificarEmp;
     @FXML private Button btnLimpiarPro;
     @FXML private Button btnLimpiarProd;
     @FXML private Button btnGuardarEmp;
-    @FXML private Button btnModificarMar; 
+    //@FXML private Button btnModificarMar; 
     @FXML private Button btnEliminar;     
-    @FXML private Button btnIngresarMar;     
+    //@FXML private Button btnIngresarMar;     
     @FXML private Button btnCancelarP;     
-    @FXML private Button btnEliminarEmp1;
+    //@FXML private Button btnEliminarEmp1;
     @FXML private Button btnModificarCli;     
     @FXML private Button btnGuardarCli; 
     @FXML private Button btnEliminarEmp;   
     @FXML private Button btnModificar;    
     @FXML private Button btnGuardarProd;    
-    @FXML private Button btnBuscar;    
+    //@FXML private Button btnBuscar;    
     @FXML private Button btnAceptarP;  
     @FXML private Button btnActualizarRecepcion;    
-    @FXML private Button btnEliminarCat;     
+    //@FXML private Button btnEliminarCat;     
     @FXML private Button btnCerrarSesion;   
-    @FXML private Button btnModificarCat;    
-    @FXML private Button btnEliminarMar;      
+    //@FXML private Button btnModificarCat;    
+    //@FXML private Button btnEliminarMar;      
     @FXML private Button btnLimpiarCli;          
     @FXML private Button btnProductos;    
-    @FXML private Button btnIngresarCat;   
+    //@FXML private Button btnIngresarCat; 
+    @FXML private Button btnEliminarPro;
+    @FXML private Button btnGuardarInv;
+    @FXML private Button btnCancelarInv;
     @FXML private TextArea txtReferenciaCli;  
-    @FXML private TextField txtStockProd;
+    //@FXML private TextField txtStockProd;
     @FXML private TextField txtNombreCli;
     @FXML private TextField txtAMaternoEmp;
     @FXML private TextField txtTelefonoEmp;
@@ -196,14 +250,14 @@ public class Administrador implements Initializable {
     @FXML private TextField txtUsuarioEmp;
     @FXML private TextField txtAPaternoPro;
     @FXML private TextField txtCallePro;    
-    @FXML private TextField txtNombreMar;    
+    //@FXML private TextField txtNombreMar;    
     @FXML private TextField txtAPaternoEmp;  
     @FXML private TextField txtMunicipioCli;      
     @FXML private TextField txtPrecio2Prod;    
     @FXML private TextField txtNombreEmp;  
     @FXML private TextField txtColoniaEmp;   
     @FXML private TextField txtStockMaxProd;    
-    @FXML private TextField txtNombreCat;  
+    //@FXML private TextField txtNombreCat;  
     @FXML private TextField txtStockMinProd;    
     @FXML private TextField txtColoniaPro;   
     @FXML private TextField txtCalleEmp;     
@@ -224,59 +278,70 @@ public class Administrador implements Initializable {
     @FXML private TextField txtAvenidaCli;  
     @FXML private TextField txtTelefonoPro;
     @FXML private TextField txtDescripcionProd;
-    @FXML private TextField txtUsuarioP;
+    @FXML private TextField txtEmpresaPro;
+    @FXML private TextField txtIdP;
+    @FXML private TextField txtDescripcionP;
+    @FXML private TextField txtExistenciaP;
+    @FXML private TextField txtNuevaExistenciaP;
+    @FXML private TextArea txtCausaP;
+    //@FXML private TextField txtUsuarioP;
     @FXML private PasswordField pfConfContrasenaP, pfNewContrasenaP, pfContrasenaP;    
     @FXML private ComboBox<String> cbTipo;    
     @FXML private ComboBox<MarcaVO> cbMarca;   
     @FXML private ComboBox<CategoriaVO> cbCategoria;   
     @FXML private TableView<ProductoVO> tvProductos; 
     @FXML private TableColumn<ProductoVO, Double> tcPrecio2Prod;
-    @FXML private TableColumn<ProductoVO, String> tcCategoriaProd; 
+    //@FXML private TableColumn<ProductoVO, String> tcCategoriaProd;
+    @FXML private TableColumn<ProductoVO, String> tcProductoProd; 
     @FXML private TableColumn<ProductoVO, String> tcTipoProd;   
-    @FXML private TableColumn<ProductoVO, Integer> tcStockMaxProd;    
+    //@FXML private TableColumn<ProductoVO, Integer> tcStockMaxProd;    
     @FXML private TableColumn<ProductoVO, Integer> tcStockMinProd;
     @FXML private TableColumn<ProductoVO, Double> tcPrecio1Prod;  
-    @FXML private TableColumn<ProductoVO, String> tcDescripcionProd; 
-    @FXML private TableColumn<ProductoVO, Integer> tcStockProd;      
+   // @FXML private TableColumn<ProductoVO, String> tcDescripcionProd; 
+    //@FXML private TableColumn<ProductoVO, Integer> tcStockProd;      
     @FXML private TableColumn<ProductoVO, String> tcMarcaProd;    
-    @FXML private TableView<CategoriaVO> tvCategoria;  
+   /* @FXML private TableView<CategoriaVO> tvCategoria;  
     @FXML private TableColumn<CategoriaVO, Integer> tcIdCat;
-    @FXML private TableColumn<CategoriaVO, String> tcNombreCat; 
-    @FXML private TableView<MarcaVO> tvMarca; 
+    @FXML private TableColumn<CategoriaVO, String> tcNombreCat; */
+    /*@FXML private TableView<MarcaVO> tvMarca; 
     @FXML private TableColumn<MarcaVO, Integer> tcIdMar;  
-    @FXML private TableColumn<MarcaVO, String> tcNombreMar;   
+    @FXML private TableColumn<MarcaVO, String> tcNombreMar;*/   
     @FXML private TableView<EmpleadoVO> tvEmpleados;
-    @FXML private TableColumn<EmpleadoVO, String> tcColoniaEmp;
+    //@FXML private TableColumn<EmpleadoVO, String> tcColoniaEmp;
     @FXML private TableColumn<EmpleadoVO, String> tcUsuarioEmp;
-    @FXML private TableColumn<EmpleadoVO, Integer> tcCalleEmp; 
+    //@FXML private TableColumn<EmpleadoVO, Integer> tcCalleEmp; 
     @FXML private TableColumn<EmpleadoVO, String> tcTelefonoEmp;    
-    @FXML private TableColumn<EmpleadoVO, String> tcAMaternoEmp;  
-    @FXML private TableColumn<EmpleadoVO, String> tcAPaternoEmp;    
-    @FXML private TableColumn<EmpleadoVO, String> tcNombreEmp;  
-    @FXML private TableColumn<EmpleadoVO, Integer> tcAvenidaEmp;
+    //@FXML private TableColumn<EmpleadoVO, String> tcAMaternoEmp;  
+    //@FXML private TableColumn<EmpleadoVO, String> tcAPaternoEmp;    
+    //@FXML private TableColumn<EmpleadoVO, String> tcNombreEmp;
+    @FXML private TableColumn<EmpleadoVO, String> tcEmpleadoEmp;
+    //@FXML private TableColumn<EmpleadoVO, Integer> tcAvenidaEmp;
     @FXML private TableColumn<EmpleadoVO, String> tcMunicipioEmp;
-    @FXML private TableColumn<EmpleadoVO, Integer> tcNumeroEmp; 
+    //@FXML private TableColumn<EmpleadoVO, Integer> tcNumeroEmp; 
     @FXML private TableColumn<EmpleadoVO, String> tcContrasenaEmp;
     @FXML private TableView<ProveedorVO> tvProveedor; 
+    @FXML private TableColumn<ProveedorVO, String> tcEmpresaPro; 
     @FXML private TableColumn<ProveedorVO, String> tcTelefonoPro; 
-    @FXML private TableColumn<ProveedorVO, String> tcAMaternoPro; 
-    @FXML private TableColumn<ProveedorVO, String> tcAPaternoPro;
-    @FXML private TableColumn<ProveedorVO, String> tcNombrePro;    
-    @FXML private TableColumn<ProveedorVO, Integer> tcCallePro; 
+    //@FXML private TableColumn<ProveedorVO, String> tcAMaternoPro; 
+   // @FXML private TableColumn<ProveedorVO, String> tcAPaternoPro;
+    //@FXML private TableColumn<ProveedorVO, String> tcNombrePro;   
+    @FXML private TableColumn<ProveedorVO, String> tcProveedorPro;
+    //@FXML private TableColumn<ProveedorVO, Integer> tcCallePro; 
     @FXML private TableColumn<ProveedorVO, String> tcMunicipioPro;  
-    @FXML private TableColumn<ProveedorVO, Integer> tcAvenidaPro;
-    @FXML private TableColumn<ProveedorVO, Integer> tcNumeroPro; 
-    @FXML private TableColumn<ProveedorVO, String> tcColoniaPro;
+    //@FXML private TableColumn<ProveedorVO, Integer> tcAvenidaPro;
+    //@FXML private TableColumn<ProveedorVO, Integer> tcNumeroPro; 
+    //@FXML private TableColumn<ProveedorVO, String> tcColoniaPro;
     @FXML private TableView<ClienteVO> tvCliente; 
-    @FXML private TableColumn<ClienteVO, Integer> tcCalleCli;  
-    @FXML private TableColumn<ClienteVO, Integer> tcAvenidaCli;
+    //@FXML private TableColumn<ClienteVO, Integer> tcCalleCli;  
+    //@FXML private TableColumn<ClienteVO, Integer> tcAvenidaCli;
     @FXML private TableColumn<ClienteVO, String> tcMunicipioCli;
-    @FXML private TableColumn<ClienteVO, String> tcAPaternoCli;     
-    @FXML private TableColumn<ClienteVO, String> tcNombreCli;   
-    @FXML private TableColumn<ClienteVO, String> tcAMaternoCli; 
+    @FXML private TableColumn<ClienteVO, String> tcClienteCli; 
+    //@FXML private TableColumn<ClienteVO, String> tcAPaternoCli;     
+    //@FXML private TableColumn<ClienteVO, String> tcNombreCli;   
+    //@FXML private TableColumn<ClienteVO, String> tcAMaternoCli; 
     @FXML private TableColumn<ClienteVO, String> tcReferenciaCli; 
-    @FXML private TableColumn<ClienteVO, String> tcColoniaCli; 
-    @FXML private TableColumn<ClienteVO, Integer> tcNumeroCli;     
+    //@FXML private TableColumn<ClienteVO, String> tcColoniaCli; 
+    //@FXML private TableColumn<ClienteVO, Integer> tcNumeroCli;     
     @FXML private TableView<CompraVO> tvCompra;    
     @FXML private TableColumn<CompraVO, Float> tcTotalCom;    
     @FXML private TableColumn<CompraVO, String> tcEmpresaCom; 
@@ -299,45 +364,62 @@ public class Administrador implements Initializable {
     @FXML private TableColumn<DetalleVentaVO, Float> tcPrecioDVen;
     @FXML private TableColumn<DetalleVentaVO, Integer> tcCantidadDVen;
     @FXML private TableColumn<DetalleVentaVO, Float> tcTotalDVen;
+    @FXML private TableView<ProductoVO> tvListProducts;
+    @FXML private TableColumn<ProductoVO, String> tcLista; 
+    @FXML private RadioButton rbtnCategoria;
+    @FXML private RadioButton rbtnMarca;
     /*
     **metodos Controlador
     */
 
     public void guardarProd(ActionEvent event) {
     	if(txtDescripcionProd.getText().trim().equals("")|| txtPrecio1Prod.getText().trim().equals("")||
-    			txtPrecio2Prod.getText().trim().equals("")|| txtStockProd.getText().trim().equals("") ||
+    			txtPrecio2Prod.getText().trim().equals("")||
     			txtStockMaxProd.getText().trim().equals("")|| txtStockMinProd.getText().trim().equals("")||
     			cbCategoria.getValue() == null || cbMarca.getValue() == null || cbCategoria.getValue() == null){
 			alert(AlertType.ERROR, "Completa los campos");
 		}
-		else{
+		else{			
 			int i = 0;
 			if(validar.cadena(txtDescripcionProd.getText())){txtDescripcionProd.setStyle("-fx-background-color: white"); }else{i++;txtDescripcionProd.setStyle("-fx-background-color: red");}
 			if(validar.precio(txtPrecio1Prod.getText())){txtPrecio1Prod.setStyle("-fx-background-color: white");}else{i++; txtPrecio1Prod.setStyle("-fx-background-color: red");}
 			if(validar.precio(txtPrecio2Prod.getText())){txtPrecio2Prod.setStyle("-fx-background-color: white");}else{i++; txtPrecio2Prod.setStyle("-fx-background-color: red");}
-			if(validar.entero(txtStockProd.getText())){txtStockProd.setStyle("-fx-background-color: white");}else{i++; txtStockProd.setStyle("-fx-background-color: red");}
 			if(validar.entero(txtStockMaxProd.getText())){txtStockMaxProd.setStyle("-fx-background-color: white");}else{i++; txtStockMaxProd.setStyle("-fx-background-color: red");}
 			if(validar.entero(txtStockMinProd.getText())){txtStockMinProd.setStyle("-fx-background-color: white");}else{i++; txtStockMinProd.setStyle("-fx-background-color: red");}
 			if(i == 0){
-				int stock=Integer.parseInt(txtStockProd.getText());
 				int stockMax=Integer.parseInt(txtStockMaxProd.getText());
 				int stockMin=Integer.parseInt(txtStockMinProd.getText());
-				double precio1= Double.valueOf(txtPrecio1Prod.getText());
-				double precio2= Double.valueOf(txtPrecio2Prod.getText());
-				if(precio1 > 0 && precio2 > 0 && precio1 > precio2 && stock > 0
-						&& stockMax > 0 && stockMin > 0 && stockMax > stock && stockMax > stockMin 
-						&& stockMin < stock && stock > stockMin){
+				float precio1= Float.valueOf(txtPrecio1Prod.getText());
+				float precio2= Float.valueOf(txtPrecio2Prod.getText());
+				if(precio1 > 0 && precio2 > 0 && precio1 > precio2 
+						&& stockMax > 0 && stockMin > 0  && stockMax > stockMin){
 					CategoriaVO catVO = cbCategoria.getValue(); 
 					MarcaVO marVO = cbMarca.getValue();
 					String tipo = (String) cbTipo.getValue();
-					ProductoVO productoVO = new ProductoVO(0, catVO, txtDescripcionProd.getText().trim(), marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
-					ProductoDAO productoDAO = new ProductoDAO();
-					if(productoDAO.registrar(productoVO)){
-						alert(AlertType.INFORMATION, "Producto Registrado");
-						productos.add(productoDAO.lastInsert());
+					ProductoVO productoVO = new ProductoVO(0, catVO, txtDescripcionProd.getText().trim(), marVO, precio1, precio2, 0 , stockMax, stockMin, tipo);
+					if(this.productoVO == null){
+						if(productoDAO.registrar(productoVO)){
+							alert(AlertType.INFORMATION, "Producto Registrado");
+							productos.add(productoDAO.lastInsert());
+							limpiarProd(null);
+						}
+						else{
+							alert(AlertType.ERROR, "Fallo Registro");
+						}
 					}
 					else{
-						alert(AlertType.ERROR, "Fallo Registro");
+						productoVO.setId(this.productoVO.getId());
+						if(productoDAO.modificar(productoVO)){
+							productos.removeAll(productos);
+							fillTableProducto();
+							limpiarProd(null);
+							disableFieldsProducto();
+							
+							alert(AlertType.INFORMATION, "Producto Actualizado");
+						}
+						else{
+							alert(AlertType.ERROR, "Fallo Registro");
+						}
 					}
 				}
 				else{
@@ -345,163 +427,585 @@ public class Administrador implements Initializable {
 							+ " Precio1 debe ser mayor que precio2,"
 							+ "Stock max debe ser mayor que Stock min y Stock");
 				}
-			}
+			}		
 			else{
 				alert(AlertType.ERROR, "Verifica Los Campos");
 			}
 		}
-
     }
 
 	public void limpiarProd(ActionEvent event) {
-		txtDescripcionProd.setText(null);
-		txtPrecio1Prod.setText(null);
-		txtPrecio2Prod.setText(null);
-		txtStockProd.setText(null);
-		txtStockMaxProd.setText(null);
-		txtStockMinProd.setText(null);
+		txtDescripcionProd.setText("");
+		txtPrecio1Prod.setText("");
+		txtPrecio2Prod.setText("");
+		txtStockMaxProd.setText("");
+		txtStockMinProd.setText("");
 		cbCategoria.setValue(null);
 		cbMarca.setValue(null);
 		cbTipo.setValue(null);
+		productoVO = null;
+		enableFieldsProducto();
+		btnModificar.setDisable(true);
+		btnEliminar.setDisable(true);
+		btnGuardarPro.setDisable(true);
     }
 
    
     public void modificarProd(ActionEvent event) {
+    	if( productoVO != null){
+        	enableFieldsProducto();
+        	btnModificar.setDisable(true);
+    	}
+    	else{
+    		alert(AlertType.ERROR,"No hay producto seleccionado.");
+    	}
 
     }
 
    
     public void eliminarProd(ActionEvent event) {
+    	if( productoVO != null){
+    		Alert alert = new Alert(AlertType.CONFIRMATION);
+    		alert.setTitle("Confirmación");
+    		//alert.setHeaderText("Look, a Confirmation Dialog");
+    		alert.setContentText("¿Desea Eliminar Este Producto? ");
+
+    		Optional<ButtonType> result = alert.showAndWait();
+    		if (result.get() == ButtonType.OK){
+    		    productoDAO.eliminar(productoVO.getId());
+    		    productos.removeAll(productos);
+    		    fillTableProducto();
+    		}
+    		}
+    	else{
+    		alert(AlertType.ERROR,"No hay producto seleccionado.");
+    	}
 
     }
 
    
-    public void buscarProd(ActionEvent event) {
-
+    @FXML public void buscarProd() {
+    	if(txtBuscar.getText().isEmpty()){
+    		tvProductos.setItems(productos);
+    	}
+    	else{
+    		productosFound.setPredicate(ProductoVO -> ProductoVO.getNombreProducto().toLowerCase().
+					contains(txtBuscar.getText().trim().toLowerCase()));
+    		tvProductos.setItems(productosFound);
+    	}
     }
 
    
     public void mostrarProductos(ActionEvent event) {
-
+    	tvProductos.setItems(productos);
     }
-
-   
-    public void ingresarCat(ActionEvent event) {
-    	if(txtNombreCat.getText().isEmpty()){
-    		alert(AlertType.ERROR,"Falta dato nombre.");
+    
+    public void guardarInv(ActionEvent event){
+    	if(txtIdP.getText().isEmpty() || txtDescripcionP.getText().isEmpty() ||
+    			txtExistenciaP.getText().isEmpty() || txtNuevaExistenciaP.getText().isEmpty() ||
+    			txtCausaP.getText().isEmpty()){
+    		alert(AlertType.ERROR, "Complete los campos.");
     	}
     	else{
-    		catVO = new CategoriaVO();
-    		catVO.setNombre(txtNombreCat.getText().trim());
-    		if(catVO.ingresarCat()){
-    			alert(AlertType.INFORMATION, "Categoria Agregada");
-    			txtNombreCat.setText(null);
-    		}
-    		else{
-    			alert(AlertType.ERROR, "Fallo Ingreso");
-    			
-    		}
+    		int i = 0;
+    		if(validar.cadena(txtDescripcionP.getText())){txtDescripcionP.setStyle("-fx-background-color: white"); }else{i++;txtDescripcionP.setStyle("-fx-background-color: red");}
+			if(validar.entero(txtIdP.getText())){txtIdP.setStyle("-fx-background-color: white");}else{i++; txtIdP.setStyle("-fx-background-color: red");}
+			if(validar.entero(txtExistenciaP.getText())){txtExistenciaP.setStyle("-fx-background-color: white");}else{i++; txtExistenciaP.setStyle("-fx-background-color: red");}
+			if(validar.entero(txtNuevaExistenciaP.getText())){txtNuevaExistenciaP.setStyle("-fx-background-color: white");}else{i++; txtNuevaExistenciaP.setStyle("-fx-background-color: red");}
+			if(validar.cadena(txtCausaP.getText())){txtCausaP.setStyle("-fx-background-color: white");}else{i++; txtCausaP.setStyle("-fx-background-color: red");}
+			if(i == 0){
+				int idProducto = Integer.parseInt(txtIdP.getText().trim());
+				String causa = txtCausaP.getText().trim();
+				int existencia = Integer.parseInt(txtExistenciaP.getText().trim());
+				int nuevaExistencia = Integer.parseInt(txtNuevaExistenciaP.getText().trim());
+				//int idEmpleado
+				InventarioVO inventarioVO = new InventarioVO(idProducto, existencia, nuevaExistencia, 3, causa);
+				if(productoDAO.inventario(inventarioVO)){
+					alert(AlertType.INFORMATION,"Actualización de inventario correcta.");
+					fillTableProducto();
+					txtIdP.setText("");
+					txtDescripcionP.setText("");
+					txtExistenciaP.setText("");
+					txtNuevaExistenciaP.setText("");					
+	    			txtCausaP.setText("");
+				}
+				else{
+					alert(AlertType.ERROR, "Falló actualización.");
+				}
+			}
     	}
-
     }
-
-   
-    public void modificarCat(ActionEvent event) {
-
-    }
-
-   
-    public void eliminarCat(ActionEvent event) {
-
-    }
-
-   
-    public void eliminarMar(ActionEvent event) {
-
-    }
-
-   
-    public void modificarMar(ActionEvent event) {
-
-    }
-
-   
-    public void ingresarMar(ActionEvent event) {
-
-    }
-
+	public void cancelarInv(ActionEvent event){
+		txtIdP.setText("");
+		txtDescripcionP.setText("");
+		txtExistenciaP.setText("");
+		txtNuevaExistenciaP.setText("");					
+		txtCausaP.setText("");
+	}
+   @FXML public void listSelected(){
+	   if(tvListProducts.getSelectionModel().getSelectedItem() != null){
+		   productoVO = tvListProducts.getSelectionModel().getSelectedItem();
+		   txtIdP.setText(String.valueOf(productoVO.getId()));
+		   txtDescripcionP.setText(productoVO.getNombreProducto());
+		   txtExistenciaP.setText(String.valueOf(productoVO.getStock()));
+	   }
+	   else{
+		   alert(AlertType.ERROR, "No hay producto seleccionado.");
+	   }
+   }
    
     public void guardarEmp(ActionEvent event) {
-
+    	if(txtNombreEmp.getText().isEmpty() || txtAMaternoEmp.getText().isEmpty() ||
+    			txtAPaternoEmp.getText().isEmpty() || txtTelefonoEmp.getText().isEmpty() ||
+    			txtUsuarioEmp.getText().isEmpty() || txtPasswordEmp.getText().isEmpty() ||
+    			txtCalleEmp.getText().isEmpty() || txtAvenidaEmp.getText().isEmpty() ||
+    			txtNumeroEmp.getText().isEmpty() || txtColoniaEmp.getText().isEmpty() ||
+    			txtMunicipioEmp.getText().isEmpty()){
+    		alert(AlertType.ERROR, "Completa los campos.");
+    	}
+    	else{
+    		int i = 0;
+    		if(validar.nombres(txtNombreEmp.getText().trim())){
+    			txtNombreEmp.setStyle("-fx-background-color: white");
+    			}else{i++; txtNombreEmp.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAMaternoEmp.getText().trim())){
+    			txtAMaternoEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtAMaternoEmp.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAPaternoEmp.getText().trim())){
+    			txtAPaternoEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtAPaternoEmp.setStyle("-fx-background-color: red");}
+    		if(validar.telefono(txtTelefonoEmp.getText().trim())){
+    			txtTelefonoEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtTelefonoEmp.setStyle("-fx-background-color: red");}
+    		if(validar.usuario(txtUsuarioEmp.getText().trim())){
+    			txtUsuarioEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtUsuarioEmp.setStyle("-fx-background-color: red");}
+	    	if(txtPasswordEmp.getText().length() != 32){
+	    		if(validar.contrasena(txtPasswordEmp.getText().trim())){
+	    			txtPasswordEmp.setStyle("-fx-background-color: white");
+	    		}else{i++; txtPasswordEmp.setStyle("-fx-background-color: red");}
+    		}
+    		if(validar.entero(txtCalleEmp.getText().trim())){
+    			txtCalleEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtCalleEmp.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtAvenidaEmp.getText().trim())){
+    			txtAvenidaEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtAvenidaEmp.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtNumeroEmp.getText().trim())){
+    			txtNumeroEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtNumeroEmp.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtColoniaEmp.getText().trim())){
+    			txtColoniaEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtColoniaEmp.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtMunicipioEmp.getText().trim())){
+    			txtMunicipioEmp.setStyle("-fx-background-color: white");
+    		}else{i++; txtMunicipioEmp.setStyle("-fx-background-color: red");}
+    		if(i == 0){
+    			String nombre = txtNombreEmp.getText().trim();
+    			String aPaterno = txtAPaternoEmp.getText().trim();
+    			String aMaterno = txtAMaternoEmp.getText().trim();
+    			int calle = Integer.parseInt(txtCalleEmp.getText());
+    			int avenida = Integer.parseInt(txtAvenidaEmp.getText());
+    			int numero = Integer.parseInt(txtNumeroEmp.getText());
+    			String colonia = txtColoniaEmp.getText().trim();
+    			String municipio = txtMunicipioEmp.getText();
+    			String telefono= txtTelefonoEmp.getText().trim();
+    			String usuario = txtUsuarioEmp.getText().trim();
+    			String password = txtPasswordEmp.getText();
+    			EmpleadoVO empleadoVO = new EmpleadoVO(0, nombre, aPaterno, aMaterno, calle, avenida, numero, colonia, municipio, telefono, usuario, password, "empleado");
+    			if(this.empleadoVO == null){
+    				if(empleadoDAO.registrar(empleadoVO)){
+    					alert(AlertType.INFORMATION,"Empleado Registrado.");
+    					empleados.add(empleadoDAO.lastInsert());
+    					limpiarEmp(null);
+    					disableFieldsEmpleado();
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Fallo registro.");
+    				}
+    			}
+    			else{
+    				empleadoVO.setId(this.empleadoVO.getId());
+    				if(empleadoDAO.modificar(empleadoVO)){
+    					alert(AlertType.INFORMATION,"Empleado Actualizado.");
+    					empleados.removeAll(empleados);
+    					fillTableEmpleado();
+    					disableFieldsEmpleado();
+    					limpiarEmp(null);
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Falló actualización.");
+    				}
+    			}
+    		}
+    		else{
+    			alert(AlertType.ERROR, "Verifica datos no validos.");
+    		}
+    	}
     }
 
-   
     public void limpiarEmp(ActionEvent event) {
-
+    	txtNombreEmp.setText("");
+    	txtAMaternoEmp.setText("");
+    	txtAPaternoEmp.setText("");
+    	txtTelefonoEmp.setText("");
+    	txtUsuarioEmp.setText("");
+    	txtPasswordEmp.setText("");
+		txtCalleEmp.setText("");
+		txtAvenidaEmp.setText("");
+		txtNumeroEmp.setText("");
+		txtColoniaEmp.setText("");
+		txtMunicipioEmp.setText("");
+		empleadoVO = null;
+		enableFieldsEmpleado();
+		btnModificarEmp.setDisable(true);
+		btnEliminarEmp.setDisable(true);
     }
 
    
     public void modificarEmp(ActionEvent event) {
+    	if( empleadoVO != null){
+    		enableFieldsEmpleado();
+        	btnModificarEmp.setDisable(true);
+    	}
+    	else{
+    		alert(AlertType.ERROR,"No hay empleado seleccionado.");
+    	}
 
     }
 
    
     public void eliminarEmp(ActionEvent event) {
+    	if( empleadoVO != null){
+    		Alert alert = new Alert(AlertType.CONFIRMATION);
+    		alert.setTitle("Confirmación");
+    		//alert.setHeaderText("Look, a Confirmation Dialog");
+    		alert.setContentText("¿Desea Eliminar Este Empleado? ");
+
+    		Optional<ButtonType> result = alert.showAndWait();
+    		if (result.get() == ButtonType.OK){
+    		    empleadoDAO.eliminar(empleadoVO.getId());
+    		    empleados.removeAll(empleados);
+    		    fillTableEmpleado();
+    		}
+    		}
+    	else{
+    		alert(AlertType.ERROR,"No hay producto seleccionado.");
+    	}
 
     }
 
    
     public void guardarPro(ActionEvent event) {
+    	if(txtNombrePro.getText().isEmpty() || txtAMaternoPro.getText().isEmpty() ||
+    			txtAPaternoPro.getText().isEmpty() || txtEmpresaPro.getText().isEmpty()||
+    			txtTelefonoPro.getText().isEmpty() ||
+    			txtCallePro.getText().isEmpty() || txtAvenidaPro.getText().isEmpty() ||
+    			txtNumeroPro.getText().isEmpty() || txtColoniaPro.getText().isEmpty() ||
+    			txtMunicipioPro.getText().isEmpty()){
+    		alert(AlertType.ERROR, "Completa los campos.");
+    	}
+    	else{
+    		int i = 0;
+    		if(validar.nombres(txtNombrePro.getText().trim())){
+    			txtNombrePro.setStyle("-fx-background-color: white");
+    			}else{i++; txtNombrePro.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAMaternoPro.getText().trim())){
+    			txtAMaternoPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtAMaternoPro.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAPaternoPro.getText().trim())){
+    			txtAPaternoPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtAPaternoPro.setStyle("-fx-background-color: red");}
+    		if(validar.telefono(txtTelefonoPro.getText().trim())){
+    			txtTelefonoPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtTelefonoPro.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtEmpresaPro.getText().trim())){
+    			txtEmpresaPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtEmpresaPro.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtCallePro.getText().trim())){
+    			txtCallePro.setStyle("-fx-background-color: white");
+    		}else{i++; txtCallePro.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtAvenidaPro.getText().trim())){
+    			txtAvenidaPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtAvenidaPro.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtNumeroPro.getText().trim())){
+    			txtNumeroPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtNumeroPro.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtColoniaPro.getText().trim())){
+    			txtColoniaPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtColoniaPro.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtMunicipioPro.getText().trim())){
+    			txtMunicipioPro.setStyle("-fx-background-color: white");
+    		}else{i++; txtMunicipioPro.setStyle("-fx-background-color: red");}
+    		if(i == 0){
+    			String nombre = txtNombrePro.getText().trim();
+    			String aPaterno = txtAPaternoPro.getText().trim();
+    			String aMaterno = txtAMaternoPro.getText().trim();
+    			int calle = Integer.parseInt(txtCallePro.getText());
+    			String empresa = txtEmpresaPro.getText().trim();
+    			int avenida = Integer.parseInt(txtAvenidaPro.getText());
+    			int numero = Integer.parseInt(txtNumeroPro.getText());
+    			String colonia = txtColoniaPro.getText().trim();
+    			String municipio = txtMunicipioPro.getText();
+    			String telefono= txtTelefonoPro.getText().trim();
+    			ProveedorVO proveedorVO = new ProveedorVO(0, nombre, aPaterno, aMaterno, empresa, calle, avenida, numero, colonia, municipio, telefono);
+    			if(this.proveedorVO == null){
+    				if(proveedorDAO.registrar(proveedorVO)){
+    					alert(AlertType.INFORMATION,"Proveedor Registrado.");
+    					proveedores.add(proveedorDAO.getLast());
+    					limpiarPro(null);
+    					disableFieldsProveedor();
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Fallo registro.");
+    				}
+    			}
+    			else{
+    				proveedorVO.setId(this.proveedorVO.getId());
+    				if(proveedorDAO.modificar(proveedorVO)){
+    					alert(AlertType.INFORMATION,"Proveedor Actualizado.");
+    					proveedores.removeAll(proveedores);
+    					fillTableProveedor();
+    					disableFieldsProveedor();
+    					limpiarPro(null);
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Falló actualización.");
+    				}
+    			}
+    		}
+    		else{
+    			alert(AlertType.ERROR, "Verifica datos no validos.");
+    		}
+    	}
 
     }
 
    
     public void limpiarPro(ActionEvent event) {
-
+    	txtNombrePro.setText("");
+    	txtAMaternoPro.setText("");
+    	txtAPaternoPro.setText("");
+    	txtTelefonoPro.setText("");
+    	txtEmpresaPro.setText("");
+		txtCallePro.setText("");
+		txtAvenidaPro.setText("");
+		txtNumeroPro.setText("");
+		txtColoniaPro.setText("");
+		txtMunicipioPro.setText("");
+		proveedorVO = null;
+		btnModificarPro.setDisable(true);
+		btnEliminarPro.setDisable(true);
+		btnGuardarPro.setDisable(false);
+		enableFieldsProveedor();
     }
 
    
     public void modificarPro(ActionEvent event) {
+    	if( proveedorVO != null){
+    		enableFieldsProveedor();
+        	btnModificarPro.setDisable(true);
+    	}
+    	else{
+    		alert(AlertType.ERROR,"No hay proveedor seleccionado.");
+    	}
 
     }
 
    
     public void eliminarPro(ActionEvent event) {
+    	if( proveedorVO != null){
+    		Alert alert = new Alert(AlertType.CONFIRMATION);
+    		alert.setTitle("Confirmación");
+    		//alert.setHeaderText("Look, a Confirmation Dialog");
+    		alert.setContentText("¿Desea Eliminar Este Proveedor? ");
 
+    		Optional<ButtonType> result = alert.showAndWait();
+    		if (result.get() == ButtonType.OK){
+    		    proveedorDAO.eliminar(proveedorVO.getId());
+    		    proveedores.removeAll(proveedores);
+    		    fillTableProveedor();
+    		}
+    		}
+    	else{
+    		alert(AlertType.ERROR,"No hay proveedor seleccionado.");
+    	}
+
+    }/*
+    metodo para mostrar ventana categoria
+    */
+    public void mostrarCategoria(ActionEvent event){
+    	main1.showCategoria();
+    	rbtnCategoria.setSelected(false);
+    	categorias.removeAll(categorias);
+    	fillCategoria();
     }
-
+    /*
+    metodo para mostrar ventana marca
+    */
+    public void mostrarMarca(ActionEvent event){
+    	main1.showMarca();
+    	rbtnMarca.setSelected(false);
+    	marcas.removeAll(marcas);
+    	fillMarca();
+    	
+    }
    
     public void guardarCli(ActionEvent event) {
+    	if(txtNombreCli.getText().isEmpty() || txtAMaternoCli.getText().isEmpty() ||
+    			txtReferenciaCli.getText().isEmpty() ||
+    			txtCalleCli.getText().isEmpty() || txtAvenidaCli.getText().isEmpty() ||
+    			txtNumeroCli.getText().isEmpty() || txtColoniaCli.getText().isEmpty() ||
+    			txtMunicipioCli.getText().isEmpty()){
+    		alert(AlertType.ERROR, "Completa los campos.");
+    	}
+    	else{
+    		int i = 0;
+    		if(validar.nombres(txtNombreCli.getText().trim())){
+    			txtNombreCli.setStyle("-fx-background-color: white");
+    			}else{i++; txtNombreCli.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAMaternoCli.getText().trim())){
+    			txtAMaternoCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtAMaternoCli.setStyle("-fx-background-color: red");}
+    		if(validar.nombres(txtAPaternoCli.getText().trim())){
+    			txtAPaternoCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtAPaternoCli.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtReferenciaCli.getText().trim())){
+    			txtReferenciaCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtReferenciaCli.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtCalleCli.getText().trim())){
+    			txtCalleCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtCalleCli.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtAvenidaCli.getText().trim())){
+    			txtAvenidaCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtAvenidaCli.setStyle("-fx-background-color: red");}
+    		if(validar.entero(txtNumeroCli.getText().trim())){
+    			txtNumeroCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtNumeroCli.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtColoniaCli.getText().trim())){
+    			txtColoniaCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtColoniaCli.setStyle("-fx-background-color: red");}
+    		if(validar.cadena(txtMunicipioCli.getText().trim())){
+    			txtMunicipioCli.setStyle("-fx-background-color: white");
+    		}else{i++; txtMunicipioCli.setStyle("-fx-background-color: red");}
+    		if(i == 0){
+    			String nombre = txtNombreCli.getText().trim();
+    			String aPaterno = txtAPaternoCli.getText().trim();
+    			String aMaterno = txtAMaternoCli.getText().trim();
+    			int calle = Integer.parseInt(txtCalleCli.getText());
+    			int avenida = Integer.parseInt(txtAvenidaCli.getText());
+    			int numero = Integer.parseInt(txtNumeroCli.getText());
+    			String colonia = txtColoniaCli.getText().trim();
+    			String municipio = txtMunicipioCli.getText();
+    			String referencia = txtReferenciaCli.getText().trim();
+    			ClienteVO clienteVO = new ClienteVO(0, nombre, aPaterno, aMaterno, calle, avenida, numero, colonia, municipio, referencia);
+    			if(this.clienteVO == null){
+    				if(clienteDAO.registrar(clienteVO)){
+    					alert(AlertType.INFORMATION,"Cliente Registrado.");
+    					clientes.add(clienteDAO.lastInsert());
+    					limpiarCli(null);
+    					disableFieldsCliente();
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Fallo registro.");
+    				}
+    			}
+    			else{
+    				clienteVO.setId(this.clienteVO.getId());
+    				if(clienteDAO.modificar(clienteVO)){
+    					alert(AlertType.INFORMATION,"Cliente Actualizado.");
+    					clientes.removeAll(clientes);
+    					fillTableCliente();
+    				}
+    				else{
+    					alert(AlertType.ERROR, "Falló actualización.");
+    				}
+    			}
+    		}
+    		else{
+    			alert(AlertType.ERROR, "Verifica datos no validos.");
+    		}
+    	}
 
     }
 
    
     public void limpiarCli(ActionEvent event) {
-
+    	txtNombreCli.setText("");
+    	txtAMaternoCli.setText("");
+    	txtAPaternoCli.setText("");
+    	txtReferenciaCli.setText("");
+		txtCalleCli.setText("");
+		txtAvenidaCli.setText("");
+		txtNumeroCli.setText("");
+		txtColoniaCli.setText("");
+		txtMunicipioCli.setText("");
+		clienteVO = null;
+		btnModificarCli.setDisable(true);
+		btnGuardarCli.setDisable(false);
+		enableFieldsCliente();
     }
 
    
     public void modificarCli(ActionEvent event) {
+    	if( clienteVO != null){
+    		enableFieldsCliente();;
+        	btnModificarCli.setDisable(true);
+    	}
+    	else{
+    		alert(AlertType.ERROR,"No hay cliente seleccionado.");
+    	}
 
-    }
-
-   
-    public void eliminarCli(ActionEvent event) {
-
-    }
-
+    }   
    
     public void actualizarRecepcionCom(ActionEvent event) {
-
+    	// checar 3er parcial
     }
 
    
     public void cambiarContrasena(ActionEvent event) {
-
+    	if(pfContrasenaP.getText().equals("") && pfNewContrasenaP.getText().equals("") && pfConfContrasenaP.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Completa los campos.");
+		}
+		else{
+			int i = 0;
+			if(validar.contrasena(pfContrasenaP.getText())){ttContrasenaP.setText(null);}else{i++; ttContrasenaP.setText("Campo Erroneo Ej: \"User4321\"");}
+			if(validar.contrasena(pfNewContrasenaP.getText())){ttNewContrasenaP.setText(null);}else{i++; ttNewContrasenaP.setText("Campo Erroneo Ej: \"User4321\"");}
+			if(validar.contrasena(pfConfContrasenaP.getText())){ttConfContrasenaP.setText(null);}else{i++; ttConfContrasenaP.setText("Campo Erroneo Ej: \"User4321\"");}
+			if(i == 0){
+				AdminDAO adminDAO = new AdminDAO();
+				String pass = encrypt.encryptText(pfContrasenaP.getText());
+				if(adminDAO.user(pass)){
+					if(pfNewContrasenaP.getText().equals(pfConfContrasenaP.getText())){
+						if(adminDAO.actualizar("",pfNewContrasenaP.getText())){
+							JOptionPane.showMessageDialog(null, "Informacion Actualizada.");
+							
+							pfContrasenaP.setText(null);
+							pfNewContrasenaP.setText(null);
+							pfConfContrasenaP.setText(null);
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Falló Actualización.");
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Contraseña Actual Invalida.");
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Verifica los campos.");
+			}
+		}
     }
    
     public void cancelarCambiarContrasena(ActionEvent event) {
-
+		pfContrasenaP.setText(null);
+		pfNewContrasenaP.setText(null);
+		pfConfContrasenaP.setText(null);
     }
 
    
@@ -527,28 +1031,25 @@ public class Administrador implements Initializable {
      * Metodo para llenar ComboBox categoria
      * */
     public void fillCategoria(){
-    	ObservableList<CategoriaVO> categorias = FXCollections.observableArrayList(catVO.listarCategoria());
-    	cbCategoria.getItems().addAll(categorias);
+    	categorias = FXCollections.observableArrayList(catVO.listarCategoria());
+    	cbCategoria.setItems(categorias);
     }
     /*
      * Metodo para llenar ComboBox marca
      * */
     public void fillMarca(){
-    	ObservableList<MarcaVO> marcas = FXCollections.observableArrayList(marVO.listarMarca());
-    	cbMarca.getItems().addAll(marcas);
+    	marcas = FXCollections.observableArrayList(marVO.listarMarca());
+    	cbMarca.setItems(marcas);
     }
     
     /*
      * Metodo para inicilaizar tabla prodcutos
      * */
     public void tableProducto(){
-    	tcCategoriaProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("categoria"));
-    	tcDescripcionProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, String >("descripcion"));
+    	tcProductoProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("nombreProducto"));
     	tcMarcaProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("marca"));
     	tcPrecio1Prod.setCellValueFactory(new PropertyValueFactory<ProductoVO, Double>("precio1"));
     	tcPrecio2Prod.setCellValueFactory(new PropertyValueFactory<ProductoVO, Double>("precio2"));
-    	tcStockProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, Integer>("stock"));
-    	tcStockMaxProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, Integer>("stockMax"));
     	tcStockMinProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, Integer>("stockMin"));
     	tcTipoProd.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("tipo"));
     }
@@ -557,7 +1058,8 @@ public class Administrador implements Initializable {
      * */
     public void fillTableProducto(){
     	productos = FXCollections.observableArrayList(productoDAO.getDatos());
-    	tvProductos.getItems().addAll(productos);
+    	//tvProductos.getItems().addAll(productos);
+    	tvProductos.setItems(productos);
     }
     /*
     
@@ -574,92 +1076,39 @@ public class Administrador implements Initializable {
     		txtPrecio1Prod.setText(precio1);
     		String precio2 = String.valueOf(productoVO.getPrecio2());
     		txtPrecio2Prod.setText(precio2);
-    		String stock = String.valueOf(productoVO.getStock());
-    		txtStockProd.setText(stock);
+    		//String stock = String.valueOf(productoVO.getStock());
+    		//txtStockProd.setText(stock);
     		String stockMax = String.valueOf(productoVO.getStockMax());
     		txtStockMaxProd.setText(stockMax);
     		String stockMin = String.valueOf(productoVO.getStockMin());
     		txtStockMinProd.setText(stockMin);
     		cbTipo.getSelectionModel().select(productoVO.getTipo());
-    		
+    		btnModificar.setDisable(false);
+    		btnEliminar.setDisable(false);    		
     	}
     	
     }
 
-    /*
-     * Metodo para delarar  de la tabla categoria
-     * */
-    public void tableCategoria(){
-    	tcIdCat.setCellValueFactory(new PropertyValueFactory<CategoriaVO, Integer>("id"));
-    	tcNombreCat.setCellValueFactory(new PropertyValueFactory<CategoriaVO, String>("nombre"));
-    }
-    /*
-     * Metodo para llenar tabla categoria
-     * */
-    public void fillTableCategoria(){
-    	categorias = FXCollections.observableArrayList(catVO.listarCategoria());
-    	tvCategoria.getItems().addAll(categorias);
-    }
-/*
-    
-     * Metodo para obtener los datos de la Categoria seleccionada en la tabla Categoria
-     * */
-    public void selectedTableCategoria(){
-    	if(tvCategoria.getSelectionModel().getSelectedItem() != null){
-    		catVO = tvCategoria.getSelectionModel().getSelectedItem();
-    		txtNombreCat.setText(catVO.getNombre());
-    		disableFieldsCategoria();
-    	}
-    }
 
-    /*
-     * Metodo para delarar  de la tabla marca
-     * */
-    public void tableMarca(){
-    	tcIdMar.setCellValueFactory(new PropertyValueFactory<MarcaVO, Integer>("id"));
-    	tcNombreMar.setCellValueFactory(new PropertyValueFactory<MarcaVO, String>("nombre"));
-    }
-    /*
-     * Metodo para llenar tabla marca
-     * */
-    public void fillTableMarca(){
-    	marcas = FXCollections.observableArrayList(marVO.listarMarca());
-    	tvMarca.getItems().addAll(marcas);
-    }
-/*
     
-     * Metodo para obtener los datos de la Marca seleccionada en la tabla marca
-     * */
-    public void selectedTableMarca(){
-    	if(tvMarca.getSelectionModel().getSelectedItem() != null){
-    		marVO = tvMarca.getSelectionModel().getSelectedItem();
-    		txtNombreMar.setText(marVO.getNombre());
-    		disableFieldsMarca();
-    	}
-    }
 
     /*
      * Metodo para declarar atributos de la tabla empleado
      * */
     public void tableEmpleado(){
-    	tcNombreEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("nombre"));
-    	tcAPaternoEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("apPaterno"));
-    	tcAMaternoEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("apMaterno"));
-    	tcCalleEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, Integer>("calle"));
-    	tcAvenidaEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, Integer>("avenida"));
-    	tcNumeroEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, Integer>("numero"));
-    	tcColoniaEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("colonia"));
+    	tcEmpleadoEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("nombreEmpleado"));
     	tcMunicipioEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("municipio"));
     	tcTelefonoEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("telefono"));
     	tcUsuarioEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("usuario"));
-    	tcContrasenaEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("contrasena"));
+    	tcContrasenaEmp.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>("password"));
     }
     /*
      * Metodo para llenar tabla empleado
      * */
     public void fillTableEmpleado(){
     	empleados = FXCollections.observableArrayList(empleadoDAO.getDatos());
-    	tvEmpleados.getItems().addAll(empleados);
+    	//tvEmpleados.getItems().addAll(empleados);
+    	tvEmpleados.setItems(empleados);
     }
     /*
      * Metodo para obtener el objeo selecioado de la tabla empleado
@@ -682,19 +1131,16 @@ public class Administrador implements Initializable {
     		txtTelefonoEmp.setText(empleadoVO.getTelefono());
     		txtUsuarioEmp.setText(empleadoVO.getUsuario());
     		txtPasswordEmp.setText(empleadoVO.getPassword());
+    		btnModificarEmp.setDisable(false);
+    		btnEliminarEmp.setDisable(false); 
     	}
     }
     /*
      * Metodo para declarar atributos de la tabla proveedor
      * */
     public void tableProveedor(){
-    	tcNombrePro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("nombre"));
-    	tcAPaternoPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("apPaterno"));
-    	tcAMaternoPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("apMaterno"));
-    	tcCallePro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, Integer>("calle"));
-    	tcAvenidaPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, Integer>("avenida"));
-    	tcNumeroPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, Integer>("numero"));
-    	tcColoniaPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("colonia"));
+    	tcProveedorPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("nombreProveedor"));
+    	tcEmpresaPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("empresa"));
     	tcMunicipioPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("municipio"));
     	tcTelefonoPro.setCellValueFactory(new PropertyValueFactory<ProveedorVO, String>("telefono"));
     	
@@ -704,7 +1150,8 @@ public class Administrador implements Initializable {
      * */
     public void fillTableProveedor(){
     	proveedores = FXCollections.observableArrayList(proveedorDAO.getDatos());
-    	tvProveedor.getItems().addAll(proveedores);
+    	//tvProveedor.getItems().addAll(proveedores);
+    	tvProveedor.setItems(proveedores);
     }
     /*
      * Metodo para obtener el objeo selecioado de la tabla proveedor
@@ -716,6 +1163,7 @@ public class Administrador implements Initializable {
     		txtNombrePro.setText(proveedorVO.getNombre());
     		txtAPaternoPro.setText(proveedorVO.getApPaterno());
     		txtAMaternoPro.setText(proveedorVO.getApMaterno());
+    		txtEmpresaPro.setText(proveedorVO.getEmpresa());
     		String calle = String.valueOf(proveedorVO.getCalle());
     		txtCallePro.setText(calle);
     		String avenida = String.valueOf(proveedorVO.getAvenida());
@@ -725,19 +1173,15 @@ public class Administrador implements Initializable {
     		txtColoniaPro.setText(proveedorVO.getColonia());
     		txtMunicipioPro.setText(proveedorVO.getMunicipio());
     		txtTelefonoPro.setText(proveedorVO.getTelefono());
+    		btnModificarPro.setDisable(false);
+    		btnEliminarPro.setDisable(false);
     	}
     }
     /*
      * Metodo para declarar atributos de la tabla cliente
      * */
     public void tableCliente(){
-    	tcNombreCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("nombre"));
-    	tcAPaternoCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("apPaterno"));
-    	tcAMaternoCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("apMaterno"));
-    	tcCalleCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, Integer>("calle"));
-    	tcAvenidaCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, Integer>("avenida"));
-    	tcNumeroCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, Integer>("numero"));
-    	tcColoniaCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("colonia"));
+    	tcClienteCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("nombreCliente"));
     	tcMunicipioCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("municipio"));
     	tcReferenciaCli.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>("referencia"));
     }
@@ -746,7 +1190,8 @@ public class Administrador implements Initializable {
      * */
     public void fillTableCliente(){
     	clientes = FXCollections.observableArrayList(clienteDAO.getDatos());
-    	tvCliente.getItems().addAll(clientes);
+    	//tvCliente.getItems().addAll(clientes);
+    	tvCliente.setItems(clientes);
     }
     /*
      * Metodo para obtener el objeo selecioado de la tabla cliente
@@ -767,6 +1212,9 @@ public class Administrador implements Initializable {
     		txtColoniaCli.setText(clienteVO.getColonia());
     		txtMunicipioCli.setText(clienteVO.getMunicipio());
     		txtReferenciaCli.setText(clienteVO.getReferencia());
+    		btnModificarCli.setDisable(false);
+    		btnModificar.setDisable(false);
+    		btnEliminar.setDisable(false); 
     	}
     }
     /*
@@ -882,7 +1330,7 @@ public class Administrador implements Initializable {
     	cbMarca.setDisable(true);
     	txtPrecio1Prod.setDisable(true);
     	txtPrecio2Prod.setDisable(true);
-    	txtStockProd.setDisable(true);
+    	//txtStockProd.setDisable(true);
     	txtStockMaxProd.setDisable(true);
     	txtStockMinProd.setDisable(true);
     	cbTipo.setDisable(true);
@@ -899,45 +1347,15 @@ public class Administrador implements Initializable {
     	cbMarca.setDisable(false);
     	txtPrecio1Prod.setDisable(false);
     	txtPrecio2Prod.setDisable(false);
-    	txtStockProd.setDisable(false);
+    	//txtStockProd.setDisable(false);
     	txtStockMaxProd.setDisable(false);
     	txtStockMinProd.setDisable(false);
     	cbTipo.setDisable(false);
     	btnGuardarProd.setDisable(false);
     	btnCancelarP.setDisable(false);
     }
-    /*
     
-     * Metodo para desabilitar campos de categoria
-     * */
-    public void disableFieldsCategoria(){
-    	txtNombreCat.setDisable(true);
-    	btnGuardarCli.setDisable(true);
-    }
-/*
     
-     * Metodo para habilitar campos de categoria
-     * */
-    public void enableFieldsCategoria(){
-    	txtNombreCat.setDisable(false);
-    	btnIngresarCat.setDisable(false);
-    }
-    /*
-    
-     * Metodo para desabilitar campos de marca
-     * */
-    public void disableFieldsMarca(){
-    	txtNombreMar.setDisable(true);
-    	btnIngresarMar.setDisable(true);
-    }
-/*
-    
-     * Metodo para habilitar campos de marca
-     * */
-    public void enableFieldsMarca(){
-    	txtNombreCat.setDisable(false);
-    	btnIngresarMar.setDisable(false);
-    }
     /*
     
      * Metodo para desabilitar campos de empleado
@@ -955,7 +1373,7 @@ public class Administrador implements Initializable {
 		txtUsuarioEmp.setDisable(true);
 		txtPasswordEmp.setDisable(true);
 		btnGuardarEmp.setDisable(true);
-		btnLimpiarEmp.setDefaultButton(true);
+		//btnLimpiarEmp.setDisable(true);
     }
 /*
     
@@ -974,7 +1392,7 @@ public class Administrador implements Initializable {
 		txtUsuarioEmp.setDisable(false);
 		txtPasswordEmp.setDisable(false);
 		btnGuardarEmp.setDisable(false);
-		btnLimpiarEmp.setDefaultButton(false);
+		//btnLimpiarEmp.setDefaultButton(false);
     }
 /*
     
@@ -984,6 +1402,7 @@ public class Administrador implements Initializable {
 		txtNombrePro.setDisable(true);
 		txtAPaternoPro.setDisable(true);
 		txtAMaternoPro.setDisable(true);
+		txtEmpresaPro.setDisable(true);
 		txtCallePro.setDisable(true);
 		txtAvenidaPro.setDisable(true);
 		txtNumeroPro.setDisable(true);
@@ -991,7 +1410,7 @@ public class Administrador implements Initializable {
 		txtMunicipioPro.setDisable(true);
 		txtTelefonoPro.setDisable(true);
 		btnGuardarPro.setDisable(true);
-		btnLimpiarPro.setDefaultButton(true);
+		//btnLimpiarPro.setDisable(true);
     }
 /*
     
@@ -1001,6 +1420,7 @@ public class Administrador implements Initializable {
     	txtNombrePro.setDisable(false);
 		txtAPaternoPro.setDisable(false);
 		txtAMaternoPro.setDisable(false);
+		txtEmpresaPro.setDisable(false);
 		txtCallePro.setDisable(false);
 		txtAvenidaPro.setDisable(false);
 		txtNumeroPro.setDisable(false);
@@ -1008,7 +1428,7 @@ public class Administrador implements Initializable {
 		txtMunicipioPro.setDisable(false);
 		txtTelefonoPro.setDisable(false);
 		btnGuardarPro.setDisable(false);
-		btnLimpiarPro.setDefaultButton(false);
+		//btnLimpiarPro.setDisable(false);
     }
 
 /*
@@ -1026,13 +1446,13 @@ public class Administrador implements Initializable {
 		txtMunicipioCli.setDisable(true);
 		txtReferenciaCli.setDisable(true);
 		btnGuardarCli.setDisable(true);
-		btnLimpiarCli.setDefaultButton(true);
+		//btnLimpiarCli.setDisable(true);
     }
 /*
     
      * Metodo para habilitar campos de cliente
      * */
-    public void enableFieldsClienter(){
+    public void enableFieldsCliente(){
     	txtNombreCli.setDisable(false);
 		txtAPaternoCli.setDisable(false);
 		txtAMaternoCli.setDisable(false);
@@ -1043,8 +1463,9 @@ public class Administrador implements Initializable {
 		txtMunicipioCli.setDisable(false);
 		txtReferenciaCli.setDisable(false);
 		btnGuardarCli.setDisable(false);
-		btnLimpiarCli.setDefaultButton(false);
+		//btnLimpiarCli.setDisable(false);
     }
+    
     /*
     /*
      

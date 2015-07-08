@@ -11,6 +11,7 @@ public class Conexion {
 	private int puerto;
 	private static Conexion instancia;
 	private Connection con;
+	private boolean date = false;
 	
 	public String getIp() {
 		return ip;
@@ -32,7 +33,7 @@ public class Conexion {
 	private Conexion(){
 		setBd("perzan");
 		usuario = "postgres";
-		contrasena = "12345";
+		contrasena = "1234";
 		ip = "localhost";
 		puerto = 5432;
 		servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
@@ -64,6 +65,7 @@ public class Conexion {
 			//establecer conexion
 			con = DriverManager.getConnection(servidor, usuario, contrasena);
 			System.out.println("Conexión éxitosa");
+			date = true;
 			return "Conexión éxitosa";
 		}catch(Exception e){
 			e .printStackTrace();
@@ -77,6 +79,7 @@ public class Conexion {
 		try{
 			con.close();
 			System.out.println("Se ha desconectado del servidor");
+			date = false;
 			return "Se ha desconectado del servidor";
 		}catch(Exception e){
 			e.printStackTrace();
@@ -112,12 +115,6 @@ public class Conexion {
 	}
 
 	public boolean conectado() {
-		if(instancia != null){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
+		return date;
 	}
 }

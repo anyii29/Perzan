@@ -5,21 +5,22 @@ public class ProductoVO {
 	private CategoriaVO categoria;
 	private int id;
 	private String descripcion;
-	private double precio1;
-	private double precio2;
+	private float precio1;
+	private float precio2;
 	private int stock;
 	private int stockMax;
 	private int stockMin;
-	private String tipo;
+	private String tipo, nombreProducto;
 	
 	public ProductoVO(){
 	}
 	
 	public ProductoVO(int id, CategoriaVO categoria, String descripcion, MarcaVO marca,
-			double precio1, double precio2, int stock, int stockMax, int stockMin, String tipo){
+			float precio1, float precio2, int stock, int stockMax, int stockMin, String tipo){
 		this.id= id;
 		this.descripcion = descripcion;
 		this.categoria= categoria;
+		this.nombreProducto = categoria.getNombre() + " " + descripcion;
 		this.marca= marca;
 		this.precio1= precio1;
 		this.precio2= precio2;
@@ -101,30 +102,7 @@ public class ProductoVO {
 	/**
 	 * @return the precio1
 	 */
-	public double getPrecio1() {
-		return precio1;
-	}
 
-	/**
-	 * @param precio1 the precio1 to set
-	 */
-	public void setPrecio1(double precio1) {
-		this.precio1 = precio1;
-	}
-
-	/**
-	 * @return the precio2
-	 */
-	public double getPrecio2() {
-		return precio2;
-	}
-
-	/**
-	 * @param precio2 the precio2 to set
-	 */
-	public void setPrecio2(double precio2) {
-		this.precio2 = precio2;
-	}
 
 	/**
 	 * @return the stock
@@ -180,6 +158,42 @@ public class ProductoVO {
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getNombreProducto() {
+		return nombreProducto;
+	}
+
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
+	}
+
+	/**
+	 * @return the precio1
+	 */
+	public float getPrecio1() {
+		return precio1;
+	}
+
+	/**
+	 * @param precio1 the precio1 to set
+	 */
+	public void setPrecio1(float precio1) {
+		this.precio1 = precio1;
+	}
+
+	/**
+	 * @return the precio2
+	 */
+	public float getPrecio2() {
+		return precio2;
+	}
+
+	/**
+	 * @param precio2 the precio2 to set
+	 */
+	public void setPrecio2(float precio2) {
+		this.precio2 = precio2;
 	}
 
 	

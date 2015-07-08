@@ -1,7 +1,7 @@
 package modelo;
 
 public class EmpleadoVO extends Person {
-	private String usuario, password, tipo;
+	private String usuario, password, tipo,nombreEmpleado;
 	
 	public EmpleadoVO(){
 		
@@ -13,6 +13,7 @@ public class EmpleadoVO extends Person {
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
 		this.apMaterno = apMaterno;
+		this.nombreEmpleado = nombre + " " + apPaterno + " " + apMaterno;
 		this.calle = calle;
 		this.avenida = avenida;
 		this.numero = numero;
@@ -58,6 +59,12 @@ public class EmpleadoVO extends Person {
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	public String getNombreEmpleado() {
+		return nombreEmpleado;
+	}
+	public void setNombreEmpleado(String nombreEmpleado) {
+		this.nombreEmpleado = nombreEmpleado;
 	}
 		
 }

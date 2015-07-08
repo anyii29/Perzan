@@ -51,6 +51,7 @@ public class EmpleadoDAO implements iOp{
 	public EmpleadoVO lastInsert(){		
 		if(conex.conectado()){
 			try{
+				conex.conectar();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarultimoempleado()");
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
@@ -69,6 +70,7 @@ public class EmpleadoDAO implements iOp{
 					String tipo = res.getString("ftipo");
 					EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
 							numero, colonia, municipio, telefono, usuario, password, tipo);
+					System.out.println(empleadoVO);
 					return empleadoVO;
 				}
 				consulta.close();
@@ -89,10 +91,11 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
+				conex.conectar();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminarempleado(?)");
 				consulta.setInt(1, id);
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 				//}
@@ -120,6 +123,7 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
+				conex.conectar();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarempleado(?,?,?,?,?,?,?,?,?,?,?,?)");
 				consulta.setString(1,empleadoVO.getNombre());
 				consulta.setString(2,empleadoVO.getApPaterno());
@@ -133,8 +137,8 @@ public class EmpleadoDAO implements iOp{
 				consulta.setString(10, empleadoVO.getUsuario());
 				consulta.setString(11, empleadoVO.getPassword());
 				consulta.setString(12, empleadoVO.getTipo());
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result= true;	
 				}
 				else{
@@ -163,7 +167,8 @@ public class EmpleadoDAO implements iOp{
 		
 		if(conex.conectado()){
 			try{
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarempleado(?,?,?,?,?,?,?,?,?,?,?,?)");
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarempleado(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				consulta.setInt(1, empleadoVO.getId());
 				consulta.setString(2,empleadoVO.getNombre());
 				consulta.setString(3,empleadoVO.getApPaterno());
@@ -177,9 +182,8 @@ public class EmpleadoDAO implements iOp{
 				consulta.setString(11, empleadoVO.getUsuario());
 				consulta.setString(12, empleadoVO.getPassword());
 				consulta.setString(13, empleadoVO.getTipo());
-				consulta.setInt(14, empleadoVO.getId());
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result= true;	
 				}
 				else{

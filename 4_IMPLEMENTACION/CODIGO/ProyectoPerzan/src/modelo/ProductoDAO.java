@@ -37,8 +37,8 @@ public class ProductoDAO implements iOp{
 					int idMar = res.getInt("fid_marca");
 					String nombreMar = res.getString("fmarca");
 					marVO = new MarcaVO(idMar, nombreMar);
-					double precio1 = res.getDouble("fprecio1");
-					double precio2 = res.getDouble("fprecio2");
+					float precio1 = res.getFloat("fprecio1");
+					float precio2 = res.getFloat("fprecio2");
 					int stock = res.getInt("fstock");
 					int stockMax = res.getInt("fstock_max");
 					int stockMin= res.getInt("fstock_min");
@@ -73,13 +73,14 @@ public class ProductoDAO implements iOp{
 					int idMar = res.getInt("fid_marca");
 					String nombreMar = res.getString("fmarca");
 					marVO = new MarcaVO(idMar, nombreMar);
-					double precio1 = res.getDouble("fprecio1");
-					double precio2 = res.getDouble("fprecio2");
+					float precio1 = res.getFloat("fprecio1");
+					float precio2 = res.getFloat("fprecio2");
 					int stock = res.getInt("fstock");
 					int stockMax = res.getInt("fstock_max");
 					int stockMin= res.getInt("fstock_min");
 					String tipo = res.getString("ftipo");
 					ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
+					System.out.println(productoVO);
 					return productoVO;
 				}
 				consulta.close();
@@ -110,8 +111,8 @@ public class ProductoDAO implements iOp{
 				int idMar = res.getInt("fid_marca");
 				String nombreMar = res.getString("fmarca");
 				marVO = new MarcaVO(idMar, nombreMar);
-				double precio1 = res.getDouble("fprecio1");
-				double precio2 = res.getDouble("fprecio2");
+				float precio1 = res.getFloat("fprecio1");
+				float precio2 = res.getFloat("fprecio2");
 				int stock = res.getInt("fstock");
 				int stockMax = res.getInt("fstock_max");
 				int stockMin= res.getInt("fstock_min");
@@ -141,10 +142,10 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminarproducto(?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_eliminaproducto(?)");
 				consulta.setInt(1, id);
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result = true;
 				}
 				//}
@@ -185,15 +186,15 @@ public class ProductoDAO implements iOp{
 				consulta.setInt(1, productoVO.getCategoria().getId());
 				consulta.setString(2, productoVO.getDescripcion());
 				consulta.setInt(3, productoVO.getMarca().getId());
-				consulta.setDouble(4, productoVO.getPrecio1());
-				consulta.setDouble(5, productoVO.getPrecio2());
+				consulta.setFloat(4, productoVO.getPrecio1());
+				consulta.setFloat(5, productoVO.getPrecio2());
 				consulta.setInt(6, productoVO.getStock());
 				consulta.setInt(7, productoVO.getStockMax());
 				consulta.setInt(8, productoVO.getStockMin());
 				consulta.setString(9, productoVO.getTipo());
 				
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result= true;	
 				}
 				else{
@@ -232,19 +233,19 @@ public class ProductoDAO implements iOp{
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificarproducto(?,?,?,?,?,?,?,?,?)");
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_modificaproducto(?,?,?,?,?,?,?,?,?,?)");
 				consulta.setInt(1,productoVO.getId());
 				consulta.setInt(2, productoVO.getCategoria().getId());
 				consulta.setString(3,productoVO.getDescripcion());
 				consulta.setInt(4, productoVO.getMarca().getId());
-				consulta.setDouble(5,productoVO.getPrecio1());
-				consulta.setDouble(6,productoVO.getPrecio2());
+				consulta.setFloat(5,productoVO.getPrecio1());
+				consulta.setFloat(6,productoVO.getPrecio2());
 				consulta.setInt(7, productoVO.getStock());
 				consulta.setInt(8, productoVO.getStockMax());
 				consulta.setInt(9, productoVO.getStockMin());
 				consulta.setString(10, productoVO.getTipo());			
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result= true;	
 				}
 				consulta.close();
@@ -267,8 +268,8 @@ public class ProductoDAO implements iOp{
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregarventaproducto(?,?)");
 				consulta.setInt(1, stock);
 				consulta.setInt(2, id);			
-				int res = consulta.executeUpdate();
-				if(res > 0){
+				boolean res = consulta.execute();
+				if(res){
 					result= true;	
 				}
 				else{
@@ -291,4 +292,32 @@ public class ProductoDAO implements iOp{
 			return false;
 		}		
 	}	
+	public boolean inventario(InventarioVO inventarioVO) {
+		boolean result = false;
+		conex = Conexion.getInstance();
+		if(conex.conectado()){
+			try{
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_ajusteinventario(?,?,?,?,?)");
+				consulta.setInt(1,inventarioVO.getIdProducto());
+				consulta.setString(2, inventarioVO.getCausa());
+				consulta.setInt(3,inventarioVO.getExistencia());
+				consulta.setInt(4, inventarioVO.getNuevaExistencia());
+				consulta.setInt(5,inventarioVO.getIdEmpleado());			
+				boolean res = consulta.execute();
+				if(res){
+					result= true;	
+				}
+				consulta.close();
+				
+				}		
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+			finally{
+				conex.desconectar();
+			}
+		}
+		return result;		
+	}
 }

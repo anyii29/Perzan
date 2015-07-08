@@ -2,7 +2,7 @@ package modelo;
 
 public class ProveedorVO extends Person {
 	
-	private String empresa ;
+	private String empresa, nombreProveedor ;
 	
 	public ProveedorVO(int id , String nombre, String apPaterno, String apMaterno, String empresa,
 			int calle,int avenida, int numero, String colonia, String municipio,
@@ -11,6 +11,7 @@ public class ProveedorVO extends Person {
 		this.nombre = nombre;
 		this.apPaterno = apPaterno;
 		this.apMaterno = apMaterno;
+		this.nombreProveedor = nombre + " " + apPaterno + " " + apMaterno;
 		this.empresa = empresa;
 		this.calle = calle;
 		this.avenida = avenida;
@@ -30,6 +31,14 @@ public class ProveedorVO extends Person {
 
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
+	}
+
+	public String getNombreProveedor() {
+		return nombreProveedor;
+	}
+
+	public void setNombreProveedor(String nombreProveedor) {
+		this.nombreProveedor = nombreProveedor;
 	}
 
 }

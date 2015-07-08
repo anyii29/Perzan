@@ -137,7 +137,7 @@ CREATE TABLE "venta" (
 CREATE TABLE "ajusteinventario" (
 "id" int4 NOT NULL,
 "id_producto" int4 not null,
-"causa" text  not null,
+"causa" character varying(255)  not null,
 "existencia_actual" int4 not null,
 "nueva_existencia" int4 not null,
 "id_empleado" int4 not null,
@@ -153,7 +153,7 @@ ALTER TABLE "ajusteinventario" ADD PRIMARY KEY ("id");
 alter table ajusteinventario add check(id > 0);
 alter table ajusteinventario add check(id_producto > 0);
 alter table ajusteinventario add check(length(rtrim(ltrim(causa))) > 5 and rtrim(ltrim(causa)) = causa);
-alter table ajusteinventario add check(existencia_actual > 0);
+alter table ajusteinventario add check(existencia_actual >= 0);
 alter table ajusteinventario add check(nueva_existencia >= 0);
 alter table ajusteinventario add check(id_empleado > 0);
 
@@ -926,7 +926,7 @@ end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
-create or replace function fn_ajusteinventario(fid_producto integer, fcausa text, fexistencia_actual integer, fnueva_existencia integer, fid_empleado integer)
+create or replace function fn_ajusteinventario(fid_producto integer, fcausa character varying(255), fexistencia_actual integer, fnueva_existencia integer, fid_empleado integer)
 returns void as $$
 declare maxid integer;
 declare total integer;

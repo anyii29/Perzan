@@ -33,7 +33,7 @@ public class Conexion {
 	private Conexion(){
 		setBd("perzan");
 		usuario = "postgres";
-		contrasena = "1234";
+		contrasena = "12345";
 		ip = "localhost";
 		puerto = 5432;
 		servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;

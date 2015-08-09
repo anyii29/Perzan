@@ -19,7 +19,8 @@ CREATE TABLE "cliente" (
 "numero" int4,
 "colonia" varchar(25) COLLATE "default" NOT NULL,
 "municipio" varchar(25) COLLATE "default" NOT NULL,
-"referencia" varchar(255) COLLATE "default" NOT NULL
+"referencia" varchar(255) COLLATE "default" NOT NULL,
+"activo" char(1) COLLATE "default" DEFAULT 's'::bpchar NOT NULL
 )
 ;
 -- ----------------------------
@@ -144,6 +145,11 @@ CREATE TABLE "ajusteinventario" (
 "fecha_hora" timestamp default now() not null
 )
 ;
+
+create table fechahora(
+id integer not null,
+fechahora timestamp not null
+);
 
 ALTER TABLE "ajusteinventario" ADD PRIMARY KEY ("id");
 
@@ -454,8 +460,6 @@ begin
 UPDATE marca set id = fid , nombre = fnombre WHERE id = fid;
 end
 $$ language plpgsql; 
-
-select fn_modificarmarca(1000, 'ALAN');
 --*****************************************************************************************************************************************************
 create or replace function fn_eliminarmarca(fid integer)
 returns void as $$
@@ -497,7 +501,7 @@ begin
 update empleado set id = fid, nombre = fnombre, apellido_paterno = fapellido_paterno, 
 apellido_materno = fapellido_materno, calle = fcalle, avenida = favenida, numero = numero, 
 colonia = fcolonia, municipio = fmunicipio, telefono = ftelefono, usuario = fusuario,
- password = fpassword, tipo = ftipo where id = fid;
+ password = md5(fpassword), tipo = ftipo where id = fid;
 end
 $$ language plpgsql; 
 
@@ -537,14 +541,14 @@ returns void as $$
 begin 
 update cliente set id = fid, nombre = fnombre, apellido_paterno = fapellido_paterno,
  apellido_materno = fapellido_materno, calle = fcalle, avenida = favenida, numero =  fnumero, 
-colonia = fcolonia, municipio = fmunicipio, referencia = freferencia where id = id;
+colonia = fcolonia, municipio = fmunicipio, referencia = freferencia where id = fid;
 end
 $$ language plpgsql; 
 --*****************************************************************************************************************************************************
 create or replace function fn_eliminarcliente(fid integer) 
 returns void as $$
 begin 
-update cliente set activo = 'n';
+update cliente set activo = 'n' where id = fid;
 end
 $$ language plpgsql; 
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -585,10 +589,9 @@ maxid := 1;
 else
 select (max(id)+1) into maxid from detallecompra;
 end if;
-insert into detallecompra(id, id_producto, id_compra, cantidad, precio_compra, precio_venta1,
-precio_venta2) values ( maxid, fid_producto, fid_compra, fcantidad, fprecio_compra, fprecio_venta1,
+insert into detallecompra(id, id_producto, id_compra, cantidad, precio_compra, total, precio_venta1,
+precio_venta2) values ( maxid, fid_producto, fid_compra, fcantidad, fprecio_compra, fcantidad * fprecio_compra, fprecio_venta1,
 fprecio_venta2);
-update producto set precio1 = fprecio_venta1, precio2 = fprecio_venta2 where id = fid_producto;
 end
 $$ language plpgsql; 
 --*****************************************************************************************************************************************************
@@ -606,8 +609,8 @@ maxid := 1;
 else
 select (max(id)+1) into maxid from detalleventa;
 end if;
-insert into detalleventa(id, id_producto, precio, cantidad, id_venta) values ( maxid, fid_producto,
-fprecio, fcantidad, fid_venta);
+insert into detalleventa(id, id_producto, precio, cantidad, total, id_venta) values ( maxid, fid_producto,
+fprecio, fcantidad, fprecio * fcantidad, fid_venta);
 end
 $$ language plpgsql; 
 --*****************************************************************************************************************************************************
@@ -644,6 +647,18 @@ apellido_materno = fapellido_materno, empresa = fempresa, calle = fcalle, avenid
 colonia = fcolonia, municipio = fmunicipio, telefono = ftelefono where id = fid;
 end
 $$ language plpgsql ;
+
+
+--*******************************************************************************************************************************************************
+
+CREATE OR REPLACE FUNCTION "fn_modificaradminpassword"(fadmin varchar, fpassword varchar)
+  RETURNS "pg_catalog"."void" AS $BODY$
+begin
+UPDATE empleado SET usuario = fadmin, password = fpassword where password = fpassword;
+end
+$BODY$
+  LANGUAGE 'plpgsql' VOLATILE COST 100
+;
 
 --*******************************************************************************************************************************************************
 create or replace function fn_eliminaproveedor(fid integer) 
@@ -737,16 +752,21 @@ end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
-create or replace function fn_seleccionarclientes()
-returns setof cliente as $$
+ create or replace function fn_seleccionarclientes()
+returns table(fid integer, fnombre character varying(30), fapellido_paterno character varying(30), fapellido_materno character varying(30),
+ fcalle integer, favenida integer, fnumero integer, fcolonia character varying(50), fmunicipio character varying(30), freferencia character varying(255))
+ as $$
 begin
-return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente;
+return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente 
+where activo = 's';
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
-create or replace function fn_seleccionarultimocliente()()
-returns setof cliente as $$
+create or replace function fn_seleccionarultimocliente()
+returns table(fid integer, fnombre character varying(30), fapellido_paterno character varying(30), fapellido_materno character varying(30),
+ fcalle integer, favenida integer, fnumero integer, fcolonia character varying(50), fmunicipio character varying(30), freferencia character varying(255))
+ as $$
 begin
 return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente 
 order by id desc limit 1;
@@ -825,6 +845,20 @@ return query SELECT id, nombre,
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-- ----------------------------
+-- Function structure for "fn_seleccionarexistencia"
+-- ----------------------------
+CREATE OR REPLACE FUNCTION "fn_seleccionarexistencia"(IN fid int4)
+  RETURNS SETOF "pg_catalog"."record" AS $BODY$
+begin 
+return query select concat(categoria.nombre,' ',producto,descripcion) as descripcion, producto.stock from producto
+inner join categoria on producto.id_categoria = categoria
+where producto.id = fid;
+end
+$BODY$
+  LANGUAGE 'plpgsql' VOLATILE COST 100
+ ROWS 1000
+;
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarproductos()
 returns table( fid integer,fid_categoria integer, fcategoria character varying(25), fdescripcion character varying(25),
@@ -938,9 +972,129 @@ else
 select (max(id)+1) into maxid from ajusteinventario;
 end if;
 insert into ajusteinventario(id, id_producto, causa, existencia_actual, nueva_existencia, id_empleado, fecha_hora)
- values ( maxid, id_producto, causa, existencia_actual, nueva_existencia, id_empleado, now());
+ values ( maxid, fid_producto, fcausa, fexistencia_actual, fnueva_existencia, fid_empleado, now());
 end
 $$ language plpgsql;
+
+--===============================================================================================================================================================
+
+--triggers
+
+CREATE OR REPLACE FUNCTION fn_nuevoinventario()
+RETURNS TRIGGER AS $$
+ BEGIN IF (TG_OP = 'INSERT')
+  THEN Update producto set stock = new.nueva_existencia
+  where id = new.id_producto;
+   END IF;
+    RETURN NULL;END;
+      $$ LANGUAGE  plpgsql;
+
+CREATE TRIGGER tg_nuevoinventario AFTER INSERT
+ON ajusteinventario
+FOR EACH ROW
+EXECUTE PROCEDURE fn_nuevoinventario();
+
+CREATE OR REPLACE FUNCTION fn_decrementoStock()
+RETURNS TRIGGER AS $$
+ BEGIN IF (TG_OP = 'INSERT')
+  THEN Update producto set stock = stock - new.cantidad
+  where id = new.id_producto;
+   END IF;
+    RETURN NULL;END;
+      $$ LANGUAGE  plpgsql;
+      
+CREATE TRIGGER tg_decrementostock AFTER INSERT
+ON detalleventa
+FOR EACH ROW
+EXECUTE PROCEDURE fn_decrementostock();
+
+CREATE OR REPLACE FUNCTION fn_incrementoStock()
+RETURNS TRIGGER AS $$
+ BEGIN IF (TG_OP = 'INSERT')
+  THEN Update producto set stock = stock + new.cantidad, precio1 = new.precio_venta1,
+  precio2 = new.precio_venta2
+  where id = new.id_producto;
+   END IF;
+    RETURN NULL;END;
+      $$ LANGUAGE  plpgsql;
+      
+CREATE TRIGGER tg_incrementostock AFTER INSERT
+ON detallecompra
+FOR EACH ROW
+EXECUTE PROCEDURE fn_incrementostock();
+
+CREATE OR REPLACE FUNCTION fn_fechahora()
+RETURNS TRIGGER AS $$
+ BEGIN IF (TG_OP = 'INSERT')
+  THEN Update fechahora set fechahora = now()
+  where id = 1;
+   END IF;
+   IF (TG_OP = 'UPDATE')
+  THEN Update fechahora set fechahora = now()
+  where id = 1;
+   END IF;
+   IF (TG_OP = 'DELETE')
+  THEN Update fechahora set fechahora = now()
+  where id = 1;
+   END IF;
+    RETURN NULL;END;
+      $$ LANGUAGE  plpgsql;
+      
+      
+CREATE  TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON ajusteinventario
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON categoria
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON cliente
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON compra
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON detallecompra
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON detalleventa
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON empleado
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON marca
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON producto
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON proveedor
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
+
+CREATE TRIGGER tg_fechahora AFTER INSERT OR UPDATE OR DELETE
+ON venta
+FOR EACH ROW
+EXECUTE PROCEDURE fn_fechahora();
 
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

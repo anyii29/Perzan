@@ -8,86 +8,142 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Empleado">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="925.0" styleClass="background" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Empleado">
    <children>
-      <Label layoutX="234.0" layoutY="14.0" text="EMPLEADO" />
-      <TabPane layoutX="14.0" layoutY="42.0" prefHeight="313.0" prefWidth="569.0" styleClass="tab-Pane" tabClosingPolicy="UNAVAILABLE">
+      <Label layoutX="317.0" layoutY="14.0" text="EMPLEADO" />
+      <TabPane layoutX="14.0" layoutY="42.0" prefHeight="438.0" prefWidth="896.0" styleClass="tab-Pane" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="VENTAS">
+          <Tab fx:id="tVentas" onSelectionChanged="#cancelarVenta" text="    Ventas">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
                      <children>
-                        <Label layoutX="25.0" layoutY="14.0" text="ID PRODUCTO" />
-                        <Label layoutX="200.0" layoutY="212.0" text="CLIENTE" />
-                        <Label layoutX="23.0" layoutY="68.0" text="CANTIDAD" />
-                        <Label layoutX="442.0" layoutY="212.0" text="TOTAL" />
-                        <TextField fx:id="txtIdVentas" layoutX="23.0" layoutY="31.0" prefHeight="25.0" prefWidth="141.0">
-                           <tooltip>
-                              <Tooltip fx:id="ttId" />
-                           </tooltip></TextField>
-                        <TextField fx:id="txtCantidadVentas" layoutX="23.0" layoutY="93.0" onAction="#insertar" prefHeight="25.0" prefWidth="139.0">
-                           <tooltip>
-                              <Tooltip fx:id="ttCantidad" />
-                           </tooltip></TextField>
-                        <Button fx:id="btnInsertar" layoutX="109.0" layoutY="130.0" mnemonicParsing="false" onAction="#insertar" text="INSERTAR" />
-                        <TextField fx:id="txtClienteVentas" layoutX="295.0" layoutY="208.0" onAction="#venta" prefHeight="25.0" prefWidth="129.0">
-                           <tooltip>
-                              <Tooltip fx:id="ttCantidad" />
-                           </tooltip></TextField>
-                        <Button fx:id="btnVenta" layoutX="418.0" layoutY="246.0" mnemonicParsing="false" onAction="#venta" text="VENTA" />
-                        <Button fx:id="btnCancelar" layoutX="489.0" layoutY="246.0" mnemonicParsing="false" onAction="#cancelar" text="CANCELAR" />
-                        <TableView fx:id="tvVentas" layoutX="185.0" layoutY="12.0" prefHeight="187.0" prefWidth="379.0">
-                          <columns>
-                            <TableColumn fx:id="tcIdVen" prefWidth="37.0" text="ID" />
-                            <TableColumn fx:id="tcNombreVen" prefWidth="135.0" text="NOMBRE" />
-                              <TableColumn fx:id="tcPrecioVen" prefWidth="59.0" text="PRECIO" />
-                              <TableColumn fx:id="tcCantidadVen" prefWidth="77.0" text="CANTIDAD" />
-                              <TableColumn fx:id="tcImporteVen" prefWidth="67.0" text="IMPORTE" />
-                          </columns>
-                        </TableView>
-                        <Label fx:id="lblTotal" alignment="CENTER" contentDisplay="RIGHT" layoutX="503.0" layoutY="212.0" prefHeight="17.0" prefWidth="52.0" text="0" textAlignment="RIGHT" />
-                        <Button fx:id="btnModItem" layoutX="328.0" layoutY="246.0" mnemonicParsing="false" onAction="#modificarItem" text="MOD ITEM">
-                           <tooltip>
-                              <Tooltip text="Modifica un elemento \n en la tabla." />
-                           </tooltip></Button>
-                        <Button fx:id="btnDelItem" layoutX="243.0" layoutY="246.0" mnemonicParsing="false" onAction="#eliminarItem" text="DEL ITEM">
+                        <TextField fx:id="txtBuscarProductoVen" layoutX="14.0" layoutY="4.0" onKeyReleased="#buscarProdVen" promptText="Buscar producto" />
+                        <ListView fx:id="lvProductosVen" layoutX="14.0" layoutY="41.0" onKeyReleased="#selectedProdVen" onMouseClicked="#selectedProdVen" prefHeight="325.0" prefWidth="172.0" />
+                        <TitledPane animated="false" collapsible="false" layoutX="233.0" layoutY="6.0" prefHeight="64.0" prefWidth="433.0" text="Cliente">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background">
+                                 <children>
+                                    <TextField fx:id="txtNombreCli" layoutX="67.0" layoutY="7.0" prefHeight="25.0" prefWidth="231.0" />
+                                    <Label layoutX="3.0" layoutY="9.0" text="Nombre:" />
+                                    <Button fx:id="btnNuevoCli" layoutX="352.0" layoutY="8.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="233.0" layoutY="74.0" prefHeight="82.0" prefWidth="433.0" text="Producto">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background">
+                                 <children>
+                                    <Label layoutX="3.0" layoutY="4.0" text="Nombre:" />
+                                    <TextField fx:id="txtNombreProd" layoutX="67.0" layoutY="2.0" prefHeight="25.0" prefWidth="150.0" />
+                                    <TextField fx:id="txtPrecioProd" alignment="CENTER_RIGHT" layoutX="67.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" />
+                                    <Label layoutX="3.0" layoutY="33.0" text="Precio:" />
+                                    <Label layoutX="220.0" layoutY="4.0" text="Cantidad:" />
+                                    <TextField fx:id="txtCantidadProd" alignment="CENTER_RIGHT" layoutX="292.0" layoutY="2.0" prefHeight="25.0" prefWidth="123.0" />
+                                    <Button fx:id="btnAgregarProd" layoutX="352.0" layoutY="31.0" mnemonicParsing="false" onAction="#agregarProd" text="Agregar" />
+                                    <CheckBox fx:id="cbDescuento" layoutX="234.0" layoutY="32.0" mnemonicParsing="false" onAction="#descuento" text="Descuento" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TextField fx:id="txtBuscarClientesVen" layoutX="709.0" layoutY="3.0" onKeyReleased="#buscarCliVen" promptText="Buscar Cliente" />
+                        <ListView fx:id="lvClientesVen" layoutX="710.0" layoutY="40.0" onKeyReleased="#selectedCliVen" onMouseClicked="#selectedCliVen" prefHeight="325.0" prefWidth="172.0" styleClass="dialogStage" />
+                        <Label layoutX="546.0" layoutY="350.0" text="Total:" />
+                        <Button fx:id="btnDelItemProd" layoutX="368.0" layoutY="376.0" mnemonicParsing="false" onAction="#eliminarItemProd" text="Del Item">
                            <tooltip>
                               <Tooltip text="Elimina un elemento \nde la tabla." />
                            </tooltip>
                         </Button>
+                        <Button fx:id="btnVenta" layoutX="524.0" layoutY="376.0" mnemonicParsing="false" onAction="#venta" text="Venta" />
+                        <Button fx:id="btnCancelarVenta" layoutX="601.0" layoutY="376.0" mnemonicParsing="false" onAction="#cancelarVenta" text="Cancelar" />
+                        <TableView fx:id="tvVentas" layoutX="232.0" layoutY="156.0" prefHeight="187.0" prefWidth="433.0">
+                          <columns>
+                            <TableColumn fx:id="tcNombreVen" prefWidth="190.0" text="Nombre" />
+                              <TableColumn fx:id="tcPrecioVen" prefWidth="101.0" text="Precio" />
+                              <TableColumn fx:id="tcCantidadVen" prefWidth="65.0" text="Cantidad" />
+                              <TableColumn fx:id="tcImporteVen" prefWidth="70.0" text="Subtotal" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="txtTotalProd" layoutX="594.0" layoutY="346.0" prefHeight="25.0" prefWidth="74.0" />
+                        <Label fx:id="lblClientes" layoutX="710.0" layoutY="377.0" prefHeight="21.0" prefWidth="172.0" />
+                        <Label fx:id="lblVProductos" layoutX="15.0" layoutY="377.0" prefHeight="21.0" prefWidth="172.0" />
+                        <Label fx:id="lblTVentas" layoutX="232.0" layoutY="348.0" prefHeight="21.0" prefWidth="198.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab text="LISTA DE PRODUCTOS">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+            <Tab fx:id="tcompras" onSelectionChanged="#cancelarCom" text="  Compras">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background">
                      <children>
-                        <TableView fx:id="tvProductos" prefHeight="253.0" prefWidth="569.0">
-                          <columns>
-                            <TableColumn fx:id="tcIdProd" prefWidth="37.0" text="ID" />
-                            <TableColumn fx:id="tcNombreProd" prefWidth="172.0" text="NOMBRE" />
-                              <TableColumn fx:id="tcPrecioProd" prefWidth="85.0" text="PRECIO" />
-                              <TableColumn fx:id="tcCantidadProd" prefWidth="73.0" text="CANTIDAD" />
-                          </columns>
+                        <TextField fx:id="txtBuscarProdCom" layoutX="9.0" layoutY="4.0" onKeyReleased="#buscarProdCom" promptText="Buscar producto" />
+                        <ListView fx:id="lvProductoCom" layoutX="10.0" layoutY="38.0" onKeyReleased="#selectedProdCom" onMouseClicked="#selectedProdCom" prefHeight="325.0" prefWidth="172.0" />
+                        <TextField fx:id="txtBuscarProCom" layoutX="711.0" layoutY="4.0" onKeyReleased="#buscarProCom" promptText="Buscar proveedor" />
+                        <ListView fx:id="lvProveedoresCom" layoutX="711.0" layoutY="38.0" onKeyReleased="#selectedProCom" onMouseClicked="#selectedProCom" prefHeight="325.0" prefWidth="172.0" />
+                        <TableView fx:id="tvCompras" layoutX="232.0" layoutY="205.0" prefHeight="124.0" prefWidth="433.0">
+                           <columns>
+                              <TableColumn fx:id="tcNombreCom" prefWidth="188.0" text="Nombre" />
+                              <TableColumn fx:id="tcPrecioCom" prefWidth="100.0" text="Precio" />
+                              <TableColumn fx:id="tcCantidadCom" prefWidth="66.0" text="Cantidad" />
+                              <TableColumn fx:id="tcImporteCom" prefWidth="72.0" text="Subtotal" />
+                           </columns>
                         </TableView>
-                        <TextField fx:id="txtIdB" layoutX="200.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="55.0" promptText="ID" />
-                        <TextField fx:id="txtNombreB" layoutX="264.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="114.0" promptText="Nombre" />
-                        <TextField fx:id="txtPrecioB" layoutX="386.0" layoutY="256.0" onAction="#buscar" prefHeight="25.0" prefWidth="53.0" promptText="Precio" />
-                        <Button fx:id="btnBuscar" layoutX="447.0" layoutY="256.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-                        <Button fx:id="btnAgregar" layoutX="504.0" layoutY="256.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
-                        <Button fx:id="btnMostrarT" layoutX="76.0" layoutY="256.0" mnemonicParsing="false" onAction="#mostrar" text="Mostrar Productos">
+                        <TitledPane animated="false" collapsible="false" layoutX="232.0" layoutY="5.0" prefHeight="59.0" prefWidth="433.0" text="Proveedor">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background">
+                                 <children>
+                                    <Button fx:id="btnNuevoProCom" layoutX="352.0" layoutY="5.0" mnemonicParsing="false" onAction="#nuevoPro" text="Nuevo" />
+                                    <Label layoutY="6.0" text="Empresa:" />
+                                    <TextField fx:id="txtEmpresaPro" layoutX="70.0" layoutY="4.0" prefHeight="25.0" prefWidth="231.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="232.0" layoutY="67.0" prefHeight="136.0" prefWidth="433.0" text="Producto">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background">
+                                 <children>
+                                    <Label layoutX="3.0" layoutY="4.0" text="Nombre:" />
+                                    <TextField fx:id="txtNombreProdCom" layoutX="67.0" layoutY="2.0" prefHeight="25.0" prefWidth="129.0" />
+                                    <TextField fx:id="txtPrecioProdCom1" alignment="CENTER_RIGHT" layoutX="67.0" layoutY="29.0" prefHeight="25.0" prefWidth="90.0" />
+                                    <TextField fx:id="txtPrecioProdCom2" alignment="CENTER_RIGHT" layoutX="67.0" layoutY="56.0" prefHeight="25.0" prefWidth="90.0" />
+                                    <TextField fx:id="txtStock" alignment="CENTER_RIGHT" layoutX="67.0" layoutY="83.0" prefHeight="25.0" prefWidth="90.0" />
+                                    <Label layoutX="3.0" layoutY="31.0" text="Precio1:" />
+                                    <Label layoutX="207.0" layoutY="4.0" text="Cantidad:" />
+                                    <TextField fx:id="txtCantidadProdCom" alignment="CENTER_RIGHT" layoutX="279.0" layoutY="2.0" prefHeight="25.0" prefWidth="65.0" />
+                                    <Label layoutX="166.0" layoutY="31.0" text="Nuevo Precio1:" />
+                                    <TextField fx:id="txtNewPrecioProdCom1" alignment="CENTER_RIGHT" layoutX="279.0" layoutY="29.0" prefHeight="25.0" prefWidth="65.0" />
+                                    <TextField fx:id="txtNewPrecioProdCom2" alignment="CENTER_RIGHT" layoutX="279.0" layoutY="56.0" prefHeight="25.0" prefWidth="65.0" />
+                                    <TextField fx:id="txtPrecioCompra" alignment="CENTER_RIGHT" layoutX="279.0" layoutY="83.0" prefHeight="25.0" prefWidth="65.0" />
+                                    <Button fx:id="btnAgregarProdCom" layoutX="352.0" layoutY="31.0" mnemonicParsing="false" onAction="#agregarProdCom" text="Agregar" />
+                                    <Button fx:id="btnNuevoProdCom" layoutX="350.0" layoutY="4.0" mnemonicParsing="false" onAction="#nuevoProdCompra" text="Nuevo" />
+                                    <Label layoutX="166.0" layoutY="58.0" text="Nuevo Precio2:" />
+                                    <Label layoutX="3.0" layoutY="58.0" text="Precio2:" />
+                                    <Label layoutX="163.0" layoutY="85.0" text="Precio Compra:" />
+                                    <Label layoutX="3.0" layoutY="85.0" text="Stock:" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TextField fx:id="txtTotalCom" layoutX="591.0" layoutY="330.0" prefHeight="25.0" prefWidth="74.0" />
+                        <Button fx:id="btnDelItemCom" layoutX="368.0" layoutY="363.0" mnemonicParsing="false" onAction="#eliminarItemCom" text="Del item">
                            <tooltip>
-                              <Tooltip text="Muestra todos los productos disponibles." />
+                              <Tooltip text="Elimina un elemento \nde la tabla." />
                            </tooltip>
                         </Button>
+                        <Button fx:id="btnCompra" layoutX="517.0" layoutY="363.0" mnemonicParsing="false" onAction="#compra" text="Compra" />
+                        <Button fx:id="btnCancelarCom" layoutX="600.0" layoutY="363.0" mnemonicParsing="false" onAction="#cancelarCom" text="Cancelar" />
+                        <Label layoutX="547.0" layoutY="332.0" text="Total:" />
+                        <Label fx:id="lblCProductos" layoutX="10.0" layoutY="376.0" prefHeight="21.0" prefWidth="172.0" />
+                        <Label fx:id="lblProveedores" layoutX="711.0" layoutY="376.0" prefHeight="21.0" prefWidth="172.0" />
+                        <Label fx:id="lblTCompras" layoutX="232.0" layoutY="332.0" prefHeight="21.0" prefWidth="211.0" />
                      </children>
                   </AnchorPane>
-               </content>
+              </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="btnCerrarSesion" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#cerrarSesion" text="CERRAR SESIÓN" />
-      <Label fx:id="lblEmpleado" layoutX="361.0" layoutY="14.0" prefHeight="16.0" prefWidth="199.0" />
+      <Button fx:id="btnCerrarSesion" layoutX="845.0" layoutY="13.0" mnemonicParsing="false" onAction="#cerrarSesion" text="CERRAR" />
+      <Label fx:id="lblEmpleado" layoutX="463.0" layoutY="14.0" prefHeight="21.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

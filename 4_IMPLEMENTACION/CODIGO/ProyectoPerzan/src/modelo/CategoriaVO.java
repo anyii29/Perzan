@@ -11,8 +11,13 @@ public class CategoriaVO {
 	protected int id;
 	protected String nombre;
 	protected Conexion conex = Conexion.getInstance();
+	protected Logger log;
+	protected String message;
 	
-	
+	public CategoriaVO(){
+		log = new Logger();
+	}
+		
 	public int getId() {
 		return id;
 	}
@@ -33,14 +38,17 @@ public class CategoriaVO {
 		this.id = id;
 		this.nombre = nombre;
 	}
-	public CategoriaVO() {
-		
-	}
-	public ObservableList<CategoriaVO> listarCategoria(){
+	public ObservableList<CategoriaVO> listarCategoria(boolean d){
 		ObservableList<CategoriaVO> lista = FXCollections.observableArrayList();
 		try {
 			conex.conectar();
-			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarcategoria()");
+			PreparedStatement consulta;
+			if(d){
+				consulta= conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarcategoria()");
+			}
+			else{
+				consulta= conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadocategoria()");
+			}
 			ResultSet res = consulta.executeQuery();
 			while(res.next()){
 				String nombre =res.getString("fnombre");
@@ -52,7 +60,8 @@ public class CategoriaVO {
 			}
 			res.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			message = e.getSQLState();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -78,7 +87,8 @@ public class CategoriaVO {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -99,7 +109,8 @@ public class CategoriaVO {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -121,11 +132,37 @@ public class CategoriaVO {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
 		}
 		return false;
+	}
+	public boolean modificarEliminado(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadocategoria(?)");
+				consulta.setInt(1, this.id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
+	public String getMesssage(){
+		return this.message;
 	}
 }

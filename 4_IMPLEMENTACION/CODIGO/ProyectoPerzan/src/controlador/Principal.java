@@ -2,6 +2,8 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import modelo.LoginEmpVO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,14 +14,15 @@ import javafx.scene.control.Tooltip;
 public class Principal implements Initializable{
 	static public boolean loginAdm;
 	static public boolean loginEmp;
-	static String empleado;
+	//static String empleado;
 	private view.Main1 main1;
+	private static LoginEmpVO empleado;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnEmpleado.setOnAction(new showLoginEmp());
 		btnAdmin.setOnAction(new showLogin());
-		ttAdmin.setText("Iniciar Sesion");
-		ttEmp.setText("Iniciar Sesion");
+		ttAdmin.setText("Iniciar Sesión");
+		ttEmp.setText("Iniciar Sesión");
 	}
 	public Principal(){	
 		loginAdm = false;
@@ -41,12 +44,12 @@ public class Principal implements Initializable{
 		public void handle(ActionEvent arg0) {
 			if(loginAdm){				
 				main1.viewAdministrador();
-				ttAdmin.setText("Cambiar A Administrador");
+				ttAdmin.setText("Cambiar a administrador.");
 			}
 			else{
 				LoginEmp.tipo = "admin";
 				main1.showLoginEmp();
-				ttAdmin.setText("Iniciar Sesion");
+				ttAdmin.setText("Iniciar sesión.");
 			}
 		}
 	}
@@ -55,17 +58,21 @@ public class Principal implements Initializable{
 		public void handle(ActionEvent arg0) {
 			if(loginEmp){
 				main1.viewEmpleado(empleado);
-				ttEmp.setText("Cambiar A Empleado");
+				ttEmp.setText("Cambiar a empleado.");
 			}
 			else{
 				LoginEmp.tipo = "empleado";
 				main1.showLoginEmp();
-				ttEmp.setText("Iniciar Sesion");
+				ttEmp.setText("Iniciar sesión.");
 			}
 		}
 	}
 	public void salir(ActionEvent event){
 		System.exit(0);
+	}
+	
+	public static void setEmpleado(LoginEmpVO emp){
+		empleado = emp;
 	}
 	
 	public void setMain1(view.Main1 main1) {

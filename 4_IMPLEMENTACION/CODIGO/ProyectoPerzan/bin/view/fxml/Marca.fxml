@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="354.0" prefWidth="342.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.Marca">
+<AnchorPane prefHeight="373.0" prefWidth="342.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Marca">
    <children>
-      <Label layoutX="41.0" layoutY="51.0" text="Nombre" />
-      <TextField fx:id="txtNombreMar" layoutX="14.0" layoutY="87.0" prefHeight="25.0" prefWidth="114.0" />
-      <TableView fx:id="tvMarca" layoutX="154.0" layoutY="51.0" onKeyReleased="#selectedTableMarca" onMouseClicked="#selectedTableMarca" prefHeight="261.0" prefWidth="155.0">
+      <Label layoutX="23.0" layoutY="57.0" text="Nombre:" />
+      <Button fx:id="btnNuevo" layoutX="14.0" layoutY="302.0" mnemonicParsing="false" onAction="#nuevo" text="Nuevo" />
+      <TextField fx:id="txtNombreMar" layoutX="23.0" layoutY="78.0" prefHeight="25.0" prefWidth="114.0" />
+      <TableView fx:id="tvMarca" layoutX="154.0" layoutY="51.0" onKeyReleased="#selectedTableMarca" onMouseClicked="#selectedTableMarca" prefHeight="224.0" prefWidth="155.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn fx:id="tcIdMar" prefWidth="41.0" text="Id" />
             <TableColumn fx:id="tcNombreMar" prefWidth="104.0" text="Nombre" />
          </columns>
       </TableView>
-      <Button fx:id="btnIngresarMar" layoutX="39.0" layoutY="135.0" mnemonicParsing="false" onAction="#ingresarMar" text="Ingresar" />
-      <Button fx:id="btnModificarMar" layoutX="38.0" layoutY="180.0" mnemonicParsing="false" onAction="#modificarMar" text="Modificar" />
-      <Button fx:id="btnEliminarMar" layoutX="38.0" layoutY="224.0" mnemonicParsing="false" onAction="#eliminarMar" text="Eliminar" />
+      <Button fx:id="btnIngresarMar" layoutX="90.0" layoutY="302.0" mnemonicParsing="false" onAction="#ingresarMar" text="Guardar" />
+      <Button fx:id="btnModificarMar" layoutX="166.0" layoutY="302.0" mnemonicParsing="false" onAction="#modificarMar" text="Editar" />
+      <Button fx:id="btnEliminarMar" layoutX="244.0" layoutY="302.0" mnemonicParsing="false" onAction="#eliminarMar" text="Eliminar" />
       <Label layoutX="138.0" layoutY="24.0" text="Marca" />
-      <Button fx:id="btnCancelar" layoutX="39.0" layoutY="265.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="btnCancelar" layoutX="244.0" layoutY="336.0" mnemonicParsing="false" onAction="#cancelar" text="Salir" />
+      <ImageView fitHeight="101.0" fitWidth="114.0" layoutX="23.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PERZAN%20FINAL.png" />
+         </image>
+      </ImageView>
+      <CheckBox fx:id="ckbEliminados" layoutX="23.0" layoutY="254.0" mnemonicParsing="false" onAction="#eliminados" text="Eliminados" />
+      <Button fx:id="btnResEliminados" layoutX="166.0" layoutY="302.0" mnemonicParsing="false" onAction="#resEliminado" text="Restaurar" />
    </children>
 </AnchorPane>

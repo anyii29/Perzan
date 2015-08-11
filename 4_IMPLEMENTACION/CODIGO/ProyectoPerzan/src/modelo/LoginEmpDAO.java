@@ -7,12 +7,18 @@ import java.sql.SQLException;
 import modelo.Conexion;
 
 public class LoginEmpDAO {
-	Conexion conex;
-	LoginEmpVO loginE = new LoginEmpVO();
+	private Conexion conex;
+	private LoginEmpVO loginE;
+	private Logger log;
+	
+	public LoginEmpDAO(){
+		log = new Logger();
+		loginE = new LoginEmpVO();
+		conex = Conexion.getInstance();
+	}
 
 	public boolean iniciar(LoginEmpVO usuarioEmpVO) {
 		boolean result = false;
-		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
@@ -25,12 +31,15 @@ public class LoginEmpDAO {
 					loginE.setUsuario(res.getString("fusuario"));
 					loginE.setPassword(res.getString("fpassword"));
 					loginE.setTipo(res.getString("ftipo"));
+					loginE.setNombre(res.getString("fnombre"));
+					loginE.setId(res.getInt("fid"));
 					result = true;
 				}
 				res.close();
 				}		
 			catch(SQLException e){
 				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 				
 			}
 			finally{
@@ -39,7 +48,25 @@ public class LoginEmpDAO {
 		}
 		return result;
 	}
-	
+	public boolean fechaHora(){
+		boolean res = false;
+		try {
+			conex.conectar();
+			PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_fechahorasistema()");
+			ResultSet r = consulta.executeQuery();
+			if(r.next()){
+				res = r.getBoolean("fn_fechahorasistema");
+			}
+			consulta.close();
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+			// TODO: handle exception
+		}
+		finally{
+			conex.desconectar();
+		}
+		return res;
+	}
 	public LoginEmpVO obj() {
 			return loginE;	
 	}

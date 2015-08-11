@@ -1,7 +1,15 @@
 package modelo;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ClienteVO extends Person {
-	String referencia, nombreCliente;
+	private String referencia, nombreCliente;
+	private Logger log;
+	
 	
 	
 	/**
@@ -36,6 +44,7 @@ public class ClienteVO extends Person {
 
 	public ClienteVO() {
 		// TODO Auto-generated constructor stub
+		log = new Logger();
 	}
 
 	/**
@@ -52,5 +61,44 @@ public class ClienteVO extends Person {
 		this.referencia = referencia;
 	}
 	
+	public ObservableList<ClienteVO> getDatos(){
+		ObservableList<ClienteVO> clientes = FXCollections.observableArrayList();
+		ClienteVO clienteVO;
+		Conexion conex = Conexion.getInstance();
+		if(conex.conectado()){
+			try {
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarclientes()");
+				ResultSet res = consulta.executeQuery();
+				while(res.next()){
+					int id = res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apellidoPaterno = res.getString("fapellido_paterno");
+					String apellidoMaterno = res.getString("fapellido_materno");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String referencia = res.getString("freferencia");
+					clienteVO = new ClienteVO(id, nombre, apellidoPaterno, apellidoMaterno, calle, avenida,
+							numero, colonia, municipio, referencia);
+					clientes.add(clienteVO);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.printLog(e.getMessage(), this.getClass().toString());
+			}
+			finally{
+				conex.desconectar();
+			}			
+		}
+		return clientes;
+		
+	}
+	
+	public String toString(){
+		return nombreCliente;
+	}
 	
 }

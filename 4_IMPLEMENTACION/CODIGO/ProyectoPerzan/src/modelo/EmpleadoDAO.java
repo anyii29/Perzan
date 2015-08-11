@@ -8,16 +8,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EmpleadoDAO implements iOp{
-	boolean result;
-	ObservableList<EmpleadoVO> empleados;
-	Conexion conex = Conexion.getInstance();
+	private boolean result;
+	private ObservableList<EmpleadoVO> empleados;
+	private Conexion conex = Conexion.getInstance();
+	private Logger log;
 	
-	public ObservableList<EmpleadoVO> getDatos(){
+	public EmpleadoDAO(){
+		log = new Logger();
+	}
+	public ObservableList<EmpleadoVO> getDatos(boolean d){
 		empleados = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarempleados()");
+				PreparedStatement consulta;
+				if(d){
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarempleados()");					
+				}
+				else{
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadoempleado()");
+					
+				}
 				ResultSet res = consulta.executeQuery();
 					while(res.next()){
 						int id= res.getInt("fid");
@@ -40,7 +51,7 @@ public class EmpleadoDAO implements iOp{
 					consulta.close();
 			}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -70,13 +81,12 @@ public class EmpleadoDAO implements iOp{
 					String tipo = res.getString("ftipo");
 					EmpleadoVO empleadoVO = new EmpleadoVO(id, nombre, apPaterno, apMaterno, calle,avenida,
 							numero, colonia, municipio, telefono, usuario, password, tipo);
-					System.out.println(empleadoVO);
 					return empleadoVO;
 				}
 				consulta.close();
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -102,7 +112,7 @@ public class EmpleadoDAO implements iOp{
 				consulta.close();
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -137,17 +147,11 @@ public class EmpleadoDAO implements iOp{
 				consulta.setString(10, empleadoVO.getUsuario());
 				consulta.setString(11, empleadoVO.getPassword());
 				consulta.setString(12, empleadoVO.getTipo());
-				boolean res = consulta.execute();
-				if(res){
-					result= true;	
-				}
-				else{
-					result = false;
-				}
+				result = consulta.execute();
 				consulta.close();
 				}		
 				catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 				}
 			finally{
 				conex.desconectar();
@@ -192,7 +196,7 @@ public class EmpleadoDAO implements iOp{
 				consulta.close();
 				}		
 				catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 				}
 			finally{
 				conex.desconectar();
@@ -205,4 +209,26 @@ public class EmpleadoDAO implements iOp{
 			return false;
 		}		
 	}
+	public boolean modificarEliminado(int id){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadoempleado(?)");
+				consulta.setInt(1, id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
+
 }

@@ -8,8 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ClienteDAO{
-	Conexion conex = Conexion.getInstance();
-	ObservableList<ClienteVO> clientes;
+	private Conexion conex;
+	private ObservableList<ClienteVO> clientes;
+	private Logger log;
+	
+	public ClienteDAO(){
+		log = new Logger();
+		conex = Conexion.getInstance();
+	}
 
 	public boolean registrar(Object obj) {
 		ClienteVO clienteVO = new ClienteVO();
@@ -28,13 +34,10 @@ public class ClienteDAO{
 				consulta.setString(7, clienteVO.getColonia());
 				consulta.setString(8, clienteVO.getMunicipio());
 				consulta.setString(9, clienteVO.getReferencia());
-				boolean res = consulta.execute();
-				if(res){
-					result = true;
-				}
+				result = consulta.execute();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -61,9 +64,12 @@ public class ClienteDAO{
 				consulta.setString(8, clienteVO.getColonia());
 				consulta.setString(9, clienteVO.getMunicipio());
 				consulta.setString(10, clienteVO.getReferencia());
-			} catch (SQLException e) {
+				if(consulta.execute()){
+					result = true;
+				}
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{	
 				conex.desconectar();
@@ -72,32 +78,54 @@ public class ClienteDAO{
 		return result;
 	}
 	
-	public ObservableList<ClienteVO> getDatos(){
+	public boolean eliminar(int id){
+		boolean result = false;
+		conex.conectar();
+		try {
+			PreparedStatement consulta = conex.getConnection().prepareStatement("Select fn_eliminarcliente(?)");
+			consulta.setInt(1, id);
+			if(consulta.execute()){
+				result = true;
+			}
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	public ObservableList<ClienteVO> getDatos(boolean d){
 		clientes = FXCollections.observableArrayList();
 		ClienteVO clienteVO;
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarclientes()");
+				PreparedStatement consulta;
+				if(d){
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarclientes()");
+				}
+				else{
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadocliente()");
+				}
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
-					int id = res.getInt("id");
-					String nombre = res.getString("nombre");
-					String apellidoPaterno = res.getString("apellido_paterno");
-					String apellidoMaterno = res.getString("apellido_materno");
-					int calle = res.getInt("calle");
-					int avenida = res.getInt("avenida");
-					int numero = res.getInt("numero");
-					String colonia = res.getString("colonia");
-					String municipio = res.getString("municipio");
-					String referencia = res.getString("referencia");
+					int id = res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apellidoPaterno = res.getString("fapellido_paterno");
+					String apellidoMaterno = res.getString("fapellido_materno");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String referencia = res.getString("freferencia");
 					clienteVO = new ClienteVO(id, nombre, apellidoPaterno, apellidoMaterno, calle, avenida,
 							numero, colonia, municipio, referencia);
 					clientes.add(clienteVO);
 				}
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -115,23 +143,23 @@ public class ClienteDAO{
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarultimocliente()");
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
-					int id = res.getInt("id");
-					String nombre = res.getString("nombre");
-					String apellidoPaterno = res.getString("apellido_paterno");
-					String apellidoMaterno = res.getString("apellido_materno");
-					int calle = res.getInt("calle");
-					int avenida = res.getInt("avenida");
-					int numero = res.getInt("numero");
-					String colonia = res.getString("colonia");
-					String municipio = res.getString("municipio");
-					String referencia = res.getString("referencia");
+					int id = res.getInt("fid");
+					String nombre = res.getString("fnombre");
+					String apellidoPaterno = res.getString("fapellido_paterno");
+					String apellidoMaterno = res.getString("fapellido_materno");
+					int calle = res.getInt("fcalle");
+					int avenida = res.getInt("favenida");
+					int numero = res.getInt("fnumero");
+					String colonia = res.getString("fcolonia");
+					String municipio = res.getString("fmunicipio");
+					String referencia = res.getString("freferencia");
 					clienteVO = new ClienteVO(id, nombre, apellidoPaterno, apellidoMaterno, calle, avenida,
 							numero, colonia, municipio, referencia);
 					return clienteVO;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -139,6 +167,27 @@ public class ClienteDAO{
 		}
 		return clienteVO;
 		
+	}
+	public boolean modificarEliminado(int id){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadocliente(?)");
+				consulta.setInt(1, id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
 	}
 
 }

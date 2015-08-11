@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="435.0" prefWidth="316.0" styleClass="background" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.NuevoProducto">
+   <children>
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutX="16.0" layoutY="35.0" prefHeight="351.0" prefWidth="284.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="dialogStage">
+               <children>
+                  <Label layoutX="41.0" layoutY="112.0" text="Marca:" />
+                  <Label layoutX="42.0" layoutY="18.0" text="Categoría:" />
+                  <ComboBox fx:id="cbTipo" layoutX="141.0" layoutY="287.0" prefHeight="25.0" prefWidth="107.0" promptText="Tipo" />
+                  <Label layoutX="41.0" layoutY="291.0" text="Tipo:" />
+                  <TextField fx:id="txtStockMinProd" alignment="CENTER_RIGHT" layoutX="144.0" layoutY="252.0" prefHeight="25.0" prefWidth="104.0">
+                    </TextField>
+                  <TextField fx:id="txtStockMaxProd" alignment="CENTER_RIGHT" layoutX="144.0" layoutY="218.0" prefHeight="25.0" prefWidth="104.0">
+                   </TextField>
+                  <Label layoutX="43.0" layoutY="256.0" text="Stock Min:" />
+                  <Label layoutX="41.0" layoutY="221.0" text="Stock Max:" />
+                  <Label layoutX="43.0" layoutY="187.0" text="Precio 2:" />
+                  <Label layoutX="42.0" layoutY="47.0" text="Descripción:" />
+                  <Label layoutX="43.0" layoutY="153.0" text="Precio 1:" />
+                  <TextField fx:id="txtPrecio2Prod" alignment="CENTER_RIGHT" layoutX="142.0" layoutY="183.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00" />
+                  <TextField fx:id="txtPrecio1Prod" alignment="CENTER_RIGHT" layoutX="141.0" layoutY="149.0" prefHeight="25.0" prefWidth="106.0" promptText="00.00">
+                  </TextField>
+                  <ComboBox fx:id="cbMarca" layoutX="141.0" layoutY="108.0" prefHeight="25.0" prefWidth="106.0" promptText="Marca" />
+                  <TextField fx:id="txtDescripcionProd" layoutX="34.0" layoutY="69.0" prefHeight="25.0" prefWidth="215.0">
+                     </TextField>
+                  <ComboBox fx:id="cbCategoria" layoutX="146.0" layoutY="14.0" prefHeight="25.0" prefWidth="101.0" promptText="Categoría" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Button fx:id="btnSalir" layoutX="211.0" layoutY="397.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+      <Button fx:id="btnGuardarProd" layoutX="40.0" layoutY="397.0" mnemonicParsing="false" onAction="#guardarProd" text="Guardar" />
+      <Label layoutX="105.0" layoutY="14.0" text="Nuevo Producto" />
+   </children>
+</AnchorPane>

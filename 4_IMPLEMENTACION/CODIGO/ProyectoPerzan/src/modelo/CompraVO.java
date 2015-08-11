@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class CompraVO {
 	
-	private int id, idProveedor;
-	private String empresa;
+	private int id, idProveedor, idEmpleado;
+	private String empresa, empleado;
 	private float total;
 	private Date fechaPedido;
 	private Timestamp fechaRecepcion;
@@ -17,8 +17,9 @@ public class CompraVO {
 		this.fechaPedido = fechaPedido;
 		this.fechaRecepcion = fechaRecepcion;
 	}
-	public CompraVO(int id, String empresa, float total, Date fechaPedido, Timestamp fechaRecepcion){
+	public CompraVO(int id, String empleado, String empresa, float total, Date fechaPedido, Timestamp fechaRecepcion){
 		this.id = id;
+		this.empleado = empleado;
 		this.empresa = empresa;
 		this.total = total;
 		this.fechaPedido = fechaPedido;
@@ -35,15 +36,6 @@ public class CompraVO {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public int getIdProvedor() {
-		return idProveedor;
-	}
-
-	public void setIdProvedor(int idProvedor) {
-		this.idProveedor = idProvedor;
-	}
-
 	public String getEmpresa() {
 		return empresa;
 	}
@@ -72,6 +64,42 @@ public class CompraVO {
 
 	public void setFechaRecepcion(Timestamp fechaRecepcion) {
 		this.fechaRecepcion = fechaRecepcion;
+	}
+	/**
+	 * @return the idProveedor
+	 */
+	public int getIdProveedor() {
+		return idProveedor;
+	}
+	/**
+	 * @param idProveedor the idProveedor to set
+	 */
+	public void setIdProveedor(int idProveedor) {
+		this.idProveedor = idProveedor;
+	}
+	/**
+	 * @return the idEmpleado
+	 */
+	public int getIdEmpleado() {
+		return idEmpleado;
+	}
+	/**
+	 * @param idEmpleado the idEmpleado to set
+	 */
+	public void setIdEmpleado(int idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+	/**
+	 * @return the empleado
+	 */
+	public String getEmpleado() {
+		return empleado;
+	}
+	/**
+	 * @param empleado the empleado to set
+	 */
+	public void setEmpleado(String empleado) {
+		this.empleado = empleado;
 	}
 	
 }

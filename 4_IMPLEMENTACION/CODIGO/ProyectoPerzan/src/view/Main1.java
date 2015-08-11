@@ -2,16 +2,19 @@ package view;
 
 import java.io.IOException;
 
+import modelo.CategoriaVO;
 import modelo.EmpleadoVO;
 import modelo.LoginEmpVO;
 import modelo.ProductoVO;
 import modelo.VentaDetVO;
 import controlador.Administrador;
+import controlador.Categoria;
 import controlador.Empleado;
 import controlador.LoginEmp;
-import controlador.ModEmpleado;
-import controlador.ModProducto;
-import controlador.ModVenta;
+import controlador.Marca;
+import controlador.NuevoCliente;
+import controlador.NuevoProducto;
+import controlador.NuevoProveedor;
 import controlador.Principal;
 import controlador.Splash;
 import javafx.application.Application;
@@ -85,14 +88,14 @@ public class Main1 extends Application {
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
 			usuario = controller.getUsuario();
-			if(LoginEmp.getTipo().equals("admin")){
+			if(LoginEmp.getTipo().equals("admin") && controller.getUsuario() != null){
 				viewAdministrador();
 				Principal.loginAdm = true;
 			}
 			else{
 				if(usuario != null && (usuario.getTipo().equals("admin")
 						|| usuario.getTipo().equals("empleado"))){
-					viewEmpleado(usuario.getUsuario());
+					viewEmpleado(usuario);
 					Principal.loginEmp = true;
 				}
 			}
@@ -101,13 +104,13 @@ public class Main1 extends Application {
 			e.printStackTrace();
 		}
 	}
-	public void showModProducto(ProductoVO productoVO) {
+	public void nuevoCliente() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main1.class.getResource("fxml/ModProducto.fxml"));
+			loader.setLocation(Main1.class.getResource("fxml/NuevoCliente.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Modificar Producto");
+			dialogStage.setTitle("Nuevo Cliente");
 			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
 			dialogStage.initStyle(StageStyle.TRANSPARENT); 
 			dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -115,24 +118,22 @@ public class Main1 extends Application {
 			Scene scene = new Scene(page);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
-			ModProducto controller = loader.getController();
-			primaryStage.opacityProperty().set(0.7);
+			NuevoCliente controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setProductoVO(productoVO);
+			primaryStage.opacityProperty().set(0.7);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
-	}
-	public void showModEmpleado(EmpleadoVO empleadoVO) {
+	}public void nuevoProducto() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main1.class.getResource("fxml/ModEmpleado.fxml"));
+			loader.setLocation(Main1.class.getResource("fxml/NuevoProducto.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Modificar Empleado");
+			dialogStage.setTitle("Nuevo Cliente");
 			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
 			dialogStage.initStyle(StageStyle.TRANSPARENT); 
 			dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -140,9 +141,8 @@ public class Main1 extends Application {
 			Scene scene = new Scene(page);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
-			ModEmpleado controller = loader.getController();
+			NuevoProducto controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setEmpleadoVO(empleadoVO);
 			primaryStage.opacityProperty().set(0.7);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
@@ -151,13 +151,13 @@ public class Main1 extends Application {
 			e.printStackTrace();
 		}
 	}
-	public void showModVenta(VentaDetVO ven) {
+	public void nuevoProveedor() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main1.class.getResource("fxml/ModVenta.fxml"));
+			loader.setLocation(Main1.class.getResource("fxml/NuevoProveedor.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Modificar Empleado");
+			dialogStage.setTitle("Nuevo Cliente");
 			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
 			dialogStage.initStyle(StageStyle.TRANSPARENT); 
 			dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -165,9 +165,8 @@ public class Main1 extends Application {
 			Scene scene = new Scene(page);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
-			ModVenta controller = loader.getController();
+			NuevoProveedor controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setVentaDetVO(ven);
 			primaryStage.opacityProperty().set(0.7);
 			dialogStage.showAndWait();
 			primaryStage.opacityProperty().set(1.0);
@@ -189,7 +188,7 @@ public class Main1 extends Application {
 			e.printStackTrace();
 		}
 	}
-	public void viewEmpleado(String usuario) {
+	public void viewEmpleado(LoginEmpVO usuario) {
 		try {
 			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("fxml/Empleado.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
@@ -240,6 +239,54 @@ public class Main1 extends Application {
 			//System.out.println("close");
 			//dialogStage.close();
 			//primaryStage.show();
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
+	}
+	public void showCategoria() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("fxml/Categoria.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Categoria");
+			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
+			dialogStage.initStyle(StageStyle.TRANSPARENT); 
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			dialogStage.setScene(scene);
+			Categoria controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			primaryStage.opacityProperty().set(0.7);
+			dialogStage.showAndWait();
+			primaryStage.opacityProperty().set(1.0);
+
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
+	}
+	public void showMarca() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("fxml/Marca.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Marca");
+			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
+			dialogStage.initStyle(StageStyle.TRANSPARENT); 
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			dialogStage.setScene(scene);
+			Marca controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			primaryStage.opacityProperty().set(0.7);
+			dialogStage.showAndWait();
+			primaryStage.opacityProperty().set(1.0);
+
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}

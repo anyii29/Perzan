@@ -16,14 +16,22 @@ public class MarcaVO extends CategoriaVO{
 	}
 
 	public MarcaVO() {
+		id= 0;
+		nombre = "";
 	}
 	
-	public ObservableList<MarcaVO> listarMarca(){
+	public ObservableList<MarcaVO> listarMarca(boolean b){
 		conex = Conexion.getInstance();
 		ObservableList<MarcaVO> lista = FXCollections.observableArrayList();
 		try {
 			conex.conectar();
-			PreparedStatement consulta= conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarmarca()");
+			PreparedStatement consulta;
+			if(b){
+				consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarmarca()"); 
+			}
+			else{
+				consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadomarca()"); 
+			}			
 			ResultSet res = consulta.executeQuery();
 			while(res.next()){
 				String nombre =res.getString("fnombre");
@@ -35,7 +43,7 @@ public class MarcaVO extends CategoriaVO{
 			}
 			res.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -61,7 +69,8 @@ public class MarcaVO extends CategoriaVO{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -82,7 +91,8 @@ public class MarcaVO extends CategoriaVO{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
@@ -104,12 +114,33 @@ public class MarcaVO extends CategoriaVO{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			message = e.getMessage();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{
 			conex.desconectar();
 		}
 		return false;
 	}
-
+	public boolean modificarEliminado(){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadomarca(?)");
+				consulta.setInt(1, this.id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
+	}
 }

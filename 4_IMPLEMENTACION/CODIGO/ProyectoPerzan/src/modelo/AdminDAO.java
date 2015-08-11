@@ -9,18 +9,20 @@ import modelo.Conexion;
 public class AdminDAO {
 	boolean result;
 	private Conexion conex;
+	private Logger log;
+	public AdminDAO(){
+		log = new Logger();
+	}
 	public boolean user(String pass) {
 		boolean yes = false;
 		conex = Conexion.getInstance();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				//PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT password from administrador as pass where password = ?");
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_adminpassword(?)");
 				consulta.setString(1, pass);
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
-					//String password = res.getString("password");
 					String password = res.getString(0);
 					
 					yes = true;
@@ -28,7 +30,7 @@ public class AdminDAO {
 				res.close();
 				}		
 				catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 				}
 				finally{
 					conex.desconectar();
@@ -53,7 +55,7 @@ public class AdminDAO {
 				consulta.close();
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();

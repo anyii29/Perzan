@@ -1,0 +1,6 @@
+Empleados
+Nombre,ApPaterno,ApMaterno,Calle,Avenida,Numero,Colonia,Municipio,Telefono,Usuario,Password,Tipo
+Angeles,Gonzalez,Blanco,43,119,65,Fraternidad,Cordoba,271-234-23-34,angeles1,6ebe562941c5f5dea13fd12c0bf01dee,empleado
+Alberto,Carmona,Rosas,1,1,2,Simple,Desconocido,000-000-00-00,alberto1,9fb747d7aca2d9b831285d05ad61ec66,empleado
+Alan,Ramirez,Garcia,3,4,21,Guadalupe,Omealca,271-234-23-24,alan111,4431eab85e54d132632660f02d2b8b85,admin
+Juanito,Bananas,Machuca,2,1,54,sdsjkjkjjk,wwwewewewe,132-123-12-12,juanito11,75c96249f401991caacb3c708bba72f0,empleado

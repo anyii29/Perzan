@@ -1,11 +1,13 @@
 package controlador;
 
+import java.io.File;
 import java.net.URL;
 import java.text.BreakIterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import modelo.BaseDatos;
 import modelo.Conexion;
 import modelo.Encrypt;
 import modelo.LoginEmpDAO;
@@ -13,10 +15,12 @@ import modelo.LoginEmpVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class LoginEmp implements Initializable {
@@ -46,14 +50,14 @@ public class LoginEmp implements Initializable {
 	public void login(ActionEvent event){
 		val = true;
 		if(txtUsuario.getText().equals("")||txtPassword.getText().equals("")){
-			JOptionPane.showMessageDialog(null, "Complementa Los Campos");
+			alert(AlertType.WARNING, "Complementa los campos.");
 		}
 		else{
 			conex.conectar();
-			if(tipo == "admin" && conex.conectado() == false){
+			if(tipo == "admin" && conex.result() == false){
 				tpConexion.setVisible(true);
 				val = false;
-				JOptionPane.showMessageDialog(null, "Configure su conexión.");
+				alert(AlertType.ERROR, "Configure su conexión.");
 				
 			}
 			else{
@@ -61,20 +65,21 @@ public class LoginEmp implements Initializable {
 				LoginEmpVO usuarioEmpVO = new LoginEmpVO(txtUsuario.getText().trim(),
 						password, tipo);
 				LoginEmpDAO usuarioEmpDAO = new LoginEmpDAO();
-				if(usuarioEmpDAO.iniciar(usuarioEmpVO)  && val){
-					usuario = usuarioEmpDAO.obj();
-					if(usuario.getTipo().equals("admin")){
-						Principal.empleado = usuario.getUsuario();
+				if(usuarioEmpDAO.fechaHora()){
+					if(usuarioEmpDAO.iniciar(usuarioEmpVO)  && val){
+						usuario = usuarioEmpDAO.obj();
+						Principal.setEmpleado(usuario);
+						dialogStage.close();
 					}
 					else{
-						Principal.empleado = usuario.getUsuario();
+						alert(AlertType.ERROR, "Error Usuario o Contraseña Incorrectos!");
+						txtPassword.setText("");
+						txtPassword.requestFocus();;
+						usuario = null;
 					}
-					dialogStage.close();
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "Error Usuario o Contraseña Incorrectos!");
-					txtPassword.setText("");
-					usuario = null;
+					alert(AlertType.ERROR, "Fecha y hora incorrectas, \n Actualice la fecha y hora de su sistema operativo.");
 				}
 			}
 		}
@@ -87,10 +92,12 @@ public class LoginEmp implements Initializable {
 		conex.setUsuario(txtUser.getText().trim());
 		conex.setContrasena(txtPass.getText().trim());
 		String text = conex.conectar();
-		JOptionPane.showMessageDialog(null, text);
-		if(conex.conectado()){
+		alert(AlertType.INFORMATION, text);
+		if(conex.result()){
+			login(null);
 			tpConexion.setVisible(false);
 			val = true;	
+			conex.actualizar();
 		}
 		
 	}
@@ -100,7 +107,20 @@ public class LoginEmp implements Initializable {
 		txtBaseDatos.setText("");
 		txtUser.setText("");
 		txtPass.setText("");
+		tpConexion.setVisible(false);
 	}
+	
+	/*
+     * metodo que crea mensajes de alerta
+     * */
+    public void alert(AlertType tipo, String mensaje) {
+    	Alert alert = new Alert(tipo);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText(mensaje);
+		alert.showAndWait();
+	}
+    
 	/**
 	 * @return the tipo
 	 */

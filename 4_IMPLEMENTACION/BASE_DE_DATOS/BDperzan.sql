@@ -790,7 +790,7 @@ begin
 return query SELECT compra.id as id, proveedor.empresa as empresa,concat(empleado.nombre,' ', empleado.apellido_paterno,' ',empleado.apellido_materno) as empleado,
 compra.total as total, compra.fecha_pedido as fecha_pedido,
  compra.fecha_recepcion as fecha_recepcion FROM compra inner JOIN proveedor ON proveedor.id = compra.id_proveedor
- inner join empleado on empleado.id = compra.id_empleado;
+ inner join empleado on empleado.id = compra.id_empleado order by compra.fecha_pedido desc;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -956,7 +956,7 @@ return query select venta.id as id,
   venta.total as total,
    venta.fecha_hora as fecha_hora from venta
     inner join empleado on empleado.id = venta.id_vendedor
-     inner join cliente on cliente.id = venta.id_cliente;
+     inner join cliente on cliente.id = venta.id_cliente order by venta.fecha_hora desc;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

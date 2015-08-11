@@ -28,6 +28,7 @@ CREATE TABLE "cliente" (
 -- ----------------------------
 CREATE TABLE "compra" (
 "id" int4 NOT NULL,
+"id_empleado" int4 NOT NULL,
 "id_proveedor" int4 NOT NULL,
 "total" float4 NOT NULL,
 "fecha_pedido" date DEFAULT now()  NOT NULL,
@@ -148,7 +149,7 @@ CREATE TABLE "ajusteinventario" (
 
 create table fechahora(
 id integer not null,
-fechahora timestamp not null
+fechahora timestamp not null default now()
 );
 
 ALTER TABLE "ajusteinventario" ADD PRIMARY KEY ("id");
@@ -194,7 +195,7 @@ ALTER TABLE "cliente" ADD CHECK (avenida > 0);
 ALTER TABLE "cliente" ADD CHECK (calle > 0);
 ALTER TABLE "cliente" ADD CHECK (id > 0);
 ALTER TABLE "cliente" ADD CHECK ((length(rtrim(ltrim((apellido_paterno)::text))) > 2) AND (rtrim(ltrim((apellido_paterno)::text)) = (apellido_paterno)::text));
-
+ALTER TABLE "cliente" ADD UNIQUE (nombre,apellido_paterno,apellido_materno,colonia);
 -- ----------------------------
 -- Primary Key structure for table cliente
 -- ----------------------------
@@ -203,6 +204,7 @@ ALTER TABLE "cliente" ADD PRIMARY KEY ("id");
 -- ----------------------------
 -- Checks structure for table compra
 -- ----------------------------
+ALTER TABLE "compra" ADD CHECK (id_empleado > 0);
 ALTER TABLE "compra" ADD CHECK (id_proveedor > 0);
 ALTER TABLE "compra" ADD CHECK (id > 0);
 ALTER TABLE "compra" ADD CHECK (total > (0)::double precision);
@@ -223,6 +225,7 @@ ALTER TABLE "detallecompra" ADD CHECK (precio_compra > (0)::double precision);
 ALTER TABLE "detallecompra" ADD CHECK (precio_venta1 > (0)::double precision);
 ALTER TABLE "detallecompra" ADD CHECK (precio_venta2 > (0)::double precision);
 ALTER TABLE "detallecompra" ADD CHECK (precio_venta1 > precio_venta2);
+
 
 
 
@@ -250,6 +253,7 @@ ALTER TABLE "detalleventa" ADD PRIMARY KEY ("id");
 -- Uniques structure for table empleado
 -- ----------------------------
 ALTER TABLE "empleado" ADD UNIQUE ("usuario", "password");
+ALTER TABLE "empleado" ADD UNIQUE ("usuario","tipo");
 
 -- ----------------------------
 -- Checks structure for table empleado
@@ -306,6 +310,8 @@ ALTER TABLE "producto" ADD CHECK ((tipo)::text = ANY (ARRAY[('interior'::charact
 ALTER TABLE "producto" ADD CHECK (id > 0);
 ALTER TABLE "producto" ADD CHECK (activo = ANY (ARRAY['s'::bpchar, 'n'::bpchar]));
 
+ALTER TABLE "producto" ADD UNIQUE (id_categoria,descripcion);
+
 -- ----------------------------
 -- Primary Key structure for table producto
 -- ----------------------------
@@ -326,6 +332,7 @@ ALTER TABLE "proveedor" ADD CHECK ((length(rtrim(ltrim((empresa)::text))) > 4) A
 ALTER TABLE "proveedor" ADD CHECK (calle > 0);
 ALTER TABLE "proveedor" ADD CHECK (numero > 0);
 ALTER TABLE "proveedor" ADD CHECK ((length(rtrim(ltrim((colonia)::text))) > 4) AND (rtrim(ltrim((colonia)::text)) = (colonia)::text));
+ALTER TABLE "proveedor" ADD UNIQUE (empresa);
 
 -- ----------------------------
 -- Primary Key structure for table proveedor
@@ -347,6 +354,7 @@ ALTER TABLE "venta" ADD PRIMARY KEY ("id");
 -- ----------------------------
 -- Foreign Key structure for table "compra"
 -- ----------------------------
+ALTER TABLE "compra" ADD FOREIGN KEY ("id_empleado") REFERENCES "empleado" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE "compra" ADD FOREIGN KEY ("id_proveedor") REFERENCES "proveedor" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- ----------------------------
@@ -385,9 +393,9 @@ ALTER TABLE "ajusteinventario" ADD FOREIGN KEY ("id_empleado") REFERENCES "emple
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*****************************************************************************************************************************************************
 create or replace function fn_login(fnusuario character varying(25), fnpassword character varying(32),fntipo character varying(8))
-returns table(fusuario character varying(25), fpassword character varying(32), ftipo character varying(8)) as $$
+returns table(fusuario character varying(25), fpassword character varying(32), ftipo character varying(8), fnombre text, fid integer) as $$
 begin
-return query SELECT usuario, password, tipo 
+return query SELECT usuario, password, tipo, concat(nombre,' ',apellido_paterno,' ',apellido_materno), id 
 from empleado where usuario = fnusuario and password = fnpassword and (tipo = 'admin' or tipo = fntipo) and activo = 's';
 end
 $$ language plpgsql;
@@ -553,8 +561,8 @@ end
 $$ language plpgsql; 
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*****************************************************************************************************************************************************
-create or replace function fn_agregarcompra(fid_proveedor integer, ftotal real) 
-returns void as $$
+create or replace function fn_agregarcompra(fid_empleado integer, fid_proveedor integer, ftotal real) 
+returns integer as $$
 declare maxid integer;
 declare total integer;
 begin 
@@ -564,10 +572,11 @@ maxid := 1;
 else
 select (max(id)+1) into maxid from compra;
 end if;
-insert into compra(id, id_proveedor, total,fecha_pedido, fecha_recepcion) values ( maxid, fid_proveedor,
+insert into compra(id, id_empleado, id_proveedor, total,fecha_pedido, fecha_recepcion) values ( maxid, fid_empleado, fid_proveedor,
 ftotal,default, default);
+return maxid;
 end
-$$ language plpgsql; 
+$$ language plpgsql;
 --*****************************************************************************************************************************************************
 create or replace function fn_modificarcompra(fid integer)
 returns void as $$ 
@@ -711,7 +720,7 @@ $$ language plpgsql ;
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*****************************************************************************************************************************************************
 create or replace function fn_agregarventa(fid_vendedor integer, fid_cliente integer, ftotal real) 
-returns void as $$
+returns integer as $$
 declare maxid integer;
 declare total integer;
 begin 
@@ -723,6 +732,7 @@ select (max(id)+1) into maxid from venta;
 end if;
 insert into venta(id, id_vendedor, id_cliente, total, fecha_hora) values ( maxid, fid_vendedor, fid_cliente, ftotal, 
 now());
+return maxid;
 end
 $$ language plpgsql ;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -775,17 +785,23 @@ $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarcompras()
-returns table(id integer, empresa character varying(50), total real, fecha_pedido date, fecha_recepcion timestamp) as $$
+returns table(id integer, empresa character varying(50),empleado text, total real, fecha_pedido date, fecha_recepcion timestamp) as $$
 begin
-return query SELECT compra.id as id, proveedor.empresa as empresa, compra.total as total, compra.fecha_pedido as fecha_pedido, compra.fecha_recepcion as fecha_recepcion FROM compra JOIN proveedor ON proveedor.id = compra.id_proveedor;
+return query SELECT compra.id as id, proveedor.empresa as empresa,concat(empleado.nombre,' ', empleado.apellido_paterno,' ',empleado.apellido_materno) as empleado,
+compra.total as total, compra.fecha_pedido as fecha_pedido,
+ compra.fecha_recepcion as fecha_recepcion FROM compra inner JOIN proveedor ON proveedor.id = compra.id_proveedor
+ inner join empleado on empleado.id = compra.id_empleado;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarultimacompra()
-returns table(id integer, empresa character varying(50), total real, fecha_pedido date, fecha_recepcion timestamp) as $$
+returns table(id integer, empresa character varying(50), empleado text, total real, fecha_pedido date, fecha_recepcion timestamp) as $$
 begin
-return query SELECT compra.id as id, proveedor.empresa as empresa, compra.total as total, compra.fecha_pedido as fecha_pedido, compra.fecha_recepcion as fecha_recepcion FROM compra JOIN proveedor ON proveedor.id = compra.id_proveedor ORDER BY id DESC LIMIT 1;
+return query SELECT compra.id as id, proveedor.empresa as empresa,concat(empleado.nombre,' ', empleado.apellido_paterno,' ',empleado.apellido_materno) as empleado,
+compra.total as total, compra.fecha_pedido as fecha_pedido,
+ compra.fecha_recepcion as fecha_recepcion FROM compra inner JOIN proveedor ON proveedor.id = compra.id_proveedor
+ inner join empleado on empleado.id = compra.id_empleado ORDER BY id DESC LIMIT 1;
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -795,7 +811,7 @@ create or replace function fn_seleccionardetallecompras()
 returns table(id integer, producto text, cantidad integer, precio_compra real,
 total double precision, precio_venta1 real, precio_venta2 real) as $$
 begin
-return query SELECT detallecompra.id as id, concat(categoria.nombre,' ', producto.descripcion)
+return query SELECT detallecompra.id_compra as id, concat(categoria.nombre,' ', producto.descripcion)
  as producto, detallecompra.cantidad as cantidad, detallecompra.precio_compra as precio_compra,
  detallecompra.cantidad * detallecompra.precio_compra AS total,
   detallecompra.precio_venta1 as precio_venta1, detallecompra.precio_venta2 as precio_venta2
@@ -809,7 +825,7 @@ $$ language plpgsql;
 create or replace function fn_seleccionardetalleventas()
 returns table(id integer,producto text,precio real, cantidad integer, total double precision) as $$
 begin
-return query SELECT detalleventa.id as id,
+return query SELECT detalleventa.id_venta as id,
 concat(categoria.nombre, ' ', producto.descripcion) as producto,
  detalleventa.precio as precio,    detalleventa.cantidad as cantidad,
   detalleventa.precio * detalleventa.cantidad AS total FROM detalleventa
@@ -817,7 +833,6 @@ concat(categoria.nombre, ' ', producto.descripcion) as producto,
     JOIN categoria ON categoria.id = producto.id_categoria;
 end
 $$ language plpgsql;
-
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --*******************************************************************************************************************************************************
 create or replace function fn_seleccionarempleados()
@@ -828,7 +843,7 @@ fusuario character varying(20), fpassword character varying(32), ftipo character
 begin
 return query SELECT id, nombre,
  apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,
- telefono, usuario, password, tipo FROM empleado WHERE activo = 's';
+ telefono, usuario, password, tipo FROM empleado WHERE activo = 's' and tipo = 'empleado';
 end
 $$ language plpgsql;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -975,6 +990,151 @@ insert into ajusteinventario(id, id_producto, causa, existencia_actual, nueva_ex
  values ( maxid, fid_producto, fcausa, fexistencia_actual, fnueva_existencia, fid_empleado, now());
 end
 $$ language plpgsql;
+
+create or replace function fn_fechahorasistema()
+returns boolean as $$
+declare res boolean;
+begin 
+select fechahora < now() into res from fechahora;
+return res;
+end
+$$ language plpgsql;
+
+create or replace function fn_seleccionardetcompras()
+returns table(id integer, empresa character varying(50), empleado text, producto text, cantidad integer, precio real, total real, fecha_pedido date, fecha_recepcion timestamp) as $$
+begin
+return query select compra.id,proveedor.empresa,concat(empleado.nombre,' ',empleado.apellido_paterno,' ',empleado.apellido_materno), concat(categoria.nombre,' ',producto.descripcion),
+detallecompra.cantidad, detallecompra.precio_compra, detallecompra.total,compra.fecha_pedido, compra.fecha_recepcion from compra
+inner join detallecompra on compra.id = detallecompra.id_compra
+inner join proveedor on proveedor.id = compra.id_proveedor
+inner join empleado on empleado.id = compra.id_empleado
+inner join producto on producto.id = detallecompra.id_producto
+inner join categoria on producto.id_categoria = categoria.id order by compra.fecha_pedido desc;
+end
+$$ language plpgsql;
+
+create or replace function fn_seleccionardetventas()
+returns table(id integer, empleado text, cliente text, producto text, cantidad integer, precio real, total real, fecha_hora timestamp) as $$
+begin
+return query select venta.id, concat(empleado.nombre,' ',empleado.apellido_paterno,' ',empleado.apellido_materno), concat(cliente.nombre,' ',cliente.apellido_paterno,' ',cliente.apellido_materno),
+concat(categoria.nombre,' ',producto.descripcion), detalleventa.cantidad, detalleventa.precio, detalleventa.total, venta.fecha_hora from venta
+inner join detalleventa on detalleventa.id_venta = venta.id
+inner join producto on producto.id = detalleventa.id_producto
+inner join categoria on categoria.id = producto.id_categoria
+inner join empleado on empleado.id = venta.id_vendedor
+inner join cliente on cliente.id = venta.id_cliente order by venta.fecha_hora desc;
+end
+$$ language plpgsql;
+
+create or replace function fn_seleccionarhistorialstock()
+returns table(id_producto integer, causa character varying(200), usuario character varying(30), stock integer,fecha_hora timestamp) as $$
+begin
+return query select ajusteinventario.id_producto,ajusteinventario.causa, empleado.usuario, ajusteinventario.nueva_existencia,ajusteinventario.fecha_hora
+		from ajusteinventario 
+		inner join empleado on ajusteinventario.id_empleado = empleado.id;
+end
+$$ language plpgsql;
+--===============================================================================================================================================================
+
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadocategoria()
+  RETURNS TABLE(fid integer, fnombre character varying) AS
+$$
+begin
+return query SELECT id, nombre FROM categoria where activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fn_modificareliminadocategoria(fid integer)
+  RETURNS void AS $$ 
+begin 
+update categoria set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadocliente()
+  RETURNS TABLE(fid integer, fnombre character varying, fapellido_paterno character varying, fapellido_materno character varying, fcalle integer, favenida integer, fnumero integer, fcolonia character varying, fmunicipio character varying, freferencia character varying) AS
+$$
+begin
+return query SELECT id, nombre, apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio, referencia FROM cliente 
+where activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fn_modificareliminadocliente(fid integer)
+  RETURNS void AS $$ 
+begin 
+update cliente set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadoempleado()
+  RETURNS TABLE(fid integer, fnombre character varying, fapellido_paterno character varying, fapellido_materno character varying, fcalle integer, favenida integer, fnumero integer, fcolonia character varying, fmunicipio character varying, ftelefono character varying, fusuario character varying, fpassword character varying, ftipo character varying) AS
+$$
+begin
+return query SELECT id, nombre,
+ apellido_paterno, apellido_materno, calle, avenida, numero, colonia, municipio,
+ telefono, usuario, password, tipo FROM empleado WHERE activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION fn_modificareliminadoempleado(fid integer)
+  RETURNS void AS $$ 
+begin 
+update empleado set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadomarca()
+ RETURNS TABLE(fid integer, fnombre character varying) AS
+$$
+begin
+return query SELECT id, nombre FROM marca where activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION fn_modificareliminadomarca(fid integer)
+  RETURNS void AS $$ 
+begin 
+update marca set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadoproducto()
+  RETURNS TABLE(fid integer, fid_categoria integer, fcategoria character varying, fdescripcion character varying, fid_marca integer, fmarca character varying, fprecio1 real, fprecio2 real, fstock integer, fstock_max integer, fstock_min integer, ftipo character varying) AS
+$$
+begin
+return query SELECT producto.id,
+ categoria.id as id_categoria, categoria.nombre AS categoria,
+  producto.descripcion, marca.id as id_marca, marca.nombre AS marca,
+   producto.precio1, producto.precio2, producto.stock, producto.stock_max, 
+    producto.stock_min, producto.tipo FROM producto
+     inner JOIN categoria ON categoria.id = producto.id_categoria
+      inner JOIN marca ON marca.id = producto.id_marca where producto.activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION fn_modificareliminadoproducto(fid integer)
+  RETURNS void AS $$ 
+begin 
+update producto set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+CREATE OR REPLACE FUNCTION fn_seleccionareliminadoproveedor()
+   RETURNS TABLE(fid integer, fnombre character varying, fapellido_paterno character varying, fapellido_materno character varying, fempresa character varying, fcalle integer, favenida integer, fnumero integer, fcolonia character varying, fmunicipio character varying, ftelefono character varying) AS
+$$
+begin
+return query SELECT id, nombre, apellido_paterno, apellido_materno, empresa, calle, 
+avenida, numero, colonia, municipio, telefono FROM proveedor where activo = 'n';
+end
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION fn_modificareliminadoproveedor(fid integer)
+  RETURNS void AS $$ 
+begin 
+update proveedor set activo = 's' where id = fid;
+end
+$$ LANGUAGE plpgsql;
+--===============================================================================================================================================================
+--===============================================================================================================================================================
+--===============================================================================================================================================================
+
 
 --===============================================================================================================================================================
 
@@ -1153,17 +1313,17 @@ VALUES ('1', '1', 'vidriada', '1', '5', '4', '300', '600', '50', 'exterior', 's'
 ('3', '1', 'barro prensada', '1', '6', '5', '200', '500', '100', 'exterior', 's'), 
 ('4', '3', 'rojo', '1', '7', '6', '400', '500', '50', 'exterior', 's');
 
-INSERT INTO "compra" ("id", "id_proveedor", "total", "fecha_pedido","fecha_recepcion") 
-VALUES ('1', '2', '1000', '2015-05-28', '2015-05-29 18:19:20'), 
-('2', '4', '500', '2015-05-28', '2015-05-29 18:19:49'), 
-('3', '3', '2000', '2015-05-28', '2015-05-29 18:20:52'), 
-('4', '5', '2500', '2015-05-28', '2015-05-29 18:21:14'), 
-('5', '1', '1500', '2015-05-28', '2015-05-29 18:21:32'), 
-('6', '2', '3000', '2015-05-28', '2015-05-29 18:21:46'),
-('7', '4', '2300', '2015-05-28', '2015-05-29 18:23:40'), 
-('8', '2', '2200', '2015-05-28', '2015-05-29 18:24:00'), 
-('9', '4', '1100', '2015-05-28', '2015-05-29 18:24:26'), 
-('10', '5', '1200', '2015-05-28', '2015-05-29 18:24:42');
+INSERT INTO "compra" ("id","id_empleado", "id_proveedor", "total", "fecha_pedido","fecha_recepcion") 
+VALUES ('1','2', '2', '1000', '2015-05-28', '2015-05-29 18:19:20'), 
+('2', '4','4', '500', '2015-05-28', '2015-05-29 18:19:49'), 
+('3', '3', '3','2000', '2015-05-28', '2015-05-29 18:20:52'), 
+('4', '3', '3','2500', '2015-05-28', '2015-05-29 18:21:14'), 
+('5', '1','1', '1500', '2015-05-28', '2015-05-29 18:21:32'), 
+('6', '2', '2','3000', '2015-05-28', '2015-05-29 18:21:46'),
+('7', '4','4', '2300', '2015-05-28', '2015-05-29 18:23:40'), 
+('8','2', '2', '2200', '2015-05-28', '2015-05-29 18:24:00'), 
+('9', '4','4', '1100', '2015-05-28', '2015-05-29 18:24:26'), 
+('10', '4','5', '1200', '2015-05-28', '2015-05-29 18:24:42');
 
 INSERT INTO "detallecompra" ("id","id_producto","id_compra","cantidad","precio_compra", "total", "precio_venta1","precio_venta2") VALUES ('1', '1', '1', '100', '4','400','6','5'),
 ('2', '3', '10', '120', '6', '720','8','7'),

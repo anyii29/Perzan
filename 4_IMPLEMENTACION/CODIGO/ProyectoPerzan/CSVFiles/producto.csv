@@ -1,0 +1,10 @@
+Productos
+IdCategoria,Categoria,Descripción,IdMarca,Marca,Precio1,Precio2,Stock,StockMax,StockMin,Tipo
+3,ladrillo,hueco,2,Novaceramic,11.0,9.0,300,400,50,exterior
+3,ladrillo,rojo,2,Novaceramic,7.0,6.0,368,500,50,exterior
+6,lavadero,chico,2,Novaceramic,300.0,280.0,0,25,10,interior
+6,lavadero,grande,2,Novaceramic,400.0,380.0,0,40,5,interior
+1,teja,vidriada,1,Teja el aguila,5.0,4.0,180,600,50,exterior
+1,teja,barro prensada,1,Teja el aguila,6.0,5.0,200,500,100,exterior
+2,tabique,rosado,2,Novaceramic,6.0,5.5,0,300,50,exterior
+9,maceta,barro,2,Novaceramic,50.0,45.0,0,50,5,exterior

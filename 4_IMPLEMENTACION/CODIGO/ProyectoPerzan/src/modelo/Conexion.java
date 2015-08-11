@@ -1,5 +1,12 @@
 package modelo;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 
 public class Conexion {
@@ -12,6 +19,11 @@ public class Conexion {
 	private static Conexion instancia;
 	private Connection con;
 	private boolean date = false;
+	private FileReader file;
+	private FileWriter fWrite;
+	private BufferedReader brFile;
+	private BufferedWriter wrWrite;
+	private Logger log;
 	
 	public String getIp() {
 		return ip;
@@ -31,12 +43,22 @@ public class Conexion {
 
 	
 	private Conexion(){
-		setBd("perzan");
-		usuario = "postgres";
-		contrasena = "12345";
-		ip = "localhost";
-		puerto = 5432;
+		try {
+			file = new FileReader("BaseDatos\\conexion.txt");
+			brFile = new BufferedReader(file);
+			ip = brFile.readLine();
+			puerto = Integer.parseInt(brFile.readLine());
+			usuario = brFile.readLine();
+			contrasena = brFile.readLine();
+			bd = brFile.readLine();
+			brFile.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
+		log = new Logger();
 	}
 	
 	private Conexion(String bd, String usuario, String contrasena, String ip, int puerto){
@@ -54,7 +76,6 @@ public class Conexion {
 			instancia = new Conexion();
 		}
 		return instancia;
-			
 	}
 	
 	public String conectar(){
@@ -68,7 +89,7 @@ public class Conexion {
 			date = true;
 			return "Conexión éxitosa";
 		}catch(Exception e){
-			e .printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 			return "No se establecio la conexion. Consulte a su administrador";
 		}
 	}
@@ -82,7 +103,7 @@ public class Conexion {
 			date = false;
 			return "Se ha desconectado del servidor";
 		}catch(Exception e){
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 			System.out.println("La conexion esta siendo ocupada, no se puede desconectar");
 			return "La conexion esta siendo ocupada, no se puede desconectar";
 		}
@@ -115,6 +136,30 @@ public class Conexion {
 	}
 
 	public boolean conectado() {
+		return true;
+	}
+	public boolean result(){
 		return date;
+	}
+	public void actualizar(){
+		try {
+			File f = new File("BaseDatos\\conexion.txt");
+			fWrite = new FileWriter(f, false);
+			wrWrite = new BufferedWriter(fWrite);
+			wrWrite.write(this.ip);//ip
+			wrWrite.newLine();
+			wrWrite.write(String.valueOf(this.puerto));//puerto
+			wrWrite.newLine();
+			wrWrite.write(this.usuario);//usuario
+			wrWrite.newLine();
+			wrWrite.write(this.contrasena);//contrasena
+			wrWrite.newLine();
+			wrWrite.write(this.bd);//bd
+			wrWrite.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			log.printLog(e.getMessage(), this.getClass().toString());
+			e.printStackTrace();
+		}
 	}
 }

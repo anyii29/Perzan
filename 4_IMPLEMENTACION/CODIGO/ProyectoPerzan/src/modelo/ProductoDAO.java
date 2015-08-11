@@ -18,15 +18,30 @@ public class ProductoDAO implements iOp{
 	private boolean enviado;
 	private CategoriaVO catVO;
 	private MarcaVO marVO;
-	private Conexion conex = Conexion.getInstance();
-	ObservableList<ProductoVO> productos;
+	private Conexion conex;
+	private ObservableList<ProductoVO> productos;
+	private Logger log;
+	private ProductoVO productoVO;
+	private String nombreProducto;
+	
+	public ProductoDAO(){
+		log = new Logger();
+		conex = Conexion.getInstance();
+		productoVO = new ProductoVO();
+	}
 	// revisar
-	public ObservableList<ProductoVO> getDatos(){
+	public ObservableList<ProductoVO> getDatos(boolean d){
 		productos = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try{
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT *FROM fn_seleccionarproductos()");
+				PreparedStatement consulta;
+				if(d){
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproductos()");
+				}
+				else{
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadoproducto()");
+				}
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id= res.getInt("fid");
@@ -43,13 +58,13 @@ public class ProductoDAO implements iOp{
 					int stockMax = res.getInt("fstock_max");
 					int stockMin= res.getInt("fstock_min");
 					String tipo = res.getString("ftipo");
-					ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
+					productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
 					productos.add(productoVO);
 				}
 				consulta.close();
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -80,13 +95,12 @@ public class ProductoDAO implements iOp{
 					int stockMin= res.getInt("fstock_min");
 					String tipo = res.getString("ftipo");
 					ProductoVO productoVO = new ProductoVO(id, catVO, descripcion, marVO, precio1, precio2, stock, stockMax, stockMin, tipo);
-					System.out.println(productoVO);
 					return productoVO;
 				}
 				consulta.close();
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -128,7 +142,7 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -153,7 +167,7 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-					e.printStackTrace();
+					log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -192,14 +206,7 @@ public class ProductoDAO implements iOp{
 				consulta.setInt(7, productoVO.getStockMax());
 				consulta.setInt(8, productoVO.getStockMin());
 				consulta.setString(9, productoVO.getTipo());
-				
-				boolean res = consulta.execute();
-				if(res){
-					result= true;	
-				}
-				else{
-					result = false;
-				}
+				result = consulta.execute();
 				consulta.close();
 				/*PreparedStatement last = conex.getConnection().prepareStatement("SELECT LAST_INSERT_ID()");
 				ResultSet lastIn = last.executeQuery();
@@ -210,7 +217,7 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -252,7 +259,7 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -279,7 +286,7 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -312,12 +319,33 @@ public class ProductoDAO implements iOp{
 				
 				}		
 			catch(SQLException e){
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
 			}
 		}
 		return result;		
+	}
+	public boolean modificarEliminado(int id){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadoproducto(?)");
+				consulta.setInt(1, id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
 	}
 }

@@ -9,11 +9,11 @@
   <top>
     <ToolBar prefHeight="35.0" prefWidth="543.0" stylesheets="@..\application.css" BorderPane.alignment="CENTER">
       <items>
-            <Button fx:id="btnAdmin" mnemonicParsing="false" text="Administrador">
+            <Button fx:id="btnAdmin" mnemonicParsing="false" text="Admin">
                <tooltip>
                   <Tooltip fx:id="ttAdmin" text="Empty Tooltip" />
                </tooltip></Button>
-        <Button id="" fx:id="btnEmpleado" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Empleado">
+        <Button id="" fx:id="btnEmpleado" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Empleado ">
                <tooltip>
                   <Tooltip fx:id="ttEmp" text="Empty Tooltip" textOverrun="CLIP" wrapText="true" />
                </tooltip></Button>

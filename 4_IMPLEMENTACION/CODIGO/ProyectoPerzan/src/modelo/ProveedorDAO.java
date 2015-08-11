@@ -8,8 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ProveedorDAO implements iOp {
-	Conexion conex = Conexion.getInstance();
-	ObservableList<ProveedorVO> proveedores;
+	private Conexion conex = Conexion.getInstance();
+	private ObservableList<ProveedorVO> proveedores;
+	private Logger log;
+	
+	public ProveedorDAO(){
+		log = new Logger();
+	}
+	
 	@Override
 	public boolean registrar(Object obj) {
 		ProveedorVO  proveedorVO= new ProveedorVO();
@@ -29,14 +35,11 @@ public class ProveedorDAO implements iOp {
 				consulta.setString(8, proveedorVO.getColonia());
 				consulta.setString(9, proveedorVO.getMunicipio());
 				consulta.setString(10, proveedorVO.getTelefono());
-				boolean res = consulta.execute();
-				if(res){
-					result = true;
-				}
+				result = consulta.execute();
 				consulta.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -71,7 +74,7 @@ public class ProveedorDAO implements iOp {
 				consulta.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -94,7 +97,7 @@ public class ProveedorDAO implements iOp {
 				consulta.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -127,7 +130,7 @@ public class ProveedorDAO implements iOp {
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
@@ -135,12 +138,18 @@ public class ProveedorDAO implements iOp {
 		}
 		return null;
 	}
-	public ObservableList<ProveedorVO> getDatos(){
+	public ObservableList<ProveedorVO> getDatos(boolean d){
 		proveedores = FXCollections.observableArrayList();
 		if(conex.conectado()){
 			try {
 				conex.conectar();
-				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproveedores()");
+				PreparedStatement consulta;
+				if(d){
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproveedores()");
+				}
+				else{
+					consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionareliminadoproveedor()");
+				}
 				ResultSet res = consulta.executeQuery();
 				while(res.next()){
 					int id = res.getInt("fid");
@@ -160,12 +169,33 @@ public class ProveedorDAO implements iOp {
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();
 			}
 		}
 		return proveedores;
+	}
+	public boolean modificarEliminado(int id){
+		try {
+			if(conex.conectado()){
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("select fn_modificareliminadoproveedor(?)");
+				consulta.setInt(1, id);
+				boolean res = consulta.execute();
+				if(res){
+					return true;
+				}
+				consulta.close();
+			}
+			
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+		finally{
+			conex.desconectar();
+		}
+		return false;
 	}
 }

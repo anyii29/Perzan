@@ -1,5 +1,12 @@
 package modelo;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ProductoVO {
 	private MarcaVO marca;
 	private CategoriaVO categoria;
@@ -11,8 +18,12 @@ public class ProductoVO {
 	private int stockMax;
 	private int stockMin;
 	private String tipo, nombreProducto;
+	private Logger log;
 	
 	public ProductoVO(){
+		log = new Logger();
+		categoria = new CategoriaVO();
+		marca = new MarcaVO();
 	}
 	
 	public ProductoVO(int id, CategoriaVO categoria, String descripcion, MarcaVO marca,
@@ -195,6 +206,47 @@ public class ProductoVO {
 	public void setPrecio2(float precio2) {
 		this.precio2 = precio2;
 	}
-
+	
+	public ObservableList<ProductoVO> getDatos(){
+		ObservableList<ProductoVO> productos = FXCollections.observableArrayList();
+		Conexion conex = Conexion.getInstance();
+		if(conex.conectado()){
+			try{
+				conex.conectar();
+				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM fn_seleccionarproductos()");
+				ResultSet res = consulta.executeQuery();
+				while(res.next()){
+					int id= res.getInt("fid");
+					int idCat = res.getInt("fid_categoria");
+					String nombreCat = res.getString("fcategoria");
+					categoria = new CategoriaVO(idCat, nombreCat);
+					String descripcion = res.getString("fdescripcion");
+					int idMar = res.getInt("fid_marca");
+					String nombreMar = res.getString("fmarca");
+					marca = new MarcaVO(idMar, nombreMar);
+					float precio1 = res.getFloat("fprecio1");
+					float precio2 = res.getFloat("fprecio2");
+					int stock = res.getInt("fstock");
+					int stockMax = res.getInt("fstock_max");
+					int stockMin= res.getInt("fstock_min");
+					String tipo = res.getString("ftipo");
+					ProductoVO productoVO = new ProductoVO(id, categoria, descripcion, marca, precio1, precio2, stock, stockMax, stockMin, tipo);
+					productos.add(productoVO);
+				}
+				consulta.close();
+				}		
+			catch(SQLException e){
+					log.printLog(e.getMessage(), this.getClass().toString());
+			}
+			finally{
+				conex.desconectar();
+			}
+		}
+		return productos;
+	}
+	
+	public String toString(){
+		return nombreProducto;
+	}
 	
 }

@@ -2,7 +2,7 @@ package modelo;
 
 public class DetalleCompraVO {
 	private int id, cantidad, idProducto, idCompra;
-	private String producto;
+	private String producto, nombre;
 	private float precioCompra,total, precioVenta1, precioVenta2;
 	
 	public DetalleCompraVO(int id, String producto, int cantidad,
@@ -153,5 +153,11 @@ public class DetalleCompraVO {
 	 */
 	public void setPrecioVenta2(float precioVenta2) {
 		this.precioVenta2 = precioVenta2;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }

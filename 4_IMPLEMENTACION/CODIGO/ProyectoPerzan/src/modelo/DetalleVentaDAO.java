@@ -8,30 +8,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DetalleVentaDAO {
-	Conexion conex = Conexion.getInstance();
-	ObservableList<DetalleVentaVO> detalleVentas;
+	private Conexion conex = Conexion.getInstance();
+	private ObservableList<DetalleVentaVO> detalleVentas;
+	private Logger log;
 	
+	public DetalleVentaDAO(){
+		log = new Logger();
+	}
 	public boolean insertar(DetalleVentaVO dVentaVO){
 		boolean result = false;
 		if(conex.conectado()){
 			try {
-				conex.conectar();
+				//conex.conectar();
 				PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT fn_agregardetalleventa(?, ?, ?, ?)");
 				consulta.setInt(1, dVentaVO.getIdProducto());
 				consulta.setFloat(2, dVentaVO.getPrecio());
 				consulta.setInt(3, dVentaVO.getCantidad());
 				consulta.setInt(4, dVentaVO.getIdVenta());
-				int res = consulta.executeUpdate();
-				if(res > 0){
-					result = true;
-				}
+				result = consulta.execute();
 				consulta.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
-				conex.desconectar();
+				//conex.desconectar();
 			}
 		}
 		return result;
@@ -58,7 +59,7 @@ public class DetalleVentaDAO {
 				consulta.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.printLog(e.getMessage(), this.getClass().toString());
 			}
 			finally{
 				conex.desconectar();

@@ -277,6 +277,7 @@ ALTER TABLE "empleado" ADD CHECK (avenida > 0);
 -- Primary Key structure for table empleado
 -- ----------------------------
 ALTER TABLE "empleado" ADD PRIMARY KEY ("id");
+alter table empleado add unique (usuario);
 
 
 -- ----------------------------

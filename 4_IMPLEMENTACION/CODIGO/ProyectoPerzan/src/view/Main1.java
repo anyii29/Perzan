@@ -2,11 +2,8 @@ package view;
 
 import java.io.IOException;
 
-import modelo.CategoriaVO;
-import modelo.EmpleadoVO;
+import modelo.Logger;
 import modelo.LoginEmpVO;
-import modelo.ProductoVO;
-import modelo.VentaDetVO;
 import controlador.Administrador;
 import controlador.Categoria;
 import controlador.Empleado;
@@ -17,6 +14,7 @@ import controlador.NuevoProducto;
 import controlador.NuevoProveedor;
 import controlador.Principal;
 import controlador.Splash;
+import controlador.Total;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
@@ -31,14 +29,17 @@ public class Main1 extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private AnchorPane overviewPage;
+	private FXMLLoader loader;
 	private Principal controlleroot;
 	private LoginEmpVO usuario;
 	public Stage dStage;
+	private Logger log;
 	@SuppressWarnings("unused")
 	private controlador.Principal principal;
 	public Main1() {
+		log = new Logger();
 	}
-
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -55,16 +56,17 @@ public class Main1 extends Application {
 			loader.setLocation(Main1.class.getResource("fxml/Principal.fxml"));
 			rootLayout = (BorderPane) loader.load();
 			Scene scene = new Scene(rootLayout);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image("view/images/perzanIco.png"));
 			primaryStage.setResizable(false);
-			primaryStage.show();
+			//primaryStage.show();
 			//dStage.close();
 			controlleroot = loader.getController();
 			controlleroot.setMain1(this);
+			primaryStage.show();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void showLoginEmp() {
@@ -80,7 +82,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			LoginEmp controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -101,7 +103,7 @@ public class Main1 extends Application {
 			}
 		}
 		catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void nuevoCliente() {
@@ -116,7 +118,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			NuevoCliente controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -125,7 +127,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}public void nuevoProducto() {
 		try {
@@ -139,7 +141,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			NuevoProducto controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -148,7 +150,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void nuevoProveedor() {
@@ -163,7 +165,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			NuevoProveedor controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -172,7 +174,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void viewAdministrador() {
@@ -180,26 +182,26 @@ public class Main1 extends Application {
 			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("fxml/Administrador.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
-			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Administrador controller = loader.getController();
 			controller.setMain1(this);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void viewEmpleado(LoginEmpVO usuario) {
 		try {
-			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("fxml/Empleado.fxml"));
-			AnchorPane overviewPage = (AnchorPane) loader.load();
+			loader = new FXMLLoader(Main1.class.getResource("fxml/Empleado.fxml"));
+			overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
-			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Empleado controller = loader.getController();
 			controller.setMain1(this);
 			controller.setUsuario(usuario);
-
 		} catch (IOException e) {
-			e.printStackTrace();
+			// TODO Auto-generated catch block
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void empty() {
@@ -207,9 +209,9 @@ public class Main1 extends Application {
 			FXMLLoader loader = new FXMLLoader(Main1.class.getResource("fxml/Empty.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage); 
-			//rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			rootLayout.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public Stage getPrimaryStage() {
@@ -227,7 +229,7 @@ public class Main1 extends Application {
 			dStage.setResizable(false);
 			dStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dStage.setScene(scene);
 			Splash controller = loader.getController();
 			controller.setDialogStage(dStage);
@@ -240,7 +242,7 @@ public class Main1 extends Application {
 			//dialogStage.close();
 			//primaryStage.show();
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void showCategoria() {
@@ -255,7 +257,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			Categoria controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -264,7 +266,7 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 	}
 	public void showMarca() {
@@ -279,7 +281,7 @@ public class Main1 extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			dialogStage.setScene(scene);
 			Marca controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -288,7 +290,33 @@ public class Main1 extends Application {
 			primaryStage.opacityProperty().set(1.0);
 
 		} catch (IOException e) {	
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+	}
+	public boolean showTotal(Float total) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("fxml/Total.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Marca");
+			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
+			dialogStage.initStyle(StageStyle.TRANSPARENT); 
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			dialogStage.setScene(scene);
+			Total controller = loader.getController();
+			controller.setTotal(total);
+			controller.setDialogStage(dialogStage);
+			primaryStage.opacityProperty().set(0.7);
+			dialogStage.showAndWait();
+			primaryStage.opacityProperty().set(1.0);
+			return controller.getVenta();
+		} catch (IOException e) {	
+			log.printLog(e.getMessage(), this.getClass().toString());
+			return false;
 		}
 	}
 	public static void main(String[] args) {

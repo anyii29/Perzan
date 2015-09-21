@@ -38,7 +38,6 @@ public class CompraDAO {
 				ResultSet res = consulta.executeQuery();
 				if(res.next()){
 					idCompra = res.getInt("fn_agregarcompra");
-					System.out.println(idCompra);
 					result = true;
 				}
 				for(int i = 0; i < dc.size();i++){

@@ -38,7 +38,6 @@ public class LoginEmpDAO {
 				res.close();
 				}		
 			catch(SQLException e){
-				e.printStackTrace();
 				log.printLog(e.getMessage(), this.getClass().toString());
 				
 			}

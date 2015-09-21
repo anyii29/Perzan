@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-09-18T14:42:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Silhouette_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y29tcHJhIEFTICw2OCwxOCxkYjYwNGUyYy05ZWZiLTQyZDEtYjIzZC00ZWExZWI4OTAxMzY7"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[select proveedor.empresa,
+concat(empleado.nombre,' ',empleado.apellido_paterno,' ',empleado.apellido_materno) as empleado,
+concat(categoria.nombre,' ',producto.descripcion) producto,
+detallecompra.cantidad,
+detallecompra.precio_compra,
+detallecompra.total,
+compra.fecha_pedido,
+compra.fecha_recepcion from compra
+inner join detallecompra on compra.id = detallecompra.id_compra
+inner join proveedor on proveedor.id = compra.id_proveedor
+inner join empleado on empleado.id = compra.id_empleado
+inner join producto on producto.id = detallecompra.id_producto
+inner join categoria on producto.id_categoria = categoria.id
+WHERE date_part('month', compra.fecha_pedido) > date_part('month', now()) - 2
+order by compra.fecha_pedido, proveedor.empresa desc]]>
+	</queryString>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="empleado" class="java.lang.String"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="precio_compra" class="java.lang.Float"/>
+	<field name="total" class="java.lang.Float"/>
+	<field name="fecha_pedido" class="java.sql.Date"/>
+	<field name="fecha_recepcion" class="java.sql.Timestamp"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{empresa}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<textField>
+					<reportElement style="SubTitle" x="97" y="3" width="703" height="24" forecolor="#000000" uuid="8caf7870-b3f6-4e56-b258-6eaf7c7087bd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="575" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="234" width="20" height="241" backcolor="#000000" uuid="15a8ce9a-88f8-4109-86c3-2d1466393615"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="475" width="105" height="100" backcolor="#666666" uuid="6eb7cb61-0dd7-47a8-8475-5fa6c3a348dc"/>
+				<textField>
+					<reportElement style="Column header" x="0" y="0" width="104" height="73" forecolor="#000000" uuid="db8457c8-99e9-434f-b439-2d400dff2bcd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="58" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="0" y="77" width="104" height="20" forecolor="#000000" uuid="e20c8a65-aded-41dc-a107-108a9159af99"/>
+					<box leftPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Center">
+						<font size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement mode="Transparent" x="42" y="73" width="20" height="1" backcolor="#FFFFFF" uuid="db6d7ead-4383-4f8c-81cf-1e3064eb6924"/>
+				</line>
+			</frame>
+		</band>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="1dcadd54-7d50-4470-85ed-189e4d910b25"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="54" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COMPRAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="232" y="67" width="568" height="37" uuid="862cb50c-5a5e-4906-a495-226e25115fb6"/>
+				<textElement textAlignment="Right">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[PERZAN]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="97" y="5" width="705" height="20" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
+				<staticText>
+					<reportElement style="Column header" x="0" y="0" width="150" height="15" uuid="b50514e9-8e80-401e-a256-d30f94d07e87"/>
+					<text><![CDATA[Empleado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="150" y="0" width="130" height="15" uuid="f9f293c2-1ff3-4836-bd46-c39646bb9295"/>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="280" y="0" width="60" height="15" uuid="659ffe3d-b1f1-4215-ada3-7897c4ed718a"/>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="340" y="0" width="90" height="15" uuid="82464d5e-5414-4559-81cf-49f3a1de6e84"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<text><![CDATA[Precio compra]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="440" y="0" width="40" height="15" uuid="d1628b84-99c6-4c6d-80a6-6188d8a72a06"/>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="490" y="0" width="100" height="15" uuid="889cae46-8c12-4ca5-a00c-c2a582d70b70"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<text><![CDATA[Fecha de pedido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="590" y="0" width="110" height="15" uuid="7f92f618-13bb-4b5f-8369-a741a8870295"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<text><![CDATA[Fecha de recepción]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement x="97" y="1" width="705" height="15" uuid="89a3da05-fdde-4ffe-965f-cc476f72e3ab"/>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="150" height="15" uuid="0beed8ea-4bc7-46b8-97c2-91e184a159ab"/>
+					<textFieldExpression><![CDATA[$F{empleado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="150" y="0" width="130" height="15" uuid="d40cc2ca-1a2d-4329-b0d3-9bf68b531a92"/>
+					<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="280" y="0" width="60" height="15" uuid="e1be0481-64c1-41d4-9663-7e281f9def01"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="340" y="0" width="90" height="15" uuid="77298e7f-90a6-4b94-bcd7-93551beb03fc"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{precio_compra}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="440" y="0" width="40" height="15" uuid="af03fba7-d71d-4459-89db-d48f07634c1d"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+				<textField pattern="d MMM, yyyy" isBlankWhenNull="true">
+					<reportElement style="Detail" x="490" y="0" width="100" height="15" uuid="0aaeea70-977a-4a34-a43b-84bf608fde0e"/>
+					<textElement>
+						<paragraph lineSpacing="Proportional"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_pedido}]]></textFieldExpression>
+				</textField>
+				<textField pattern="d/M/yyyy h:mm a">
+					<reportElement style="Detail" x="590" y="0" width="110" height="15" uuid="0f3598b0-248a-4814-8939-804b5bc7ab7e"/>
+					<textFieldExpression><![CDATA[$F{fecha_recepcion}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="97" y="16" width="705" height="1" uuid="e5f21b91-7f24-498e-97a1-0e93db9225a4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="671" y="0" width="131" height="20" forecolor="#000000" uuid="95484ca0-40b4-4752-95d8-1afbc33c820b"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="96" y="0" width="267" height="20" uuid="0ec52099-dcd7-42f4-8baa-f3874f05208a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[COMPRAS]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

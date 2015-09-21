@@ -1730,3 +1730,1099 @@ precio_venta2) values ( maxid, fid_producto, fid_compra, fcantidad, fprecio_comp
 fprecio_venta2)»
 función PL/pgSQL fn_agregardetallecompra(integer,integer,integer,real,real,real) en la línea 11 en sentencia SQL 2015/08/06 00:54:31 
 *******************************************************************
+class modelo.Conexion
+El intento de conexión falló. 2015/08/07 09:06:02 
+*******************************************************************
+class modelo.Conexion
+El intento de conexión falló. 2015/08/07 09:38:20 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 10:33:36 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 10:42:02 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 11:04:12 
+*******************************************************************
+class modelo.Conexion
+El intento de conexión falló. 2015/08/07 11:08:01 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 11:15:12 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 11:29:03 
+*******************************************************************
+class modelo.Conexion
+Connection to :0 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 2015/08/07 11:46:39 
+*******************************************************************
+class modelo.Conexion
+El intento de conexión falló. 2015/08/07 11:54:49 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:03:23 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:06:17 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:11:12 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:48:34 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:50:07 
+*******************************************************************
+class modelo.Conexion
+FATAL: database "null" does not exist 2015/08/07 12:54:45 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, hueco).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, chico).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, grande).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, vidriada).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro prensada).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rosado).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro prensada).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: el valor es demasiado largo para el tipo character varying(25)
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: el valor es demasiado largo para el tipo character varying(25)
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: inserción o actualización en la tabla «producto» viola la llave foránea «producto_id_categoria_fkey»
+  Detail: La llave (id_categoria)=(13) no está presente en la tabla «categoria».
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.CsvFiles
+null 2015/08/07 22:20:19 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, grande).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, hueco).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rosado).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro media ala).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro tipo portuguesa).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro tipo guadalajara).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro Ala Mega).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro rústica).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo solera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo rosa española).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo cuadrado).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo cintillailla).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo sencillo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo media luna).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, pecho de paloma).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo octágono).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo hacha).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo pecho de ganso).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, decorativa de madera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, mixta).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, fieltro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, flor).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, arco).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, madera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(5, mármol).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, granito).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, un octavo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, tres cuartos).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, un cuarto).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, media).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, cinco octavos).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera natural).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera rosa).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera naranja).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera gris).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(10, color para adoquin).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, cuadrada terracota).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, cemento).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro pintada).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, artesanal de barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, patas de barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(11, para mármol y granito).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(12, volcánico negro rústico).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(11, base de agua Wismar).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.CsvFiles
+null 2015/08/08 00:19:11 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, grande).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, hueco).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rosado).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro media ala).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro tipo portuguesa).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro tipo guadalajara).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro Ala Mega).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(1, barro rústica).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo solera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo rosa española).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo cuadrado).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo cintillailla).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo sencillo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo media luna).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, pecho de paloma).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo octágono).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo tipo hacha).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(2, rojo pecho de ganso).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, decorativa de madera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, mixta).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, fieltro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, flor).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, arco).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(4, madera).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(5, mármol).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(6, granito).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, un octavo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, tres cuartos).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, un cuarto).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, media).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(7, cinco octavos).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera natural).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera rosa).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera naranja).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(8, cantera gris).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(10, color para adoquin).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, cuadrada terracota).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, cemento).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, barro pintada).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, artesanal de barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(9, patas de barro).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(11, para mármol y granito).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(12, volcánico negro rústico).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(11, base de agua Wismar).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.CsvFiles
+null 2015/08/08 08:54:34 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 10:30:54 
+*******************************************************************
+class modelo.ProductoDAO
+ERROR: llave duplicada viola restricción de unicidad «producto_id_categoria_descripcion_key»
+  Detail: Ya existe la llave (id_categoria, descripcion)=(3, rojo).
+  Where: sentencia SQL: «insert into producto(id, id_categoria, descripcion, id_marca, precio1, precio2, stock, stock_max,
+stock_min, tipo) values ( maxid, fid_categoria, fdescripcion, fid_marca, fprecio1, fprecio2, fstock, 
+fstock_max, fstock_min, ftipo)»
+función PL/pgSQL fn_agregarproducto(integer,character varying,integer,real,real,integer,integer,integer,character varying) en la línea 11 en sentencia SQL 2015/08/08 10:30:54 
+*******************************************************************
+class modelo.CategoriaVO
+Se retornó un resultado cuando no se esperaba ninguno. 2015/08/09 23:23:22 
+*******************************************************************
+class modelo.CategoriaVO
+Se retornó un resultado cuando no se esperaba ninguno. 2015/08/09 23:24:40 
+*******************************************************************
+class modelo.CategoriaVO
+Se retornó un resultado cuando no se esperaba ninguno. 2015/08/09 23:26:21 
+*******************************************************************
+class modelo.CategoriaVO
+Se retornó un resultado cuando no se esperaba ninguno. 2015/08/09 23:28:59 
+*******************************************************************
+class modelo.CategoriaVO
+Se retornó un resultado cuando no se esperaba ninguno. 2015/08/09 23:32:22 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(ladrillo).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:34:36 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(laja).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:36:44 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(laja).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:39:32 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(laja).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:42:39 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(laja).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:44:49 
+*******************************************************************
+class modelo.CategoriaVO
+ERROR: llave duplicada viola restricción de unicidad «categoria_nombre_key»
+  Detail: Ya existe la llave (nombre)=(laja).
+  Where: sentencia SQL: «insert into categoria(id, nombre) values ( maxid, nombre)»
+función PL/pgSQL fn_agregarcategoria(character varying) en la línea 11 en sentencia SQL 2015/08/09 23:46:22 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 08:15:29 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 08:15:29 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 08:19:26 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 08:22:21 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 08:22:59 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 11:55:59 
+*******************************************************************
+class view.Main1
+
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Administrador.fxml
+ 2015/08/10 11:57:30 
+*******************************************************************
+class modelo.VentaDAO
+ERROR: el nuevo registro para la relación «venta» viola la restricción «check» «venta_id_cliente_check»
+  Detail: La fila que falla contiene (22, 4, 0, 144, 2015-08-10 22:46:22.285).
+  Where: sentencia SQL: «insert into venta(id, id_vendedor, id_cliente, total, fecha_hora) values ( maxid, fid_vendedor, fid_cliente, ftotal, 
+now())»
+función PL/pgSQL fn_agregarventa(integer,integer,real) en la línea 11 en sentencia SQL 2015/08/10 22:45:35 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/10 23:18:39 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/10 23:18:39 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/10 23:18:39 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/11 07:18:31 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/11 07:18:31 
+*******************************************************************
+class view.Main1
+Error resolving onKeyPressed='#calcuar', either the event handler is not in the Namespace or there is an error in the script.
+/C:/Users/GHOST/eclipse_proyects/ProyectoPerzan/bin/view/fxml/Total.fxml:23
+ 2015/08/11 07:18:31 
+*******************************************************************
+class modelo.Conexion
+El servidor requiere autenticación basada en contraseña, pero no se ha provisto ninguna contraseña. 2015/08/26 16:15:14 
+*******************************************************************
+class modelo.Conexion
+El intento de conexión falló. 2015/09/15 13:44:46 
+*******************************************************************
+class modelo.Conexion
+FATAL: no existe la base de datos ?null? 2015/09/18 23:43:47 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:16:30 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:16:30 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:16:30 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:16:30 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:16:30 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:22:33 
+*******************************************************************
+class modelo.Reportes
+Byte data not found at : silhouette2.jpg 2015/09/21 09:22:33 
+*******************************************************************

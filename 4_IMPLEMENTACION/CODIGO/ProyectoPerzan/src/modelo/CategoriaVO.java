@@ -86,8 +86,9 @@ public class CategoriaVO {
 				consulta.close();
 			}
 			
-		} catch (Exception e) {
-			message = e.getMessage();
+		} catch (SQLException e) {
+			message = e.getMessage().intern();
+			System.out.println(e.getMessage().intern());
 			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		finally{

@@ -65,9 +65,12 @@ public class Categoria implements Initializable{
     		Optional<ButtonType> result = alert.showAndWait();
     		if (result.get() == ButtonType.OK){
     			if(catVO.eliminarCat()){
-	    		    tvCategoria.getItems().removeAll(categorias);
-	    		    fillTableCategoria();
-	    			txtNombreCat.setText("");
+	    		    //tvCategoria.getItems().removeAll(categorias);
+	    		    //fillTableCategoria();
+	    			categorias.remove(catVO);
+	    			categoriasDel.add
+	    			(catVO);
+    				txtNombreCat.setText("");
 	    			disableFieldsCategoria();
     			}
     			else{
@@ -110,7 +113,7 @@ public class Categoria implements Initializable{
     	        		}
     	        		else{
     	        			alert(AlertType.ERROR, "No se agrego el registro.");
-    	        			
+    	        			//alert(AlertType.INFORMATION, catVO.getMesssage());
     	        		}
         			}
         			else{
@@ -162,7 +165,6 @@ public class Categoria implements Initializable{
     			alert(AlertType.INFORMATION, "Registro restaurado.");
     			categoriasDel.remove(catVO);
     			categorias.add(catVO);
-    			tvCategoria.setSelectionModel(null);
     			catVO = null;
     		}
     		else{
@@ -219,7 +221,7 @@ public class Categoria implements Initializable{
     	catVO = new CategoriaVO();
     	categorias = FXCollections.observableArrayList(catVO.listarCategoria(true));
     	categoriasDel = FXCollections.observableArrayList(catVO.listarCategoria(false));
-    	tvCategoria.getItems().addAll(categorias);
+    	tvCategoria.setItems(categorias);
     }
 /*
     

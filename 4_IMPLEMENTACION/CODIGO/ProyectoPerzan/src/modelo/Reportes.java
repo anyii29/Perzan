@@ -47,5 +47,4 @@ public class Reportes {
 			// TODO: handle exception
 		}
 	}
-	
 }

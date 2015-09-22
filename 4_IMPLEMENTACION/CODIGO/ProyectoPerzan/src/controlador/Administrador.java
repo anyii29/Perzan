@@ -1,6 +1,13 @@
 package controlador;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -27,11 +34,14 @@ import modelo.EmpleadoDAO;
 import modelo.EmpleadoVO;
 import modelo.Encrypt;
 import modelo.InventarioVO;
+import modelo.Logger;
 import modelo.MarcaVO;
 import modelo.ProductoDAO;
 import modelo.ProductoVO;
 import modelo.ProveedorDAO;
 import modelo.ProveedorVO;
+import modelo.Reportes;
+import modelo.StockVO;
 import modelo.VentaDAO;
 import modelo.VentaDetVO;
 import modelo.VentaVO;
@@ -58,6 +68,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -87,6 +99,8 @@ public class Administrador implements Initializable {
 	private BaseDatos baseDatos;
 	private CsvFiles csv;
 	private CompraDetVO compraDetVO;
+	private Logger log;
+	private Reportes reporte;
 	private ObservableList<ProductoVO> productos;
 	private ObservableList<EmpleadoVO> empleados;
 	private ObservableList<ProveedorVO> proveedores;
@@ -95,11 +109,22 @@ public class Administrador implements Initializable {
 	private ObservableList<EmpleadoVO> delEmpleados;
 	private ObservableList<ProveedorVO> delProveedores;
 	private ObservableList<ClienteVO> delClientes;
-	private ObservableList<CompraDetVO> compras;
-	private ObservableList<VentaDetVO> ventas;
+	private ObservableList<CompraDetVO> comprasCSV;
+	private ObservableList<VentaDetVO> ventasCSV;
+	private ObservableList<CompraVO> compras;
+	private ObservableList<DetalleCompraVO> detalleCompras;
+	private ObservableList<VentaVO> ventas;
+	private ObservableList<DetalleVentaVO> detalleVentas;               
 	private ObservableList<CategoriaVO> categorias;
 	private ObservableList<MarcaVO> marcas;
+	private ObservableList<StockVO> stock;
+	private FilteredList<StockVO> historialStock;
 	private FilteredList<ProductoVO> productosFound;
+	private FilteredList<EmpleadoVO> empleadosFound;
+	private FilteredList<ClienteVO> clientesFound;
+	private FilteredList<ProveedorVO> proveedoresFound;
+	private FilteredList<DetalleCompraVO> detalleCompraFiltro;
+	private FilteredList<DetalleVentaVO> detalleVentaFiltro;
 	
 	public Administrador(){
 		validar = new Validar();
@@ -124,6 +149,9 @@ public class Administrador implements Initializable {
 		detalleVentaDAO = new DetalleVentaDAO();
 		baseDatos = new BaseDatos();
 		csv = new CsvFiles();
+		log = new Logger();
+		reporte = new Reportes();
+		stock = FXCollections.observableArrayList();
 		//compraDetVO = new CompraDetVO();
 	}
 
@@ -132,6 +160,7 @@ public class Administrador implements Initializable {
 		// TODO Auto-generated method stub
 		cbTipo.getItems().addAll("interior", "exterior");
 		cbCSV.getItems().addAll("Producto","Empleado","Cliente","Proveedor","Compra","Venta");
+		cbReportes.getItems().addAll("Producto","Empleado","Cliente","Proveedor","Compra","Venta");
 		this.fillCategoria();
 		this.fillMarca();
 		this.tableProducto();
@@ -144,12 +173,17 @@ public class Administrador implements Initializable {
 		this.fillTableCliente();
 		this.tableCompra();
 		this.fillTableCompra();
-		//this.tableDetalleCompra();
-		//this.fillTableDetalleCompra();
+		this.tableDetalleCompra();
+		this.fillTableDetalleCompra();
 		this.tableVenta();
 		this.fillTableVenta();
-		//this.tableDetalleVenta();
-		//this.fillTableDetalleVenta();
+		this.tableDetalleVenta();
+		this.fillTableDetalleVenta();
+		this.tableStock();
+		this.fillTableStock();
+		detalleCompraFiltro = new FilteredList<DetalleCompraVO>(detalleCompras);
+		detalleVentaFiltro = new FilteredList<DetalleVentaVO>(detalleVentas);
+		historialStock = new FilteredList<StockVO>(stock);
 		btnModificar.setDisable(true);
 		btnModificarCli.setDisable(true);
 		btnModificarPro.setDisable(true);
@@ -164,14 +198,18 @@ public class Administrador implements Initializable {
 		this.disableFieldsProducto();
 		this.disableFieldsCliente();
 		this.disableFieldsEmpleado();
-		this.disableFieldsProveedor();
-		productosFound = new FilteredList<>(productos);
+		this.disableFieldsProveedor();				
 		tcLista.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>(
 				"nombreProducto"));
 		txtIdP.setDisable(true);
 		txtDescripcionP.setDisable(true);
 		txtExistenciaP.setDisable(true);
 		btnResProd.setVisible(false);
+		btnResEmp.setVisible(false);
+		btnResEmp.setVisible(false);
+		btnResEmp.setVisible(false);
+		registros(lblTDetalleCompras, 0);
+		registros(lblTDetalleVentas, 0);
 	}
 
 	@FXML
@@ -211,8 +249,6 @@ public class Administrador implements Initializable {
 	@FXML
 	private Button btnLimpiarCli;
 	@FXML
-	private Button btnProductos;
-	@FXML
 	private Button btnEliminarPro;
 	@FXML
 	private Button btnGuardarInv;
@@ -225,9 +261,13 @@ public class Administrador implements Initializable {
 	@FXML
 	private Button btnEliminarCli;
 	@FXML
+	private Button btnCrearReporte;
+	@FXML
 	private Button btnCrearCSV;
 	@FXML
 	private Button btnLeerCSV;
+	@FXML
+	private Button btnLog;
 	@FXML
 	private Button btnResProd;
 	@FXML
@@ -305,7 +345,9 @@ public class Administrador implements Initializable {
 	@FXML
 	private TextField txtMunicipioPro;
 	@FXML
-	private TextField txtPasswordEmp;
+	private PasswordField txtPasswordEmp;
+	@FXML
+	private PasswordField txtPasswordConfEmp;
 	@FXML
 	private TextField txtAvenidaEmp;
 	@FXML
@@ -325,6 +367,12 @@ public class Administrador implements Initializable {
 	@FXML
 	private TextField txtNuevaExistenciaP;
 	@FXML
+	private TextField txtBuscarCli;
+	@FXML
+	private TextField txtBuscarPro;
+	@FXML
+	private TextField txtBuscarEmp;
+	@FXML
 	private TextArea txtCausaP;
 	@FXML
 	private Label lblProductos;
@@ -337,6 +385,16 @@ public class Administrador implements Initializable {
 	@FXML
 	private Label lblProveedores;
 	@FXML
+	private Label lblTCompras;
+	@FXML
+	private Label lblTDetalleCompras;
+	@FXML
+	private Label lblTVentas;
+	@FXML
+	private Label lblTDetalleVentas;
+	@FXML
+	private Label lblTStock;
+	@FXML
 	private PasswordField pfConfContrasenaP, pfNewContrasenaP, pfContrasenaP;
 	@FXML
 	private ComboBox<String> cbTipo;
@@ -346,6 +404,8 @@ public class Administrador implements Initializable {
 	private ComboBox<CategoriaVO> cbCategoria;
 	@FXML
 	private ComboBox<String> cbCSV;
+	@FXML
+	private ComboBox<String> cbReportes;
 	@FXML
 	private TableView<ProductoVO> tvProductos;
 	@FXML
@@ -371,8 +431,6 @@ public class Administrador implements Initializable {
 	@FXML
 	private TableColumn<EmpleadoVO, String> tcMunicipioEmp;
 	@FXML
-	private TableColumn<EmpleadoVO, String> tcContrasenaEmp;
-	@FXML
 	private TableView<ProveedorVO> tvProveedor;
 	@FXML
 	private TableColumn<ProveedorVO, String> tcEmpresaPro;
@@ -391,42 +449,36 @@ public class Administrador implements Initializable {
 	@FXML
 	private TableColumn<ClienteVO, String> tcReferenciaCli;
 	@FXML
-	private TableView<CompraDetVO> tvCompra;
+	private TableView<StockVO> tvNuevoStock;
 	@FXML
-	private TableColumn<CompraDetVO, String> tcEmpleadoCom;
+	private TableColumn<StockVO, String> tcCausaStock;
 	@FXML
-	private TableColumn<CompraDetVO, String> tcClienteCom;
+	private TableColumn<StockVO, Integer> tcNuevoStock;
 	@FXML
-	private TableColumn<CompraDetVO, String> tcProductoCom;
-	@FXML
-	private TableColumn<CompraDetVO, Integer> tcCantidadCom;
-	@FXML
-	private TableColumn<CompraDetVO, Float> tcPrecioCom;
-	@FXML
-	private TableColumn<CompraDetVO, Float> tcTotalCom;
-	@FXML
-	private TableColumn<CompraDetVO, String> tcEmpresaCom;
-	@FXML
-	private TableColumn<CompraDetVO, Timestamp> tcFechaRecepcionCom;
-	@FXML
-	private TableColumn<CompraDetVO, Date> tcFechaPedidoCom;
-	@FXML
-	private TableView<VentaDetVO> tvVenta;
-	@FXML
-	private TableColumn<VentaDetVO, String> tcProductoVen;
-	@FXML
-	private TableColumn<VentaDetVO, Integer> tcCantidadVen;
-	@FXML
-	private TableColumn<VentaDetVO, Float> tcPrecioVen;
-	@FXML
-	private TableColumn<VentaDetVO, String> tcVendedorVen;
-	@FXML
-	private TableColumn<VentaDetVO, String> tcClienteVen;
-	@FXML
-	private TableColumn<VentaDetVO, Float> tcTotalVen;
-	@FXML
-	private TableColumn<VentaDetVO, Timestamp> tcFechaHoraVen;
-	@FXML
+	private TableColumn<StockVO, Timestamp> tcFechaHoraStock;
+	@FXML private TableView<CompraVO> tvCompra;    
+    @FXML private TableColumn<CompraVO, Float> tcTotalCom;    
+    @FXML private TableColumn<CompraVO, String> tcEmpresaCom; 
+    @FXML private TableColumn<CompraVO, Timestamp> tcFechaRecepcionCom; 
+    @FXML private TableColumn<CompraVO, Date> tcFechaPedidoCom; 
+    @FXML private TableView<DetalleCompraVO> tvDetalleCompra;
+    @FXML private TableColumn<DetalleCompraVO, String> tcProductoDCom;
+    @FXML private TableColumn<DetalleCompraVO, Float> tcPrecioCompraDCom;
+    @FXML private TableColumn<DetalleCompraVO, Float> tcTotalDCom;  
+    @FXML private TableColumn<DetalleCompraVO, Float> tcPrecioVenta1DCom; 
+    @FXML private TableColumn<DetalleCompraVO, Integer> tcCantidadDCom; 
+    @FXML private TableColumn<DetalleCompraVO, Float> tcPrecioVenta2DCom;   
+    @FXML private TableView<VentaVO> tvVenta;  
+    @FXML private TableColumn<VentaVO, String> tcVendedorVen;
+    @FXML private TableColumn<VentaVO, String> tcClienteVen; 
+    @FXML private TableColumn<VentaVO, Float> tcTotalVen; 
+    @FXML private TableColumn<VentaVO, Timestamp> tcFechaHoraVen;    
+    @FXML private TableView<DetalleVentaVO> tvDetalleVenta; 
+    @FXML private TableColumn<DetalleVentaVO, String> tcProductoDVen;
+    @FXML private TableColumn<DetalleVentaVO, Float> tcPrecioDVen;
+    @FXML private TableColumn<DetalleVentaVO, Integer> tcCantidadDVen;
+    @FXML private TableColumn<DetalleVentaVO, Float> tcTotalDVen;
+    @FXML
 	private TableView<ProductoVO> tvListProducts;
 	@FXML
 	private TableColumn<ProductoVO, String> tcLista;
@@ -501,6 +553,7 @@ public class Administrador implements Initializable {
 							productos.add(productoDAO.lastInsert());
 							limpiarProd(null);
 							disableFieldsProducto();
+							fillTableStock();
 						} else {
 							alert(AlertType.ERROR, "Falló registro.");
 						}
@@ -511,7 +564,7 @@ public class Administrador implements Initializable {
 							fillTableProducto();
 							limpiarProd(null);
 							disableFieldsProducto();
-
+							fillTableStock();
 							alert(AlertType.INFORMATION, "Producto actualizado.");
 						} else {
 							alert(AlertType.ERROR, "Falló registro.");
@@ -564,10 +617,16 @@ public class Administrador implements Initializable {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-				productoDAO.eliminar(productoVO.getId());
-				productos.removeAll(productos);
-				fillTableProducto();
-				disableFieldsProducto();
+				if(productoDAO.eliminar(productoVO.getId())){
+					//productos.removeAll(productos);
+					//fillTableProducto();
+					productos.remove(productoVO);
+					delProductos.add(productoVO);
+					disableFieldsProducto();
+				}
+				else{
+					alert(AlertType.ERROR, "No se elimino el producto.");
+				}
 			}
 		} else {
 			alert(AlertType.ERROR, "No hay producto seleccionado.");
@@ -577,21 +636,122 @@ public class Administrador implements Initializable {
 
 	@FXML
 	public void buscarProd() {
-		if (txtBuscar.getText().isEmpty()) {
-			tvProductos.setItems(productos);
-			registros(lblProductos, productos.size());
-		} else {
-			productosFound.setPredicate(ProductoVO -> ProductoVO
-					.getNombreProducto().toLowerCase()
-					.contains(txtBuscar.getText().trim().toLowerCase()));
-			tvProductos.setItems(productosFound);
-			registros(lblProductos, productosFound.size());
+		if(!ckbDelProd.isSelected()){
+			productosFound = new FilteredList<>(productos);
+			if (txtBuscar.getText().isEmpty()) {
+				tvProductos.setItems(productos);
+				registros(lblProductos, productos.size());
+			} else {
+				productosFound.setPredicate(ProductoVO -> ProductoVO
+						.getNombreProducto().toLowerCase()
+						.contains(txtBuscar.getText().trim().toLowerCase()));
+				tvProductos.setItems(productosFound);
+				registros(lblProductos, productosFound.size());
+			}
+		}
+		else{
+			productosFound = new FilteredList<>(delProductos);
+			if (txtBuscar.getText().isEmpty()) {
+				tvProductos.setItems(delProductos);
+				registros(lblProductos, delProductos.size());
+			} else {
+				productosFound.setPredicate(ProductoVO -> ProductoVO
+						.getNombreProducto().toLowerCase()
+						.contains(txtBuscar.getText().trim().toLowerCase()));
+				tvProductos.setItems(productosFound);
+				registros(lblProductos, productosFound.size());
+			}
+		}
+		
+	}
+	@FXML
+	public void buscarEmp() {
+		if(!ckbDelEmp.isSelected()){
+			empleadosFound = new FilteredList<EmpleadoVO>(empleados);
+			if (txtBuscarEmp.getText().isEmpty()) {
+				tvEmpleados.setItems(empleados);
+				registros(lblEmpleados, empleados.size());
+			} else {
+				empleadosFound.setPredicate(EmpleadoVO -> EmpleadoVO
+						.getNombreEmpleado().toLowerCase()
+						.contains(txtBuscarEmp.getText().trim().toLowerCase()));
+				tvEmpleados.setItems(empleadosFound);
+				registros(lblEmpleados, empleadosFound.size());
+			}
+		}
+		else{
+			empleadosFound = new FilteredList<EmpleadoVO>(delEmpleados);
+			if (txtBuscarEmp.getText().isEmpty()) {
+				tvEmpleados.setItems(delEmpleados);
+				registros(lblEmpleados, delEmpleados.size());
+			} else {
+				empleadosFound.setPredicate(EmpleadoVO -> EmpleadoVO
+						.getNombreEmpleado().toLowerCase()
+						.contains(txtBuscarEmp.getText().trim().toLowerCase()));
+				tvEmpleados.setItems(empleadosFound);
+				registros(lblEmpleados, empleadosFound.size());
+			}
+		}
+	}
+	@FXML
+	public void buscarCli() {
+		if(!ckbDelCli.isSelected()){
+			clientesFound = new FilteredList<ClienteVO>(clientes);
+			if (txtBuscarCli.getText().isEmpty()) {
+				tvCliente.setItems(clientes);
+				registros(lblClientes, clientes.size());
+			} else {
+				clientesFound.setPredicate(ClienteVO -> ClienteVO
+						.getNombreCliente().toLowerCase()
+						.contains(txtBuscarCli.getText().trim().toLowerCase()));
+				tvCliente.setItems(clientesFound);
+				registros(lblClientes, clientesFound.size());
+			}
+		}
+		else{
+			clientesFound = new FilteredList<ClienteVO>(delClientes);
+			if (txtBuscarCli.getText().isEmpty()) {
+				tvCliente.setItems(delClientes);
+				registros(lblClientes, delClientes.size());
+			} else {
+				clientesFound.setPredicate(ClienteVO -> ClienteVO
+						.getNombreCliente().toLowerCase()
+						.contains(txtBuscarCli.getText().trim().toLowerCase()));
+				tvCliente.setItems(clientesFound);
+				registros(lblClientes, clientesFound.size());
+			}
+		}
+	}
+	@FXML
+	public void buscarPro() {
+		if(!ckbDelPro.isSelected()){
+			proveedoresFound = new FilteredList<ProveedorVO>(proveedores);
+			if (txtBuscarPro.getText().isEmpty()) {
+				tvProveedor.setItems(proveedores);
+				registros(lblProveedores, proveedores.size());
+			} else {
+				proveedoresFound.setPredicate(ProveedorVO -> ProveedorVO
+						.getNombreProveedor().toLowerCase()
+						.contains(txtBuscarPro.getText().trim().toLowerCase()));
+				tvProveedor.setItems(proveedoresFound);
+				registros(lblProveedores, proveedoresFound.size());
+			}
+		}
+		else{
+			proveedoresFound = new FilteredList<ProveedorVO>(delProveedores);
+			if (txtBuscarPro.getText().isEmpty()) {
+				tvProveedor.setItems(delProveedores);
+				registros(lblProveedores, delProveedores.size());
+			} else {
+				proveedoresFound.setPredicate(ProveedorVO -> ProveedorVO
+						.getNombreProveedor().toLowerCase()
+						.contains(txtBuscarPro.getText().trim().toLowerCase()));
+				tvProveedor.setItems(proveedoresFound);
+				registros(lblProveedores, proveedoresFound.size());
+			}
 		}
 	}
 
-	public void mostrarProductos(ActionEvent event) {
-		tvProductos.setItems(productos);
-	}
 
 	public void guardarInv(ActionEvent event) {
 		if (txtIdP.getText().isEmpty() || txtDescripcionP.getText().isEmpty()
@@ -645,7 +805,7 @@ public class Administrador implements Initializable {
 				}
 				else{
 					InventarioVO inventarioVO = new InventarioVO(idProducto,
-							existencia, nuevaExistencia, 3, causa);
+							existencia, nuevaExistencia, 4, causa);
 					if (productoDAO.inventario(inventarioVO)) {
 						alert(AlertType.INFORMATION,
 								"Actualización de inventario correcta.");
@@ -655,6 +815,7 @@ public class Administrador implements Initializable {
 						txtExistenciaP.setText("");
 						txtNuevaExistenciaP.setText("");
 						txtCausaP.setText("");
+						fillTableStock();
 					} else {
 						alert(AlertType.ERROR, "Falló actualización.");
 					}
@@ -678,6 +839,7 @@ public class Administrador implements Initializable {
 			txtIdP.setText(String.valueOf(productoVO.getId()));
 			txtDescripcionP.setText(productoVO.getNombreProducto());
 			txtExistenciaP.setText(String.valueOf(productoVO.getStock()));
+			selectedStock();
 		} else {
 			alert(AlertType.ERROR, "No hay producto seleccionado.");
 		}
@@ -690,6 +852,7 @@ public class Administrador implements Initializable {
 				|| txtTelefonoEmp.getText().isEmpty()
 				|| txtUsuarioEmp.getText().isEmpty()
 				|| txtPasswordEmp.getText().isEmpty()
+				|| txtPasswordConfEmp.getText().isEmpty()
 				|| txtCalleEmp.getText().isEmpty()
 				|| txtAvenidaEmp.getText().isEmpty()
 				|| txtNumeroEmp.getText().isEmpty()
@@ -735,6 +898,10 @@ public class Administrador implements Initializable {
 					i++;
 					txtPasswordEmp.setStyle("-fx-background-color: red");
 				}
+			}
+			if(!txtPasswordEmp.getText().trim().equals(txtPasswordConfEmp.getText().trim())){
+				i++;
+				alert(AlertType.ERROR, "Las contraseñas no coinciden.");
 			}
 			if (validar.entero(txtCalleEmp.getText().trim())) {
 				txtCalleEmp.setStyle("-fx-background-color: white");
@@ -815,6 +982,7 @@ public class Administrador implements Initializable {
 		txtTelefonoEmp.setText("");
 		txtUsuarioEmp.setText("");
 		txtPasswordEmp.setText("");
+		txtPasswordConfEmp.setText("");
 		txtCalleEmp.setText("");
 		txtAvenidaEmp.setText("");
 		txtNumeroEmp.setText("");
@@ -845,10 +1013,16 @@ public class Administrador implements Initializable {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-				empleadoDAO.eliminar(empleadoVO.getId());
-				empleados.removeAll(empleados);
-				fillTableEmpleado();
-				disableFieldsEmpleado();
+				if(empleadoDAO.eliminar(empleadoVO.getId())){
+					//empleados.removeAll(empleados);
+					//fillTableEmpleado();
+					empleados.remove(empleadoVO);
+					delEmpleados.add(empleadoVO);
+					disableFieldsEmpleado();
+				}
+				else{
+					alert(AlertType.ERROR, "No se elimino el proveedor.");
+				}
 			}
 		} else {
 			alert(AlertType.ERROR, "No hay producto seleccionado.");
@@ -1009,10 +1183,17 @@ public class Administrador implements Initializable {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-				proveedorDAO.eliminar(proveedorVO.getId());
-				proveedores.removeAll(proveedores);
-				fillTableProveedor();
-				disableFieldsProveedor();
+				if(proveedorDAO.eliminar(proveedorVO.getId())){
+					//proveedores.removeAll(proveedores);
+					//fillTableProveedor();
+					proveedores.remove(proveedorVO);
+					delProveedores.add(proveedorVO);
+					disableFieldsProveedor();
+				}
+				else{
+					alert(AlertType.ERROR, "Proveedor no eliminado.");
+				}
+				
 			}
 		} else {
 			alert(AlertType.ERROR, "No hay proveedor seleccionado.");
@@ -1183,8 +1364,10 @@ public class Administrador implements Initializable {
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				if (clienteDAO.eliminar(clienteVO.getId())) {
-					clientes.removeAll(clientes);
-					fillTableCliente();
+					//clientes.removeAll(clientes);
+					//fillTableCliente();
+					clientes.remove(clienteVO);
+					delClientes.add(clienteVO);
 					limpiarCli(null);
 					disableFieldsCliente();
 				} else {
@@ -1199,11 +1382,11 @@ public class Administrador implements Initializable {
 
 	public void actualizarRecepcionCom(ActionEvent event) {
 		// checar 3er parcial
-		if(compraDetVO != null){
-			if(compraDAO.actualizar(compraDetVO.getId())){
+		if(compraVO != null){
+			if(compraDAO.actualizar(compraVO.getId())){
 				alert(AlertType.INFORMATION, "Fecha de compra actualizada.");
 				compras.removeAll(compras);
-				compraDetVO = null;
+				compraVO = null;
 				fillTableCompra();
 			}
 			else{
@@ -1373,7 +1556,13 @@ public class Administrador implements Initializable {
 			txtStockMinProd.setText(stockMin);
 			cbTipo.getSelectionModel().select(productoVO.getTipo());
 			btnModificar.setDisable(false);
-			btnEliminar.setDisable(false);
+			btnEliminar.setDisable(false);			
+			txtDescripcionProd.setStyle("-fx-background-color: white");
+			txtPrecio1Prod.setStyle("-fx-background-color: white");
+			txtPrecio2Prod.setStyle("-fx-background-color: white");
+			txtStockMaxProd.setStyle("-fx-background-color: white");
+			txtStockMinProd.setStyle("-fx-background-color: white");
+		
 		}
 
 	}
@@ -1394,9 +1583,6 @@ public class Administrador implements Initializable {
 		tcUsuarioEmp
 				.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>(
 						"usuario"));
-		tcContrasenaEmp
-				.setCellValueFactory(new PropertyValueFactory<EmpleadoVO, String>(
-						"password"));
 	}
 
 	/*
@@ -1431,8 +1617,21 @@ public class Administrador implements Initializable {
 			txtTelefonoEmp.setText(empleadoVO.getTelefono());
 			txtUsuarioEmp.setText(empleadoVO.getUsuario());
 			txtPasswordEmp.setText(empleadoVO.getPassword());
+			txtPasswordConfEmp.setText(empleadoVO.getPassword());
 			btnModificarEmp.setDisable(false);
 			btnEliminarEmp.setDisable(false);
+
+			txtNombreEmp.setStyle("-fx-background-color: white");
+			txtAMaternoEmp.setStyle("-fx-background-color: white");
+			txtAPaternoEmp.setStyle("-fx-background-color: white");
+			txtTelefonoEmp.setStyle("-fx-background-color: white");
+			txtUsuarioEmp.setStyle("-fx-background-color: white");
+			txtPasswordEmp.setStyle("-fx-background-color: white");
+			txtCalleEmp.setStyle("-fx-background-color: white");
+			txtAvenidaEmp.setStyle("-fx-background-color: white");
+			txtNumeroEmp.setStyle("-fx-background-color: white");
+			txtColoniaEmp.setStyle("-fx-background-color: white");
+			txtMunicipioEmp.setStyle("-fx-background-color: white");
 		}
 	}
 
@@ -1489,6 +1688,16 @@ public class Administrador implements Initializable {
 			txtTelefonoPro.setText(proveedorVO.getTelefono());
 			btnModificarPro.setDisable(false);
 			btnEliminarPro.setDisable(false);
+			txtNombrePro.setStyle("-fx-background-color: white");
+			txtAMaternoPro.setStyle("-fx-background-color: white");
+			txtAPaternoPro.setStyle("-fx-background-color: white");
+			txtTelefonoPro.setStyle("-fx-background-color: white");
+			txtEmpresaPro.setStyle("-fx-background-color: white");
+			txtCallePro.setStyle("-fx-background-color: white");
+			txtAvenidaPro.setStyle("-fx-background-color: white");
+			txtNumeroPro.setStyle("-fx-background-color: white");
+			txtColoniaPro.setStyle("-fx-background-color: white");
+			txtMunicipioPro.setStyle("-fx-background-color: white");
 		}
 	}
 
@@ -1505,6 +1714,37 @@ public class Administrador implements Initializable {
 		tcReferenciaCli
 				.setCellValueFactory(new PropertyValueFactory<ClienteVO, String>(
 						"referencia"));
+	}
+
+	/*
+	 * Metodo para llenar tabla cliente
+	 */
+	public void fillTableStock() {
+		stock = FXCollections.observableArrayList(productoDAO.getStock());
+		// tvCliente.getItems().addAll(clientes);
+		//tvNuevoStock.setItems(stock);
+		//registros(lblTStock, stock.size());
+	}
+	
+	/*
+	 * Metodo para declarar atributos de la tabla cliente
+	 */
+	public void tableStock() {
+		tcCausaStock
+				.setCellValueFactory(new PropertyValueFactory<StockVO, String>(
+						"causa"));
+		tcNuevoStock
+				.setCellValueFactory(new PropertyValueFactory<StockVO, Integer>(
+						"stock"));
+		tcFechaHoraStock
+				.setCellValueFactory(new PropertyValueFactory<StockVO, Timestamp>("fechaHora"));
+	}
+	
+	public void selectedStock(){
+    		historialStock.setPredicate(StockVO -> StockVO
+					.getIdProducto() ==  productoVO.getId());
+			tvNuevoStock.setItems(historialStock);
+			registros(lblTStock, historialStock.size());
 	}
 
 	/*
@@ -1539,62 +1779,117 @@ public class Administrador implements Initializable {
 			txtReferenciaCli.setText(clienteVO.getReferencia());
 			btnModificarCli.setDisable(false);
 			btnEliminarCli.setDisable(false);
+			txtNombreCli.setStyle("-fx-background-color: white");
+			txtAMaternoCli.setStyle("-fx-background-color: white");
+			txtAPaternoCli.setStyle("-fx-background-color: white");
+			txtReferenciaCli.setStyle("-fx-background-color: white");
+			txtCalleCli.setStyle("-fx-background-color: white");
+			txtAvenidaCli.setStyle("-fx-background-color: white");
+			txtNumeroCli.setStyle("-fx-background-color: white");
+			txtColoniaCli.setStyle("-fx-background-color: white");
+			txtMunicipioCli.setStyle("-fx-background-color: white");
 		}
 	}
 
 	/*
 	 * Metodo para declarar atributos de la tabla compra
 	 */
-	public void tableCompra() {
-		tcEmpresaCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, String>("empresa"));
-		tcEmpleadoCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, String>("empleado"));
-		tcProductoCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO,  String>("producto"));
-		tcCantidadCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, Integer>("cantidad"));
-		tcPrecioCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO,  Float>("precio"));
-		tcTotalCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, Float>("total"));
-		tcFechaPedidoCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, Date>("fechaPedido"));
-		tcFechaRecepcionCom.setCellValueFactory(new PropertyValueFactory<CompraDetVO, Timestamp>("fechaRecepcion"));
-	}
+	public void tableCompra(){
+    	tcEmpresaCom.setCellValueFactory(new PropertyValueFactory<CompraVO, String>("empresa"));
+    	tcTotalCom.setCellValueFactory(new PropertyValueFactory<CompraVO, Float>("total"));
+    	tcFechaPedidoCom.setCellValueFactory(new PropertyValueFactory<CompraVO, Date>("fechaPedido"));
+    	tcFechaRecepcionCom.setCellValueFactory(new PropertyValueFactory<CompraVO, Timestamp>("fechaRecepcion"));
+    }
+    /*
+     * Metodo para llenar tabla compra
+     * */
+    public void fillTableCompra(){
+    	compras = FXCollections.observableArrayList(compraDAO.getDatos());
+    	tvCompra.setItems(compras);
+    	registros(lblTCompras, compras.size());
+    }
+    /*
+     * Metodo para obtener el objeto selecioado de la tabla compra
+     * */
+    public void selectedTableCompra(){
+    	if(tvCompra.getSelectionModel().getSelectedItem() != null){
+    		compraVO = tvCompra.getSelectionModel().getSelectedItem();
+    		detalleCompraFiltro.setPredicate(DetalleCompraVO -> DetalleCompraVO
+					.getId() == compraVO.getId());
+			tvDetalleCompra.setItems(detalleCompraFiltro);
+			registros(lblTDetalleCompras, detalleCompraFiltro.size());
+    		
+    	}
+    }
 
-	/*
-	 * Metodo para llenar tabla compra
-	 */
-	public void fillTableCompra() {
-		compras = FXCollections.observableArrayList(compraDAO.getDatosDetalle());
-		tvCompra.setItems(compras);
-	}
+    /*
+     * Metodo para declarar atributos de la tabla detallecompra
+     * */
+    public void tableDetalleCompra(){
+    	tcProductoDCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, String>("producto"));
+    	tcCantidadDCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, Integer>("cantidad"));
+    	tcPrecioCompraDCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, Float>("precioCompra"));
+    	tcTotalDCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, Float>("total"));
+    	tcPrecioVenta1DCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, Float>("precioVenta1"));
+    	tcPrecioVenta2DCom.setCellValueFactory(new PropertyValueFactory<DetalleCompraVO, Float>("precioVenta2"));
+    	
+    }
+    /*
+     * Metodo para llenar tabla detallecompra
+     * */
+    public void fillTableDetalleCompra(){
+    	detalleCompras = FXCollections.observableArrayList(detalleCompraDAO.getDatos());
+    	//tvDetalleCompra.getItems().addAll(detalleCompras);
+    }
+    /*
+     * Metodo para declarar atributos de la tabla venta
+     * */
+    public void tableVenta(){
+    	tcVendedorVen.setCellValueFactory(new PropertyValueFactory<VentaVO, String>("vendedor"));
+    	tcClienteVen.setCellValueFactory(new PropertyValueFactory<VentaVO, String>("cliente"));
+    	tcTotalVen.setCellValueFactory(new PropertyValueFactory<VentaVO, Float>("total"));
+    	tcFechaHoraVen.setCellValueFactory(new PropertyValueFactory<VentaVO, Timestamp>("fechaHora"));
+    	
+    }
+    /*
+     * Metodo para llenar tabla venta
+     * */
+    public void fillTableVenta(){
+    	ventas = FXCollections.observableArrayList(ventaDAO.getDatos());
+    	tvVenta.getItems().addAll(ventas);
+    	registros(lblTVentas, ventas.size());
+    }
+    /*
+     * Metodo para obtener el objeto selecioado de la tabla venta
+     * */
+    public void selectedTableVenta(){
+    	if(tvVenta.getSelectionModel().getSelectedItem() != null){
+    		ventaVO = tvVenta.getSelectionModel().getSelectedItem();
+    		detalleVentaFiltro.setPredicate(DetalleVentaVO -> DetalleVentaVO
+					.getId() ==  ventaVO.getId());
+			tvDetalleVenta.setItems(detalleVentaFiltro);
+			registros(lblTDetalleVentas, detalleVentaFiltro.size());
+    		
+    	}
+    }
 
-	/*
-	 * Metodo para obtener el objeto selecioado de la tabla compra
-	 */
-	public void selectedTableCompra() {
-		if (tvCompra.getSelectionModel().getSelectedItem() != null) {
-			compraDetVO = tvCompra.getSelectionModel().getSelectedItem();
-		}
-	}
-
-	/*
-	 * Metodo para declarar atributos de la tabla venta
-	 */
-	public void tableVenta() {
-		tcVendedorVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, String>("empleado"));
-		tcClienteVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, String>("cliente"));
-		tcProductoVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, String>("producto"));
-		tcCantidadVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, Integer>("cantidad"));
-		tcPrecioVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, Float>("precio"));		
-		tcTotalVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, Float>("total"));
-		tcFechaHoraVen.setCellValueFactory(new PropertyValueFactory<VentaDetVO, Timestamp>("fechaHora"));
-
-	}
-
-	/*
-	 * Metodo para llenar tabla venta
-	 */
-	public void fillTableVenta() {
-		ventas = FXCollections.observableArrayList(ventaDAO.getDatosDetalle());
-		tvVenta.getItems().addAll(ventas);
-	}
-
+    /*
+     * Metodo para declarar atributos de la tabla detalleventa
+     * */
+    public void tableDetalleVenta(){
+    	tcProductoDVen.setCellValueFactory(new PropertyValueFactory<DetalleVentaVO, String>("producto"));
+    	tcPrecioDVen.setCellValueFactory(new PropertyValueFactory<DetalleVentaVO, Float>("precio"));
+    	tcCantidadDVen.setCellValueFactory(new PropertyValueFactory<DetalleVentaVO, Integer>("cantidad"));
+    	tcTotalDVen.setCellValueFactory(new PropertyValueFactory<DetalleVentaVO, Float>("total"));
+    	
+    }
+    /*
+     * Metodo para llenar tabla detalleventa
+     * */
+    public void fillTableDetalleVenta(){
+    	detalleVentas = FXCollections.observableArrayList(detalleVentaDAO.getDatos());
+    	//tvDetalleVenta.getItems().addAll(detalleVentas);
+    }
 	/*
 	 * Metodo para desabilitar campos de producto
 	 */
@@ -1655,6 +1950,7 @@ public class Administrador implements Initializable {
 		txtTelefonoEmp.setDisable(true);
 		txtUsuarioEmp.setDisable(true);
 		txtPasswordEmp.setDisable(true);
+		txtPasswordConfEmp.setDisable(true);
 		btnGuardarEmp.setDisable(true);
 		// btnLimpiarEmp.setDisable(true);
 	}
@@ -1675,6 +1971,7 @@ public class Administrador implements Initializable {
 		txtTelefonoEmp.setDisable(false);
 		txtUsuarioEmp.setDisable(false);
 		txtPasswordEmp.setDisable(false);
+		txtPasswordConfEmp.setDisable(false);
 		btnGuardarEmp.setDisable(false);
 		// btnLimpiarEmp.setDefaultButton(false);
 	}
@@ -1834,14 +2131,16 @@ public class Administrador implements Initializable {
 				}
 				break;
 			case "Compra":
-				if(csv.writeCsvCompra(file, compras)) {
+				comprasCSV = FXCollections.observableArrayList(compraDAO.getDatosDetalle());
+				if(csv.writeCsvCompra(file, comprasCSV)) {
 					alert(AlertType.INFORMATION, "Reporte creado.");
 				} else {
 					alert(AlertType.ERROR, "Falló creación de reporte.");
 				}
 				break;
 			case "Venta":
-				if(csv.writeCsvVenta(file, ventas)) {
+				ventasCSV = FXCollections.observableArrayList(ventaDAO.getDatosDetalle());
+				if(csv.writeCsvVenta(file, ventasCSV)) {
 					alert(AlertType.INFORMATION, "Reporte creado.");
 				} else {
 					alert(AlertType.ERROR, "Falló creación de reporte.");
@@ -1871,6 +2170,44 @@ public class Administrador implements Initializable {
 		}
 	}
 	
+	public void crearReporte(ActionEvent event){
+		if(cbReportes.getValue() != null){
+			String rep = cbReportes.getSelectionModel().getSelectedItem();
+			switch (rep) {
+			case "Cliente":
+				reporte.loadReport("src\\view\\reporte\\cliente.jrxml");
+				reporte.showReport();
+				break;
+			case "Compra":
+				reporte.loadReport("src\\view\\reporte\\compra.jrxml");
+				reporte.showReport();
+				break;
+			case "Empleado":
+				reporte.loadReport("src\\view\\reporte\\empleado.jrxml");
+				reporte.showReport();
+				break;
+			case "Producto":
+				reporte.loadReport("src\\view\\reporte\\producto.jrxml");
+				reporte.showReport();
+				break;
+			case "Proveedor":
+				reporte.loadReport("src\\view\\reporte\\proveedor.jrxml");
+				reporte.showReport();
+				break;
+			case "Venta":
+				reporte.loadReport("src\\view\\reporte\\ventas.jrxml");
+				reporte.showReport();
+				break;
+			default:
+				alert(AlertType.ERROR, "Falló creación de reporte.");
+				break;
+			}
+		}
+		else{
+			alert(AlertType.ERROR, "Seleccione una categoria.");
+		}
+	}
+	
 	public void delProd(ActionEvent event){
 		if(ckbDelProd.isSelected()){
 			btnGuardarProd.setVisible(false);
@@ -1878,7 +2215,6 @@ public class Administrador implements Initializable {
 			btnModificar.setVisible(false);
 			btnLimpiarProd.setVisible(false);
 			btnResProd.setVisible(true);
-			btnProductos.setDisable(true);
 			tvProductos.setItems(delProductos);
 			registros(lblProductos, delProductos.size());
 		}
@@ -1888,7 +2224,6 @@ public class Administrador implements Initializable {
 			btnModificar.setVisible(true);
 			btnLimpiarProd.setVisible(true);
 			btnResProd.setVisible(false);
-			btnProductos.setDisable(false);
 			tvProductos.setItems(productos);
 			registros(lblProductos, productos.size());
 			registros(lblProductos1, productos.size());
@@ -2020,6 +2355,62 @@ public class Administrador implements Initializable {
 		}
 		
 	}
+public void showLog(ActionEvent event){
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Logs");
+	alert.setHeaderText("Bitacora de errores.");
+
+	File f = new File("Logs\\log.txt");
+	try {
+		FileWriter fw = new FileWriter(f,true);
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		log.printLog(e1.getMessage(), this.getClass().toString());
+	}
+	int n = 0;
+	String t = "";
+	String message = "";
+	FileReader fr;
+	try {
+		fr = new FileReader(f);
+	
+	BufferedReader br = new BufferedReader(fr);
+	while(n == 0){
+		t = br.readLine();
+		if(t != null){
+			message += t + "\n";
+		}
+		else{
+			n++;
+		}
+	}
+	br.close();
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		log.printLog(e.getMessage(), this.getClass().toString());
+	}
+	// Create expandable Exception.
+
+	TextArea textArea = new TextArea(message);
+	textArea.setEditable(false);
+	textArea.setWrapText(true);
+
+	textArea.setMaxWidth(Double.MAX_VALUE);
+	textArea.setMaxHeight(Double.MAX_VALUE);
+	GridPane.setVgrow(textArea, Priority.ALWAYS);
+	GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+	GridPane expContent = new GridPane();
+	expContent.setMaxWidth(Double.MAX_VALUE);
+	expContent.add(textArea, 0, 0);
+
+	// Set expandable Exception into the dialog pane.
+	alert.getDialogPane().setExpandableContent(expContent);
+
+	alert.showAndWait();
+
+}
 
 	/*
 	 * /*

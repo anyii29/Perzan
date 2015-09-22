@@ -10,6 +10,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 public class ProductoDAO implements iOp{
 	private int dato;
@@ -347,5 +348,28 @@ public class ProductoDAO implements iOp{
 			conex.desconectar();
 		}
 		return false;
+	}
+	public ObservableList<StockVO> getStock() {
+		StockVO stockVO;
+		ObservableList<StockVO> stock = FXCollections.observableArrayList();
+		try {
+			conex.conectar();
+			PreparedStatement consulta = conex.getConnection().prepareStatement("select * from fn_seleccionarhistorialstock()");
+			ResultSet res = consulta.executeQuery();
+			while(res.next()){
+				stockVO = new StockVO();
+				stockVO.setIdProducto(res.getInt("id_producto"));
+				stockVO.setCausa(res.getString("causa"));
+				stockVO.setUsuario(res.getString("usuario"));
+				stockVO.setStock(res.getInt("stock"));
+				stockVO.setFechaHora(res.getTimestamp("fecha_hora"));
+				stock.add(stockVO);
+			}
+		} catch (Exception e) {
+			log.printLog(e.getMessage(), this.getClass().toString());
+			// TODO: handle exception
+		}
+		// TODO Auto-generated method stub
+		return stock;
 	}
 }

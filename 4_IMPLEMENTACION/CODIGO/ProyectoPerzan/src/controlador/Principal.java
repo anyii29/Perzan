@@ -25,8 +25,8 @@ public class Principal implements Initializable{
 		ttEmp.setText("Iniciar Sesión");
 	}
 	public Principal(){	
-		loginAdm = false;
-		loginEmp = false;
+		//loginAdm = false;
+		//loginEmp = false;
 	}
 	@FXML
 	private Button btnAdmin;

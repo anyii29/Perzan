@@ -20,7 +20,7 @@
          </tooltip></PasswordField>
       <Button fx:id="btnLogin" layoutX="72.0" layoutY="159.0" mnemonicParsing="false" onAction="#login" text="Login" />
       <Button fx:id="btnCancelar" layoutX="177.0" layoutY="159.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-      <TitledPane fx:id="tpConexion" prefHeight="196.0" prefWidth="305.0" text="Conexión" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TitledPane fx:id="tpConexion" animated="false" collapsible="false" focusTraversable="false" prefHeight="196.0" prefWidth="305.0" text="Conexión" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="217.0" styleClass="background">
                <children>

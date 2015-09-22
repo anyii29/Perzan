@@ -58,8 +58,10 @@ public class Marca implements Initializable{
     		Optional<ButtonType> result = alert.showAndWait();
     		if (result.get() == ButtonType.OK){
     		    marVO.eliminarMar();
-    		    tvMarca.getItems().removeAll(marcas);
-    		    fillTableMarca();
+    		    //tvMarca.getItems().removeAll(marcas);
+    		    //fillTableMarca();
+    		    marcas.remove(marVO);
+    		    marcasDel.add(marVO);
     			txtNombreMar.setText("");
     			disableFieldsMarca();
     		}
@@ -152,7 +154,6 @@ public class Marca implements Initializable{
     			alert(AlertType.INFORMATION, "Registro restaurado.");
     			marcasDel.remove(marVO);
     			marcas.add(marVO);
-    			tvMarca.setSelectionModel(null);
     		}
     		else{
     			alert(AlertType.INFORMATION, "Registro no restaurado.");
@@ -218,7 +219,8 @@ public class Marca implements Initializable{
     public void fillTableMarca(){
     	marVO = new MarcaVO();
     	marcas = FXCollections.observableArrayList(marVO.listarMarca(true));
-    	tvMarca.getItems().addAll(marcas);
+    	marcasDel = FXCollections.observableArrayList(marVO.listarMarca(false));
+    	tvMarca.setItems(marcas);
     }
 /*
     

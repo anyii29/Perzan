@@ -1,32 +1,24 @@
 package modelo;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt {
 	
@@ -39,9 +31,11 @@ public class Encrypt {
 	private DateFormat dateFormat;
 	private Date date;
 	private File file;
+	private Logger log;
 	
 	
 	public Encrypt(){
+		log = new Logger();
 		dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         try {
 			/*keyGenerator = KeyGenerator.getInstance("AES");
@@ -55,7 +49,7 @@ public class Encrypt {
 	        aes = Cipher.getInstance("DES/ECB/PKCS5Padding");
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
         
 	}
@@ -145,5 +139,23 @@ public class Encrypt {
 			System.out.println("fichero borrado!!");
 		}
 	}
+	public String encryptConexion(File ruta) throws Throwable {
+		file = ruta;
+		File f2 = new File("BaseDatos\\conexion.txt");
+		FileInputStream fis = new FileInputStream(ruta);
+		FileOutputStream fos = new FileOutputStream(f2);
+		encryptOrDecrypt(key1, Cipher.ENCRYPT_MODE, fis, fos);
+		file.delete();
+		//f2.renameTo(new File("BaseDatos\\conexion1.txt"));
+		
+		return "";
+	}
 
+	public File decryptConexion(File f) throws Throwable {
+		file = new File("BaseDatos\\conexion1.txt");
+		FileInputStream fis = new FileInputStream(f);
+		FileOutputStream fos = new FileOutputStream(file);
+		encryptOrDecrypt(key1, Cipher.DECRYPT_MODE, fis, fos);
+		return file;
+	}
 }

@@ -1,13 +1,9 @@
 package controlador;
 
-import java.io.File;
 import java.net.URL;
-import java.text.BreakIterator;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
 
-import modelo.BaseDatos;
 import modelo.Conexion;
 import modelo.Encrypt;
 import modelo.LoginEmpDAO;
@@ -57,6 +53,10 @@ public class LoginEmp implements Initializable {
 			if(tipo == "admin" && conex.result() == false){
 				tpConexion.setVisible(true);
 				val = false;
+				txtUsuario.setDisable(true);
+				txtPassword.setDisable(true);
+				btnLogin.setDisable(true);
+				btnCancelar.setDisable(true);
 				alert(AlertType.ERROR, "Configure su conexión.");
 				
 			}
@@ -96,6 +96,10 @@ public class LoginEmp implements Initializable {
 		if(conex.result()){
 			login(null);
 			tpConexion.setVisible(false);
+			txtUsuario.setDisable(false);
+			txtPassword.setDisable(false);
+			btnCancelar.setDisable(false);
+			btnLogin.setDisable(false);
 			val = true;	
 			conex.actualizar();
 		}
@@ -108,6 +112,10 @@ public class LoginEmp implements Initializable {
 		txtUser.setText("");
 		txtPass.setText("");
 		tpConexion.setVisible(false);
+		txtUsuario.setDisable(false);
+		txtPassword.setDisable(false);
+		btnCancelar.setDisable(false);
+		btnLogin.setDisable(false);
 	}
 	
 	/*

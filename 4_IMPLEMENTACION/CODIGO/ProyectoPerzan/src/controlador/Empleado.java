@@ -201,7 +201,7 @@ public class Empleado implements Initializable {
         						ventas.set(i, dListVentaVO);
     						}
     						else{
-    							alert(AlertType.ERROR, "Producto insuficiente.");
+    							alert(AlertType.ERROR, "Producto insuficiente. \n Stock: "+productoVO.getStock());
     						}
     						d = true;
     						//break;
@@ -212,7 +212,7 @@ public class Empleado implements Initializable {
     						ventas.add(dVentaVO);
 						}
 						else{
-							alert(AlertType.ERROR, "Producto insuficiente.");
+							alert(AlertType.ERROR, "Producto insuficiente. \n Stock: "+productoVO.getStock());
 						}
     				}  
 					getTotalVen();
@@ -222,7 +222,7 @@ public class Empleado implements Initializable {
 						ventas.add(dVentaVO);
 					}
 					else{
-						alert(AlertType.ERROR, "Producto insuficiente.");
+						alert(AlertType.ERROR, "Producto insuficiente. \n Stock: "+productoVO.getStock());
 					}
     				getTotalVen();    				
     			}
@@ -265,28 +265,35 @@ public class Empleado implements Initializable {
     
     public void venta(ActionEvent event) {
     	int i = 0;
-    	if(txtNombreCli.getText().isEmpty()){
+    	/*if(txtNombreCli.getText().isEmpty()){
     		i++; alert(AlertType.ERROR, "Seleciona un cliente.");
-    	}
+    	}*/
     	if(ventas.size() == 0){
     		i++; alert(AlertType.ERROR, "No se han agregado productos.");
     	}
     	if(i == 0){
     		ventaVO = new VentaVO();
     		ventaVO.setIdVendedor(usuario.getId());
-    		ventaVO.setIdCliente(clienteVO.getId());
-    		ventaVO.setTotal(total);
-    		if(ventaDAO.registrar(ventaVO, ventas)){
-    			alert(AlertType.INFORMATION, "Venta realizada.");
-    			cancelarVenta();
-    			registros(lblTVentas, ventas.size());
-    			fillProducto();
+    		if(txtNombreCli.getText().isEmpty()){
+        		ventaVO.setIdCliente(1);    			
     		}
     		else{
-    			alert(AlertType.ERROR, "No se realizo la venta.");
+        		ventaVO.setIdCliente(clienteVO.getId());    			
+    		}
+    		//ventaVO.setIdCliente(clienteVO.getId());
+    		ventaVO.setTotal(total);
+    		if(main1.showTotal(total)){
+    			if(ventaDAO.registrar(ventaVO, ventas)){
+        			alert(AlertType.INFORMATION, "Venta realizada.");
+        			cancelarVenta();
+        			registros(lblTVentas, ventas.size());
+        			fillProducto();
+        		}
+        		else{
+        			alert(AlertType.ERROR, "No se realizo la venta.");
+        		}
     		}
     	}
-    	
     }
 
     

@@ -24,6 +24,7 @@ public class Conexion {
 	private BufferedReader brFile;
 	private BufferedWriter wrWrite;
 	private Logger log;
+	private Encrypt encrypt;
 	
 	public String getIp() {
 		return ip;
@@ -43,18 +44,43 @@ public class Conexion {
 
 	
 	private Conexion(){
+		encrypt = new Encrypt();
 		try {
-			file = new FileReader("BaseDatos\\conexion.txt");
-			brFile = new BufferedReader(file);
-			ip = brFile.readLine();
-			puerto = Integer.parseInt(brFile.readLine());
-			usuario = brFile.readLine();
-			contrasena = brFile.readLine();
-			bd = brFile.readLine();
-			brFile.close();
+			File f = new File("BaseDatos\\conexion.txt");
+			if(!f.exists()){
+				fWrite = new FileWriter(f);
+				ip = "";
+				puerto = 0;
+				usuario = "";
+				contrasena = "";
+				bd = "";
+			}
+			else{
+				try {
+					f = encrypt.decryptConexion(f);
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					log.printLog(e.getMessage(), this.getClass().toString());
+				}
+				file = new FileReader(f);
+				brFile = new BufferedReader(file);
+				ip = brFile.readLine();
+				String p = brFile.readLine();
+				if(p == null){
+					puerto = 0;
+				}
+				else{
+					puerto = Integer.parseInt(p);
+				}
+				usuario = brFile.readLine();
+				contrasena = brFile.readLine();
+				bd = brFile.readLine();
+				brFile.close();
+				f.delete();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.printLog(e.getMessage(), this.getClass().toString());
 		}
 		
 		servidor = "jdbc:postgresql://" + ip +":"+ puerto + "/"+bd;
@@ -143,7 +169,7 @@ public class Conexion {
 	}
 	public void actualizar(){
 		try {
-			File f = new File("BaseDatos\\conexion.txt");
+			File f = new File("BaseDatos\\conexion1.txt");
 			fWrite = new FileWriter(f, false);
 			wrWrite = new BufferedWriter(fWrite);
 			wrWrite.write(this.ip);//ip
@@ -156,10 +182,10 @@ public class Conexion {
 			wrWrite.newLine();
 			wrWrite.write(this.bd);//bd
 			wrWrite.close();
-		} catch (IOException e) {
+			encrypt.encryptConexion(f);
+		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			log.printLog(e.getMessage(), this.getClass().toString());
-			e.printStackTrace();
 		}
 	}
 }

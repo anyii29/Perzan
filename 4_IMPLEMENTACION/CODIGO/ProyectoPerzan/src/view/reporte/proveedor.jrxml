@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-18T14:42:37 -->
+<!-- 2015-09-21T19:48:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="proveedor" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="cHJvdmVlZG9yIEFTICwxOTEsMTQ0LGFmMjY0NDdlLWY0MDQtNDQwMi05NTY4LTk3N2FjYjJjYzFiODs="/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
@@ -134,18 +134,22 @@ ORDER BY proveedor.apellido_paterno ASC]]>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="395" y="0" width="40" height="15" uuid="7af27094-e7c5-4232-863a-12d956651c5b"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{calle}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="450" y="0" width="50" height="15" uuid="d16dea14-94ac-4243-883c-86cc97bacae0"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{avenida}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="515" y="0" width="90" height="15" uuid="a2904c56-d4cd-49b7-8279-07e545666bb8"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$F{colonia}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="620" y="0" width="80" height="15" uuid="27b6b1f7-9a1e-4925-a874-370c29cca82b"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$F{municipio}]]></textFieldExpression>
 				</textField>
 			</frame>

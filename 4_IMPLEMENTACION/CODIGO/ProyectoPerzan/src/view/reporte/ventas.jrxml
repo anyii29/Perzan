@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-18T14:42:38 -->
+<!-- 2015-09-21T19:45:08 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ventas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGV0YWxsZXZlbnRhICwyMCw2MTMsZGMwZTYwZGQtY2I2Yi00MmQxLWE4YzktM2QzMTljODM3OTU0&#xA;O3Byb2R1Y3RvICwzMjgsMTgsN2U0ZjE5ZjctOGJiNS00ODQ4LTk3ZDgtNjMzMWQ1N2I4YzkzO3Zl&#xA;bnRhICwxNTksNjI2LDI1YjM3NWRkLTRjNmMtNDkwMC1iZTE1LTQ4MTAxZWUyMDM3NDtjYXRlZ29y&#xA;aWEgLDE1OSw0OTQsZmQxNWMzODItY2U3Ny00OTNhLTgxYTAtNDY4OTgwZjRhZThhO2NsaWVudGUg&#xA;LDE1OSwxMjMwLDA4ODcxMzc3LTMzYWEtNGVhZi1iZDEwLTIzOTI2N2M3ZmM3ODtlbXBsZWFkbyAs&#xA;MTU5LDgxMiwwNGMxOTk3ZC1lMTk0LTQ2N2MtYWZkZi02YWE5OThlODEwZWM7"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
@@ -169,18 +169,22 @@ ORDER BY venta.fecha_hora DESC]]>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="320" y="0" width="87" height="15" uuid="408ea7bf-faf7-4fbd-915a-5a4e229667b7"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="410" y="0" width="77" height="15" uuid="b7e9e424-40fe-4873-97a0-91668225096f"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="490" y="0" width="84" height="15" uuid="a40e6831-ed0d-4355-a86c-bc1e16a7e5ca"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="585" y="0" width="117" height="15" uuid="51ec470c-a697-45fd-bded-d0f42164e8c7"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{fecha_hora}]]></textFieldExpression>
 				</textField>
 			</frame>

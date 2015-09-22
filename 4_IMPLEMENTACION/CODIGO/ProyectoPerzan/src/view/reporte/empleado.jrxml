@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-18T14:42:37 -->
+<!-- 2015-09-21T19:50:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="empleado" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="ZW1wbGVhZG8gQVMgLDE3MiwxMTksM2I0ZTE1ZGMtMjc1Mi00MDljLWE2NzItMjZjNWRhOWQyZmExOw=="/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
@@ -126,10 +126,12 @@ order by empleado.apellido_paterno]]>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="170" y="0" width="65" height="15" uuid="a7c855a6-ec82-429a-a60f-0e75d791e946"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$F{calle}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Detail" x="240" y="0" width="60" height="15" uuid="03d1a562-8da8-4007-8a65-f4c640a01072"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$F{avenida}]]></textFieldExpression>
 				</textField>
 				<textField>

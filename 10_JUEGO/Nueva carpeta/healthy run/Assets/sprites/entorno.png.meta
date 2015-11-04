@@ -1,0 +1,385 @@
+fileFormatVersion: 2
+guid: e2767df4a2b7b434088a827c2255e98c
+timeCreated: 1445378338
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: entorno_0
+    21300002: entorno_1
+    21300004: entorno_2
+    21300006: entorno_3
+    21300008: entorno_4
+    21300010: entorno_5
+    21300012: entorno_6
+    21300014: entorno_7
+    21300016: entorno_8
+    21300018: entorno_9
+    21300020: entorno_10
+    21300022: entorno_11
+    21300024: entorno_12
+    21300026: entorno_13
+    21300028: entorno_14
+    21300030: entorno_15
+    21300032: entorno_16
+    21300034: entorno_17
+    21300036: entorno_18
+    21300038: entorno_19
+    21300040: entorno_20
+    21300042: entorno_21
+    21300044: entorno_22
+    21300046: entorno_23
+    21300048: entorno_24
+    21300050: entorno_25
+    21300052: entorno_26
+    21300054: entorno_27
+    21300056: Item_fruta
+    21300058: entorno_29
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: entorno_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 633
+        width: 184
+        height: 126
+      alignment: 9
+      pivot: {x: .835132182, y: .547980428}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_1
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 448
+        width: 191
+        height: 201
+      alignment: 9
+      pivot: {x: .911475241, y: .475938797}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_2
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 636
+        width: 184
+        height: 126
+      alignment: 9
+      pivot: {x: .848274887, y: .538384318}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_3
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 639
+        width: 184
+        height: 126
+      alignment: 9
+      pivot: {x: .854845464, y: .528788269}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_4
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 578
+        width: 19
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 578
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_6
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 579
+        width: 4
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_7
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 578
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_8
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 578
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_9
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 575
+        width: 175
+        height: 31
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_10
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 379
+        width: 199
+        height: 245
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_11
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 401
+        width: 266
+        height: 219
+      alignment: 9
+      pivot: {x: .922731757, y: .450310975}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_12
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 220
+        width: 280
+        height: 210
+      alignment: 9
+      pivot: {x: .74613905, y: .48848471}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_13
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 326
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_14
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 325
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_15
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 326
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_16
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 319
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_17
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 325
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_18
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 311
+        width: 223
+        height: 38
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_19
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 194
+        width: 235
+        height: 177
+      alignment: 9
+      pivot: {x: .777836978, y: .459013522}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_20
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 146
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_21
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 146
+        width: 7
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_22
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 144
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_23
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 146
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_24
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 146
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_25
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 146
+        width: 8
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_26
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 158
+        width: 109
+        height: 114
+      alignment: 9
+      pivot: {x: .788410723, y: .478787601}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_27
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 65
+        width: 93
+        height: 120
+      alignment: 9
+      pivot: {x: .447995424, y: .842579126}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Item_fruta
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 70
+        width: 87
+        height: 87
+      alignment: 9
+      pivot: {x: .569489598, y: .694568336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: entorno_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 955
+        height: 48
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="221.0" prefWidth="385.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.ReporteProcesos">
+   <children>
+      <Label layoutX="212.0" layoutY="18.0" text="Reportes" />
+      <DatePicker fx:id="dpInicio" layoutX="149.0" layoutY="71.0" />
+      <DatePicker fx:id="dpFinal" layoutX="150.0" layoutY="132.0" />
+      <Label layoutX="197.0" layoutY="46.0" text="Fecha inicio" />
+      <Label layoutX="208.0" layoutY="106.0" text="Fecha final" />
+      <Button fx:id="btnAceptar" layoutX="150.0" layoutY="179.0" mnemonicParsing="false" onAction="#aceptar" text="Aceptar" />
+      <Button fx:id="btnCancelar" layoutX="276.0" layoutY="179.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <ImageView fitHeight="115.0" fitWidth="120.0" layoutX="14.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PERZAN%20FINAL.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

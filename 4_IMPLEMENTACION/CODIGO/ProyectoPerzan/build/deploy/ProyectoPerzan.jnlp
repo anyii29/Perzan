@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ProyectoPerzan.jnlp">
+  <information>
+    <title>ProyectoPerzan</title>
+    <vendor>DAAA</vendor>
+    <description>Sample JavaFX 2.0 application.</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ProyectoPerzan.jar" size="1319622" download="eager" />
+    <jar href="libs/postgresql-9.4-1201.jdbc4.jar" size="642809" download="eager" />
+  </resources>
+  <application-desc main-class="view.Main1"  name="PERZAN" >
+  </application-desc>
+  <update check="background"/>
+</jnlp>

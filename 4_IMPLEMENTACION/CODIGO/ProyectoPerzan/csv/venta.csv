@@ -1,0 +1,26 @@
+Ventas
+Empleado,Cliente,Producto,Cantidad,Precio,Total,Fecha Hora
+Alan Ramirez Garcia,Default Default Default,tabique rosado,1,12.0,12.0,2015-08-11 07:26:43.144
+Alan Ramirez Garcia,Default Default Default,ladrillo rojo,1,7.0,7.0,2015-08-10 22:50:42.712
+Alan Ramirez Garcia,Default Default Default,maceta barro,10,50.0,500.0,2015-08-10 22:27:59.806
+Alan Ramirez Garcia,Gonzalo Perez Prado,tabique rosado,10,6.0,60.0,2015-08-08 11:05:14.357
+Alan Ramirez Garcia,Martin Martinez Marin,ladrillo hueco,10,13.0,130.0,2015-08-08 11:02:12.343
+Alan Ramirez Garcia,Martin Martinez Marin,ladrillo rojo,12,7.0,84.0,2015-08-08 11:02:12.343
+Alan Ramirez Garcia,Marcos Carmona Yepez,maceta barro,10,50.0,500.0,2015-08-06 00:55:12.817
+Alan Ramirez Garcia,Alvaro Castillo Gomez,ladrillo rojo,12,7.0,84.0,2015-08-02 23:47:21.645
+Alan Ramirez Garcia,Alvaro Castillo Gomez,teja vidriada,100,5.0,500.0,2015-08-02 17:54:56.507
+Alan Ramirez Garcia,Martin Martinez Marin,ladrillo rojo,10,7.0,70.0,2015-08-02 17:52:37.086
+Alan Ramirez Garcia,Martin Martinez Marin,teja vidriada,10,5.0,50.0,2015-08-02 17:52:37.086
+Alan Ramirez Garcia,Martin Martinez Marin,ladrillo rojo,10,7.0,70.0,2015-08-02 17:44:23.985
+Alan Ramirez Garcia,Martin Martinez Marin,teja vidriada,10,5.0,50.0,2015-08-02 17:44:23.985
+Angeles Gonzalez Blanco,Alvaro Castillo Gomez,teja vidriada,200,3.0,600.0,2015-05-29 18:48:16.0
+Alfredo Flores Hernandez,Marcos Carmona Yepez,celosia xxxx,180,5.0,900.0,2015-05-29 18:47:53.0
+Alfredo Flores Hernandez,Alvaro Castillo Gomez,teja barro prensada,100,7.0,700.0,2015-05-29 18:47:35.0
+Alan Ramirez Garcia,Martin Martinez Marin,ladrillo rojo,100,9.0,900.0,2015-05-29 18:47:17.0
+Angeles Gonzalez Blanco,Oscar Castillo Merino,teja vidriada,80,11.0,880.0,2015-05-29 18:46:54.0
+Daniel Isaac Sosa Rincon,Marcos Carmona Yepez,celosia xxxx,100,9.0,900.0,2015-05-29 18:46:26.0
+Alan Ramirez Garcia,Alvaro Castillo Gomez,teja barro prensada,100,6.0,600.0,2015-05-29 18:46:01.0
+Daniel Isaac Sosa Rincon,Marina Medina Rojas,ladrillo rojo,300,8.0,2400.0,2015-05-29 18:45:42.0
+Alfredo Flores Hernandez,Leticia Perez Sanchez,teja vidriada,400,5.0,2000.0,2015-05-29 18:44:40.0
+Angeles Gonzalez Blanco,Marcos Carmona Yepez,celosia xxxx,25,45.0,1125.0,2015-05-29 18:44:21.0
+Angeles Gonzalez Blanco,Marcos Carmona Yepez,teja barro prensada,200,3.0,600.0,2015-05-29 18:44:21.0

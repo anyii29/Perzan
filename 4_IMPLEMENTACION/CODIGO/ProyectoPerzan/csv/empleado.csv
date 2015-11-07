@@ -1,0 +1,5 @@
+Empleados
+Nombre,ApPaterno,ApMaterno,Calle,Avenida,Numero,Colonia,Municipio,Telefono,Usuario,Password,Tipo
+Angeles,Gonzalez,Blanco,43,119,65,Fraternidad,Cordoba,271-234-23-34,angeles1,6ebe562941c5f5dea13fd12c0bf01dee,empleado
+Daniel Isaac,Sosa,Rincon,23,21,87,Los Filtros,Cordoba,271-123-15-29,isaac12,93e9a8a830ef81f187b2f9d0b91dc724,empleado
+Lucas,Sanchez,Medina,23,12,182,centro,cordoba,555-123-76-76,alan111,15948314d8593a5d17d1ffe88f5e91be,empleado

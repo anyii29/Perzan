@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="442.0" prefWidth="307.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.NuevoCliente">
+   <children>
+      <Label layoutX="103.0" layoutY="6.0" text="Nuevo Cliente" />
+      <TitledPane animated="false" collapsible="false" layoutX="13.0" layoutY="35.0" prefHeight="120.0" prefWidth="282.0" text="Datos Cliente">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="dialogStage">
+               <children>
+                  <Label layoutX="7.0" layoutY="7.0" text="Nombre:" />
+                  <TextField fx:id="txtNombreCli" layoutX="136.0" layoutY="3.0" prefHeight="25.0" prefWidth="138.0" />
+                  <Label layoutX="7.0" layoutY="35.0" prefHeight="18.0" prefWidth="128.0" text="Apellido Paterno:" />
+                  <TextField fx:id="txtAPaternoCli" layoutX="137.0" layoutY="31.0" prefHeight="25.0" prefWidth="138.0" />
+                  <Label layoutX="7.0" layoutY="64.0" text="Apellido Materno:" />
+                  <TextField fx:id="txtAMaternoCli" layoutX="137.0" layoutY="60.0" prefHeight="25.0" prefWidth="138.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" layoutX="11.0" layoutY="161.0" prefHeight="225.0" prefWidth="285.0" text="Dirección">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="187.0" prefWidth="248.0" styleClass="dialogStage">
+               <children>
+                  <TextField fx:id="txtCalleCli" layoutX="14.0" layoutY="29.0" prefHeight="25.0" prefWidth="56.0" />
+                  <Label layoutX="25.0" layoutY="10.0" text="Calle:" />
+                  <Label layoutX="106.0" layoutY="10.0" text="Avenida:" />
+                  <TextField fx:id="txtAvenidaCli" layoutX="109.0" layoutY="29.0" prefHeight="25.0" prefWidth="58.0" />
+                  <Label layoutX="203.0" layoutY="10.0" text="Numero:" />
+                  <TextField fx:id="txtNumeroCli" layoutX="202.0" layoutY="29.0" prefHeight="25.0" prefWidth="62.0" />
+                  <Label layoutX="14.0" layoutY="58.0" text="Colonia:" />
+                  <Label layoutX="170.0" layoutY="58.0" text="Municipio:" />
+                  <TextField fx:id="txtColoniaCli" layoutX="14.0" layoutY="79.0" prefHeight="25.0" prefWidth="83.0" />
+                  <TextField fx:id="txtMunicipioCli" layoutX="167.0" layoutY="79.0" prefHeight="25.0" prefWidth="95.0" />
+                  <Label layoutX="16.0" layoutY="107.0" text="Referencia:" />
+                  <TextArea fx:id="txtReferenciaCli" layoutX="17.0" layoutY="125.0" prefHeight="60.0" prefWidth="246.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </TitledPane>
+      <Button fx:id="btnGuardarCli" layoutX="43.0" layoutY="397.0" mnemonicParsing="false" onAction="#guardarCli" text="Guardar" />
+      <Button fx:id="btnSalir" layoutX="200.0" layoutY="397.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+Clientes
+Nombre,ApPaterno,ApMaterno,Calle,Avenida,Numero,Colonia,Municipio,Referencia
+Alvaro,Castillo,Gomez,7,2,87,Francisco Zarco,Cordoba,en la casa de porton negro
+Marcos,Carmona,Yepez,1,24,92,El Barreal,Cordoba,contraesquina a a escuela
+Leticia,Perez,Sanchez,18,21,176,Lomas Pedregal,Cordoba,a un lado del parque
+Oscar,Castillo,Merino,9,2,65,Esperanza,Cordoba,a dos cuadras de la iglesia
+Marina,Medina,Rojas,2,6,12,Centro,Cordoba,frente a tienda "ilusion"
+Gonzalo,Perez,Prado,9,7,164,Solidaridad,Cordoba,Junto a casa verde con cafe
+Alondra,Rodriguez,Rojas,23,12,275,Castillo,Cordoba,adelante del puesto de verduras
+Andrez,Martinez,Sanchez,14,31,321,Pedregal,Cordoba,Frente a tienda de abarrotes
+Martin,Castellano,Perez,23,43,95,desconocida,Cordoba,casa con barda rosa
+Carlos,Garcia,Rosas,24,54,203,Alegria,Cordoba,casa azul con ventanas polarizadas
+Maria,Castañeda,Pulido,1,4,34,Centro,Cordoba,A un costado de la tienda de abarrotes
+Martina,Murillo,Serrano,3,5,57,Cerenidad,Cordoba,Frente a la casa beige
+Martin,Martinez,Marin,3,3,54,5 de mayo,Cordoba,frente a casa de dos pisos azul.
+Default,Default,Default,1,1,1,Default,Default,Domicilio desconocido.

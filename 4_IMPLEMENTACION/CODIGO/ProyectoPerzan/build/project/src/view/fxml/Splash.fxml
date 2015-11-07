@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.embed.swing.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="192.0" prefWidth="418.0" stylesheets="@..\application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Splash">
+   <children>
+      <ImageView fx:id="ivImage" fitHeight="180.0" fitWidth="418.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PerzanImg.png" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="pbBarra" layoutY="174.0" prefHeight="18.0" prefWidth="418.0" progress="0.0" />
+      <Label fx:id="lblProgress" layoutX="160.0" layoutY="170.0" prefHeight="17.0" prefWidth="20.0" />
+   </children>
+</AnchorPane>

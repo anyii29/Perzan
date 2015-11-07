@@ -254,6 +254,8 @@ ALTER TABLE "detalleventa" ADD PRIMARY KEY ("id");
 -- ----------------------------
 ALTER TABLE "empleado" ADD UNIQUE ("usuario", "password");
 ALTER TABLE "empleado" ADD UNIQUE ("usuario","tipo");
+alter table empleado 
+add unique (usuario);
 
 -- ----------------------------
 -- Checks structure for table empleado

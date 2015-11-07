@@ -1,0 +1,51 @@
+Productos,,,,,,,,,,
+IdCategoria,Categoria,Descripción,IdMarca,Marca,Precio1,Precio2,Stock,StockMax,StockMin,Tipo
+6,lavadero,grande,2,Novaceramic,400,380,0,40,5,interior
+3,ladrillo,hueco,2,Novaceramic,14,13,240,400,50,exterior
+1,teja,barro media ala,1,Teja el aguila,25,23,100,250,25,exterior
+9,maceta,barro,2,Novaceramic,50,45,49,50,5,exterior
+1,teja,barro tipo portuguesa,1,Teja el aguila,25,23,100,250,25,exterior
+1,teja,barro tipo guadalajara,1,Teja el aguila,25,23,100,250,25,exterior
+1,teja,barro Ala Mega,1,Teja el aguila,25,23,100,250,25,exterior
+1,teja,barro rústica,1,Teja el aguila,25,23,100,250,25,exterior
+2,tabique,barro,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo solera,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo rosa española,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo cuadrado,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo cintillailla,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo sencillo,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo media luna,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,pecho de paloma,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo octágono,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo tipo hacha,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rojo pecho de ganso,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,decorativa de madera,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,mixta,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,fieltro,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,flor,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,arco,2,Novaceramic,25,23,100,250,25,exterior
+4,celosia,madera,2,Novaceramic,25,23,100,250,25,exterior
+5,ovalin,mármol,2,Novaceramic,25,23,100,250,25,exterior
+6,lavadero,granito,2,Novaceramic,25,23,100,250,25,exterior
+7,solera,un octavo,2,Novaceramic,25,23,100,250,25,exterior
+7,solera,tres cuartos,2,Novaceramic,25,23,100,250,25,exterior
+7,solera,un cuarto,2,Novaceramic,25,23,100,250,25,exterior
+7,solera,media,2,Novaceramic,25,23,100,250,25,exterior
+7,solera,cinco octavos,2,Novaceramic,25,23,100,250,25,exterior
+8,adoquin,cantera natural,2,Novaceramic,25,23,100,250,25,exterior
+8,adoquin,cantera rosa,2,Novaceramic,25,23,100,250,25,exterior
+8,adoquin,cantera naranja,2,Novaceramic,25,23,100,250,25,exterior
+8,adoquin,cantera gris,2,Novaceramic,25,23,100,250,25,exterior
+10,restaurador,color para adoquin,2,Novaceramic,25,23,100,250,25,exterior
+9,maceta,cuadrada terracota,2,Novaceramic,25,23,100,250,25,exterior
+9,maceta,cemento,2,Novaceramic,25,23,100,250,25,exterior
+3,ladrillo,rojo,2,Novaceramic,7,6,355,500,50,exterior
+9,maceta,barro pintada,2,Novaceramic,25,23,100,250,25,exterior
+9,maceta,artesanal de barro,2,Novaceramic,25,23,100,250,25,exterior
+9,maceta,patas de barro,2,Novaceramic,25,23,100,250,25,exterior
+11,sellador,para mármol y granito,2,Novaceramic,25,23,100,250,25,exterior
+12,recinto,volcánico negro rústico,2,Novaceramic,25,23,100,250,25,exterior
+2,tabique,rosado,2,Novaceramic,12,11,199,300,50,exterior
+11,sellador,base de agua Wismar,2,Novaceramic,25,23,0,250,25,interior
+11,sellador,javier,2,Novaceramic,25,23,0,250,25,interior

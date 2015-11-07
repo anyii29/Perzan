@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="196.0" prefWidth="339.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.ReporteActivo">
+   <children>
+      <Label layoutX="180.0" layoutY="14.0" text="Reportes" />
+      <CheckBox fx:id="cbActivo" layoutX="170.0" layoutY="73.0" mnemonicParsing="false" onAction="#cbActivoChange" text="Activos" />
+      <CheckBox fx:id="cbInactivo" layoutX="170.0" layoutY="101.0" mnemonicParsing="false" onAction="#cbInactivoChange" text="Inactivos" />
+      <Label layoutX="170.0" layoutY="46.0" text="Selecciona un tipo:" />
+      <Button fx:id="btnAceptar" layoutX="133.0" layoutY="149.0" mnemonicParsing="false" onAction="#aceptar" text="Aceptar" />
+      <Button fx:id="btnCancelar" layoutX="224.0" layoutY="149.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <ImageView fitHeight="96.0" fitWidth="118.0" layoutX="11.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PERZAN%20FINAL.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="116.0" fitWidth="136.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

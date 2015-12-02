@@ -243,3 +243,7 @@ totallabel{
 .progress-bar:disabled {
     -fx-opacity: 1.0
 }
+
+.date-picker .label{
+    -fx-text-fill: black;
+}

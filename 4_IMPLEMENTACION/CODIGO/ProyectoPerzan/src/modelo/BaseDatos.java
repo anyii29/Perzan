@@ -43,8 +43,12 @@ public class BaseDatos {
 //        		+ "-h "+host+" -p "+puerto+" -U "+usuario+" -w -d "+bd+ " -f custom -b"
 //        		+ " -f C:\\Users\\GHOST\\eclipse_proyects\\ProyectoPerzan\\BaseDatos\\"+nameBackup;
 		String exec = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\pg_dump.exe "
-        		+ "-h "+host+" -p "+puerto+" -U \""+usuario+"\" -w -d \""+bd+ "\" -F custom -b"
+        		+ "-h \""+host+"\" -p "+puerto+" -U \""+usuario+"\" -w -d \""+bd+ "\" -F custom -b"
         		+ " -f \"" + f.getAbsolutePath()+"\"";
+		
+		/*String exec = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\pg_dump.exe -i "
+        		+ "-h "+host+" -p "+puerto+" -U \""+usuario+"\" -F c -b -v"
+        		+ " -f \"" + f.getAbsolutePath()+"\"" + bd;*/
         
         //C:\Users\GHOST\eclipse proyects\ProyectoPerzan\BaseDatos -v -b -f c 
         //pg_dump.exe --host localhost --port 5432 --username "postgres" --no-password  --format custom --blobs --verbose --file "D:\perzanBackup.backup" "perzan"
@@ -74,6 +78,50 @@ public class BaseDatos {
         
 		return false;
 	}
+	public boolean respaldoAuto(){
+		nameBackup = "TempPerzan.per";
+		f = new File("BaseDatos\\"+ nameBackup);
+		System.out.println(nameBackup);
+//        String exec = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\pg_dump.exe "
+//        		+ "-h "+host+" -p "+puerto+" -U "+usuario+" -w -d "+bd+ " -f custom -b"
+//        		+ " -f C:\\Users\\GHOST\\eclipse_proyects\\ProyectoPerzan\\BaseDatos\\"+nameBackup;
+		String exec = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\pg_dump.exe "
+        		+ "-h \""+host+"\" -p "+puerto+" -U \""+usuario+"\" -w -d \""+bd+ "\" -F custom -b"
+        		+ " -f \"" + f.getAbsolutePath()+"\"";
+		
+		/*String exec = "C:\\Program Files\\PostgreSQL\\9.4\\bin\\pg_dump.exe -i "
+        		+ "-h "+host+" -p "+puerto+" -U \""+usuario+"\" -F c -b -v"
+        		+ " -f \"" + f.getAbsolutePath()+"\"" + bd;*/
+        
+        //C:\Users\GHOST\eclipse proyects\ProyectoPerzan\BaseDatos -v -b -f c 
+        //pg_dump.exe --host localhost --port 5432 --username "postgres" --no-password  --format custom --blobs --verbose --file "D:\perzanBackup.backup" "perzan"
+        Process p;
+		try {
+			p = Runtime.getRuntime().exec(exec);
+			
+	        int time = p.waitFor();
+	        if(time == 0){
+	          System.out.println("backup is created");
+	          try {
+	        	nameBackup = encrypt.encryptAuto(f);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				log.printLog(e.getMessage(), this.getClass().toString());
+			}
+	          return true;
+	        }
+	        else{
+	          System.out.println("fail to create backup");
+	        }
+	        p.destroy();
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+        
+		return false;
+	}
+	
 	public boolean restaurar(File file){
 		File f = null;
 		try {

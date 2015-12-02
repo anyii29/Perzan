@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import modelo.BaseDatos;
 import modelo.Logger;
 import modelo.LoginEmpVO;
 import controlador.Administrador;
@@ -13,6 +14,8 @@ import controlador.NuevoCliente;
 import controlador.NuevoProducto;
 import controlador.NuevoProveedor;
 import controlador.Principal;
+import controlador.ReporteActivo;
+import controlador.ReporteProcesos;
 import controlador.Splash;
 import controlador.Total;
 import javafx.application.Application;
@@ -35,10 +38,13 @@ public class Main1 extends Application {
 	private LoginEmpVO usuario;
 	public Stage dStage;
 	private Logger log;
+	private BaseDatos bd;
 	@SuppressWarnings("unused")
 	private controlador.Principal principal;
 	public Main1() {
 		log = new Logger();
+		bd = new BaseDatos();
+		bd.respaldoAuto();
 	}
 	@Override
 	public void start(Stage primaryStage) {
@@ -319,7 +325,57 @@ public class Main1 extends Application {
 			return false;
 		}
 	}
+	
+	public void showReporteActivo(String ruta,String nombreReporte) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("fxml/ReporteActivos.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Marca");
+			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
+			dialogStage.initStyle(StageStyle.TRANSPARENT); 
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			dialogStage.setScene(scene);
+			ReporteActivo controller = loader.getController();
+			controller.setRuta(ruta, nombreReporte);
+			controller.setDialogStage(dialogStage);
+			primaryStage.opacityProperty().set(0.7);
+			dialogStage.showAndWait();
+			primaryStage.opacityProperty().set(1.0);
+		} catch (IOException e) {	
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+	}
+	
+	public void showReporteProceso(String ruta,String nombreReporte) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main1.class.getResource("fxml/ReporteProcesos.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Marca");
+			dialogStage.getIcons().add(new Image("view/images/perzanIco.png"));
+			dialogStage.initStyle(StageStyle.TRANSPARENT); 
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			dialogStage.setScene(scene);
+			ReporteProcesos controller = loader.getController();
+			controller.setRuta(ruta, nombreReporte);
+			controller.setDialogStage(dialogStage);
+			primaryStage.opacityProperty().set(0.7);
+			dialogStage.showAndWait();
+			primaryStage.opacityProperty().set(1.0);
+		} catch (IOException e) {	
+			log.printLog(e.getMessage(), this.getClass().toString());
+		}
+	}
 	public static void main(String[] args) {
-		launch(args);	
+		launch(args);
 	}
 }

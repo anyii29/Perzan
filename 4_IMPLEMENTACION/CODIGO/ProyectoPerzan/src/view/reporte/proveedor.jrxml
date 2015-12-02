@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-21T19:48:13 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="proveedor" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
+<!-- 2015-11-24T12:47:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="proveedor" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="cHJvdmVlZG9yIEFTICwxOTEsMTQ0LGFmMjY0NDdlLWY0MDQtNDQwMi05NTY4LTk3N2FjYjJjYzFiODs="/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
+	<property name="background.image.path" value="C:\Users\GHOST\eclipse_proyects\ProyectoPerzan\src\view\images\PERZAN FINAL.png"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="activo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT concat(	proveedor.apellido_paterno,'  ',
 	proveedor.apellido_materno,' ',
@@ -19,7 +21,7 @@
 	proveedor.colonia,	
 	proveedor.municipio
 FROM proveedor 
-WHERE proveedor.activo = 's'
+WHERE proveedor.activo = $P{activo}
 ORDER BY proveedor.apellido_paterno ASC]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>

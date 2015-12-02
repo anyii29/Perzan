@@ -7,20 +7,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class ReporteActivo {
 	
-	String ruta;
-	Stage dialogStage;
-	Reportes reporte;
+	private String ruta, nombreReporte;
+	private Stage dialogStage;
+	private Reportes reporte;
 	
 	public ReporteActivo() {
 		// TODO Auto-generated constructor stub
 		ruta = "";
 		reporte = new Reportes();
 	}
-
+	@FXML
+	private Label lblNombreReporte;
+	
     @FXML
     private CheckBox cbActivo;
 
@@ -76,10 +79,10 @@ public class ReporteActivo {
 		
 	}
 
-	public void setRuta(String ruta) {
+	public void setRuta(String ruta, String nombreReporte) {
 		// TODO Auto-generated method stub
 		this.ruta = ruta;
-		
+		this.nombreReporte = nombreReporte;
+		lblNombreReporte.setText(this.nombreReporte);	
 	}
-
 }

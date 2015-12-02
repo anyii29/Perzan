@@ -554,4 +554,8 @@ public class CsvFiles {
 		}
 		return msj;
 	}
+	
+	public void setAdmin(Administrador admin){
+		this.admin = admin;
+	}
 }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-21T19:49:48 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="producto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
+<!-- 2015-11-24T12:48:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="producto" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2F0ZWdvcmlhIEFTICwxNTcsNDEsNWM5NWI0N2UtODI1MS00ZTBlLThiYWYtZGI5MTI2ODE3MTg0&#xA;O21hcmNhIEFTICwxNTIsMjA5LDgyOWJjMjg1LTFhMjktNDM2ZC04MWVlLTNlMTE5ZTVlYjY5ZDtw&#xA;cm9kdWN0byBBUyAsMjI2LDEzMCw5YTRjNTE2My0xZjY0LTQzY2YtOTAwYi0yMmNhYjZhM2NkYzg7"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
+	<property name="background.image.path" value="C:\Users\GHOST\eclipse_proyects\ProyectoPerzan\src\view\images\PERZAN FINAL.png"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="activo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT categoria.nombre as categoria,
 	producto.descripcion,
@@ -21,7 +23,7 @@ FROM producto
 	 producto.id_categoria = categoria.id 
 	INNER JOIN marca ON 
 	 producto.id_marca = marca.id 
-	 WHERE producto.activo = 's'
+	 WHERE producto.activo = $P{activo}
 	 ORDER BY categoria.nombre ASC]]>
 	</queryString>
 	<field name="categoria" class="java.lang.String"/>

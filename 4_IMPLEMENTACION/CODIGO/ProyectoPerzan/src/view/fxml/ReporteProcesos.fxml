@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="221.0" prefWidth="385.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.ReporteProcesos">
+<AnchorPane prefHeight="221.0" prefWidth="385.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ReporteProcesos">
    <children>
-      <Label layoutX="212.0" layoutY="18.0" text="Reportes" />
+      <Label layoutX="131.0" layoutY="18.0" text="Reporte de " />
       <DatePicker fx:id="dpInicio" layoutX="149.0" layoutY="71.0" />
       <DatePicker fx:id="dpFinal" layoutX="150.0" layoutY="132.0" />
       <Label layoutX="197.0" layoutY="46.0" text="Fecha inicio" />
@@ -21,5 +20,6 @@
             <Image url="@../images/PERZAN%20FINAL.png" />
          </image>
       </ImageView>
+      <Label fx:id="lblNombreReporte" layoutX="208.0" layoutY="20.0" prefHeight="21.0" prefWidth="102.0" />
    </children>
 </AnchorPane>

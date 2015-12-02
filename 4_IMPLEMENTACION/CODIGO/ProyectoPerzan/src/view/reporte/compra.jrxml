@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-21T19:50:42 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Silhouette_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
+<!-- 2015-11-24T12:52:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Silhouette_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="Y29tcHJhIEFTICw2OCwxOCxkYjYwNGUyYy05ZWZiLTQyZDEtYjIzZC00ZWExZWI4OTAxMzY7"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
+	<property name="background.image.path" value="C:\Users\GHOST\eclipse_proyects\ProyectoPerzan\src\view\images\PERZAN FINAL.png"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="fechainicio" class="java.lang.String"/>
+	<parameter name="fechafin" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select proveedor.empresa,
 concat(empleado.nombre,' ',empleado.apellido_paterno,' ',empleado.apellido_materno) as empleado,
@@ -22,7 +25,8 @@ inner join proveedor on proveedor.id = compra.id_proveedor
 inner join empleado on empleado.id = compra.id_empleado
 inner join producto on producto.id = detallecompra.id_producto
 inner join categoria on producto.id_categoria = categoria.id
-WHERE date_part('month', compra.fecha_pedido) > date_part('month', now()) - 2
+WHERE date(compra.fecha_pedido) >=  date($P{fechainicio}) 
+and date(compra.fecha_pedido) <= date($P{fechafin}) 
 order by compra.fecha_pedido, proveedor.empresa desc]]>
 	</queryString>
 	<field name="empresa" class="java.lang.String"/>
@@ -175,14 +179,13 @@ order by compra.fecha_pedido, proveedor.empresa desc]]>
 				</textField>
 				<textField pattern="d MMM, yyyy" isBlankWhenNull="true">
 					<reportElement style="Detail" x="490" y="0" width="100" height="15" uuid="0aaeea70-977a-4a34-a43b-84bf608fde0e"/>
-					<textElement textAlignment="Right">
+					<textElement>
 						<paragraph lineSpacing="Proportional"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{fecha_pedido}]]></textFieldExpression>
 				</textField>
 				<textField pattern="d/M/yyyy h:mm a">
 					<reportElement style="Detail" x="590" y="0" width="110" height="15" uuid="0f3598b0-248a-4814-8939-804b5bc7ab7e"/>
-					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{fecha_recepcion}]]></textFieldExpression>
 				</textField>
 			</frame>

@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="196.0" prefWidth="339.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.ReporteActivo">
+<AnchorPane prefHeight="196.0" prefWidth="339.0" styleClass="dialogStage" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ReporteActivo">
    <children>
-      <Label layoutX="180.0" layoutY="14.0" text="Reportes" />
+      <Label layoutX="104.0" layoutY="16.0" text="Reporte de " />
       <CheckBox fx:id="cbActivo" layoutX="170.0" layoutY="73.0" mnemonicParsing="false" onAction="#cbActivoChange" text="Activos" />
       <CheckBox fx:id="cbInactivo" layoutX="170.0" layoutY="101.0" mnemonicParsing="false" onAction="#cbInactivoChange" text="Inactivos" />
       <Label layoutX="170.0" layoutY="46.0" text="Selecciona un tipo:" />
@@ -21,5 +20,6 @@
          </image>
       </ImageView>
       <ImageView fitHeight="116.0" fitWidth="136.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblNombreReporte" layoutX="181.0" layoutY="16.0" prefHeight="21.0" prefWidth="95.0" />
    </children>
 </AnchorPane>

@@ -93,6 +93,16 @@ public class Encrypt {
 		deleteFile();
 		return nameBackup;
 	}
+	
+	public String encryptAuto(File ruta) throws Throwable {
+		String nameBackup = "TemporalPerzan.per";	
+		file = ruta;
+		FileInputStream fis = new FileInputStream(ruta);
+		FileOutputStream fos = new FileOutputStream("BaseDatos\\"+nameBackup);
+		encryptOrDecrypt(key1, Cipher.ENCRYPT_MODE, fis, fos);
+		deleteFile();
+		return nameBackup;
+	}
 
 	public File decrypt(File f) throws Throwable {
 		date = new Date();

@@ -2,12 +2,9 @@ package controlador;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -57,6 +54,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -206,8 +204,8 @@ public class Administrador implements Initializable {
 		txtExistenciaP.setDisable(true);
 		btnResProd.setVisible(false);
 		btnResEmp.setVisible(false);
-		btnResEmp.setVisible(false);
-		btnResEmp.setVisible(false);
+		btnResPro.setVisible(false);
+		btnResCli.setVisible(false);
 		registros(lblTDetalleCompras, 0);
 		registros(lblTDetalleVentas, 0);
 	}
@@ -2150,6 +2148,7 @@ public class Administrador implements Initializable {
 				alert(AlertType.ERROR, "Falló creación de reporte.");
 				break;
 			}
+			cbCSV.setValue(null);
 		}
 		
 		else{
@@ -2166,6 +2165,7 @@ public class Administrador implements Initializable {
 		//chooser.setInitialFileName("perzan");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
+			csv.setAdmin(this);
 			alert(AlertType.INFORMATION, csv.readCSVFile(f));
 		}
 	}
@@ -2175,33 +2175,28 @@ public class Administrador implements Initializable {
 			String rep = cbReportes.getSelectionModel().getSelectedItem();
 			switch (rep) {
 			case "Cliente":
-				reporte.loadReport("src\\view\\reporte\\cliente.jrxml");
-				reporte.showReport();
+				main1.showReporteActivo("src\\view\\reporte\\cliente.jrxml", rep);
 				break;
 			case "Compra":
-				reporte.loadReport("src\\view\\reporte\\compra.jrxml");
-				reporte.showReport();
+				main1.showReporteProceso("src\\view\\reporte\\compra.jrxml", rep);
 				break;
 			case "Empleado":
-				reporte.loadReport("src\\view\\reporte\\empleado.jrxml");
-				reporte.showReport();
+				main1.showReporteActivo("src\\view\\reporte\\empleado.jrxml", rep);
 				break;
 			case "Producto":
-				reporte.loadReport("src\\view\\reporte\\producto.jrxml");
-				reporte.showReport();
+				main1.showReporteActivo("src\\view\\reporte\\producto.jrxml", rep);
 				break;
 			case "Proveedor":
-				reporte.loadReport("src\\view\\reporte\\proveedor.jrxml");
-				reporte.showReport();
+				main1.showReporteActivo("src\\view\\reporte\\proveedor.jrxml", rep);
 				break;
 			case "Venta":
-				reporte.loadReport("src\\view\\reporte\\ventas.jrxml");
-				reporte.showReport();
+				main1.showReporteProceso("src\\view\\reporte\\ventas.jrxml", rep);
 				break;
 			default:
 				alert(AlertType.ERROR, "Falló creación de reporte.");
 				break;
 			}
+			cbReportes.setValue(null);
 		}
 		else{
 			alert(AlertType.ERROR, "Seleccione una categoria.");

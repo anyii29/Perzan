@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-11-02T11:31:39 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ventas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
+<!-- 2015-11-24T15:27:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ventas" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGV0YWxsZXZlbnRhICwyMCw2MTMsZGMwZTYwZGQtY2I2Yi00MmQxLWE4YzktM2QzMTljODM3OTU0&#xA;O3Byb2R1Y3RvICwzMjgsMTgsN2U0ZjE5ZjctOGJiNS00ODQ4LTk3ZDgtNjMzMWQ1N2I4YzkzO3Zl&#xA;bnRhICwxNTksNjI2LDI1YjM3NWRkLTRjNmMtNDkwMC1iZTE1LTQ4MTAxZWUyMDM3NDtjYXRlZ29y&#xA;aWEgLDE1OSw0OTQsZmQxNWMzODItY2U3Ny00OTNhLTgxYTAtNDY4OTgwZjRhZThhO2NsaWVudGUg&#xA;LDE1OSwxMjMwLDA4ODcxMzc3LTMzYWEtNGVhZi1iZDEwLTIzOTI2N2M3ZmM3ODtlbXBsZWFkbyAs&#xA;MTU5LDgxMiwwNGMxOTk3ZC1lMTk0LTQ2N2MtYWZkZi02YWE5OThlODEwZWM7"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPerzan"/>
+	<property name="background.image.path" value="C:\Users\GHOST\eclipse_proyects\ProyectoPerzan\src\view\images\PERZAN FINAL.png"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
@@ -36,7 +37,7 @@ INNER JOIN cliente ON
 venta.id_cliente = cliente.id 
 WHERE date(venta.fecha_hora) >=  date($P{fechainicio}) 
 and date(venta.fecha_hora) <= date($P{fechafin})
-ORDER BY venta.fecha_hora DESC]]>
+ORDER BY empleado.apellido_paterno, venta.fecha_hora DESC]]>
 	</queryString>
 	<field name="vendedor" class="java.lang.String"/>
 	<field name="cliente" class="java.lang.String"/>
